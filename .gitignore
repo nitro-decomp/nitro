@@ -1,0 +1,18 @@
+# Base ROMs
+*.nds
+
+# Build output
+/build/
+
+# Tools
+/dsd
+/dsd.exe
+/objdiff-cli
+/objdiff-cli.exe
+/objdiff.json
+/wibo
+
+# Ninja
+.ninja_deps
+.ninja_log
+build.ninja

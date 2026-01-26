@@ -1,0 +1,26 @@
+rom_config: '../../../extract/pm4_jp/config.yaml'
+build_path: '../../../build/pm4_jp'
+delinks_path: '../../../build/pm4_jp/delinks'
+main_module:
+  name: main
+  object: '../../../build/pm4_jp/build/arm9.bin'
+  hash: acf92b3fd9e0a608
+  delinks: delinks.txt
+  symbols: symbols.txt
+  relocations: relocs.txt
+autoloads:
+- kind: Itcm
+  name: itcm
+  object: '../../../build/pm4_jp/build/itcm.bin'
+  hash: '16603e941c0a660a'
+  delinks: itcm/delinks.txt
+  symbols: itcm/symbols.txt
+  relocations: itcm/relocs.txt
+- kind: Dtcm
+  name: dtcm
+  object: '../../../build/pm4_jp/build/dtcm.bin'
+  hash: '08a0716795baead0'
+  delinks: dtcm/delinks.txt
+  symbols: dtcm/symbols.txt
+  relocations: dtcm/relocs.txt
+overlays: []

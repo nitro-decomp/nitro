@@ -1,0 +1,19 @@
+#ifndef _NITRO_HW_H
+#define _NITRO_HW_H
+
+#define HW_LCDC_VRAM 0x06800000
+#define HW_LCDC_VRAM_SIZE 0xA4000
+
+#define HW_OAM 0x07000000
+#define HW_OAM_SIZE 0x400
+
+#define HW_PLTT 0x05000000
+#define HW_PLTT_SIZE 0x400
+
+#define HW_DB_OAM 0x07000400
+#define HW_DB_OAM_SIZE 0x400
+
+#define HW_DB_PLTT 0x05000400
+#define HW_DB_PLTT_SIZE 0x400
+
+#endif

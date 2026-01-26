@@ -1,0 +1,80 @@
+    .text       start:0x02000000 end:0x02082810 kind:code align:32
+    .rodata     start:0x02082810 end:0x020913f8 kind:rodata align:4
+    .ctor       start:0x020913f8 end:0x020913fc kind:rodata align:4
+    .data       start:0x02091400 end:0x020a74a0 kind:data align:32
+    .bss        start:0x020a74a0 end:0x0216d1a0 kind:bss align:32
+
+src/fx.c:
+    .text       start:0x02068a64 end:0x02068a68
+
+src/gx.c:
+    .text       start:0x02068a68 end:0x0206acd8
+
+src/os/os_irq.c:
+    .text       start:0x0206acd8 end:0x0206b040
+
+src/os/os_unk1.c:
+    .text       start:0x0206b040 end:0x0206b3e0
+
+src/os/os_thread.c:
+    .text       start:0x0206b3e0 end:0x0206bf34
+
+src/os/os_unk2.c:
+    .text       start:0x0206bf34 end:0x0206bf54
+
+src/os/os_message.c:
+    .text       start:0x0206bf54 end:0x0206c020
+
+src/os/os_mutex.c:
+    .text       start:0x0206c020 end:0x0206c19c
+
+src/os/os_cache.c:
+    .text       start:0x0206c19c end:0x0206c298
+
+src/os/os_init.c:
+    .text       start:0x0206c298 end:0x0206c470
+
+src/os/os_arena.c:
+    .text       start:0x0206c470 end:0x0206ca88
+
+src/os/os_unk3.c:
+    .text       start:0x0206ca88 end:0x0206ccf4
+
+src/os/os_tick.c:
+    .text       start:0x0206ccf4 end:0x0206d30c
+
+src/os/os_unk4.c:
+    .text       start:0x0206d30c end:0x0206d400
+
+src/os/os_unk5.c:
+    .text       start:0x0206d400 end:0x0206d710
+
+src/mi/mi_unk1.c:
+    .text       start:0x0206d710 end:0x0206deec
+
+src/snd/snd_unk1.c:
+    .text       start:0x0206deec end:0x0206e260
+
+src/snd/snd_unk2.c:
+    .text       start:0x0206e260 end:0x0206f2e4
+
+src/fs.c:
+    .text       start:0x0206f2e4 end:0x02070c90
+
+src/os/os_unk6.c:
+    .text       start:0x02070c90 end:0x02070d0c
+
+src/tp/tp_unk1.c:
+    .text       start:0x02070d0c end:0x020715cc
+
+src/pm/pm_unk1.c:
+    .text       start:0x020715cc end:0x02072158
+
+src/rtc/rtc_unk1.c:
+    .text       start:0x02072158 end:0x02072b24
+
+src/card/card_unk1.c:
+    .text       start:0x02072b24 end:0x020748d4
+
+src/std/std_string.c:
+    .text       start:0x020748d4 end:0x02074948
