@@ -9,6 +9,19 @@
 #define REG_DISPSTAT (*(vu16 *) 0x4000004)
 #define REG_VCOUNT (*(vu16 *) 0x04000006)
 
+#define REG_VRAM_CNT_ABCD (*(vu32 *) 0x04000240)
+#define REG_VRAM_CNT_A (*(vu8 *) 0x04000240)
+#define REG_VRAM_CNT_B (*(vu8 *) 0x04000241)
+#define REG_VRAM_CNT_C (*(vu8 *) 0x04000242)
+#define REG_VRAM_CNT_D (*(vu8 *) 0x04000243)
+#define REG_VRAM_CNT_E (*(vu8 *) 0x04000244)
+#define REG_VRAM_CNT_F (*(vu8 *) 0x04000245)
+#define REG_VRAM_CNT_G (*(vu8 *) 0x04000246)
+#define REG_WRAM_CNT (*(vu8 *) 0x04000247)
+#define REG_VRAM_CNT_HI (*(vu16 *) 0x04000248)
+#define REG_VRAM_CNT_H (*(vu8 *) 0x04000248)
+#define REG_VRAM_CNT_I (*(vu8 *) 0x04000249)
+
 #define REG_PAD (*(u16 *) 0x027FFFA8)
 #define REG_KEYINPUT (*(u16 *) 0x04000130)
 

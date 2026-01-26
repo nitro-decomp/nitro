@@ -228,4 +228,6 @@ u32 OS_GetLockID(void);
 u32 OS_DisableInterrupts_Irq(void);
 void OS_RestoreInterrupts(u32);
 
+BOOL OS_func_0206d5ac(u16, u32);
+
 #endif

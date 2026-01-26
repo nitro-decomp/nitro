@@ -171,19 +171,19 @@ inline void GXS_SetOBJVRamModeChar(u32 value) {
     REG_DISPCNT_SUB = (REG_DISPCNT_SUB & 0xFFCFFFEF) | (value);
 }
 
-void GX_VBlankIntr(BOOL);
-void GX_HBlankIntr(BOOL);
+u16 GX_VBlankIntr(BOOL);
+u16 GX_HBlankIntr(BOOL);
 
 inline u16 GX_GetVCount(void) {
     return REG_VCOUNT;
 }
 
-void GX_SetBankForLCDC(u32);
+void GX_SetBankForLCDC(s32);
 void GX_DisableBankForLCDC(void);
-void GX_SetBankForBG(u32);
-void GX_SetBankForOBJ(u32);
-void GX_SetBankForSubBG(u32);
-void GX_SetBankForSubOBJ(u32);
+void GX_SetBankForBG(s32);
+void GX_SetBankForOBJ(s32);
+void GX_SetBankForSubBG(s32);
+void GX_SetBankForSubOBJ(s32);
 void GX_SetGraphicsMode(u32, u32, u32);
 void GXS_SetGraphicsMode(u32);
 
@@ -236,10 +236,10 @@ void GXS_LoadOBJPltt(void *ptr, u32 offset, u32 size);
 void GX_LoadOBJ(void *ptr, u32 offset, u32 size);
 void GXS_LoadOBJ(void *ptr, u32 offset, u32 size);
 
-BOOL GX_TrySetBankForBGExtPltt(u32);
-BOOL GX_TrySetBankForSubBGExtPltt(u32);
-BOOL GX_TrySetBankForOBJExtPltt(u32);
-BOOL GX_TrySetBankForSubOBJExtPltt(u32);
+BOOL GX_TrySetBankForBGExtPltt(s32);
+BOOL GX_TrySetBankForSubBGExtPltt(s32);
+BOOL GX_TrySetBankForOBJExtPltt(s32);
+BOOL GX_TrySetBankForSubOBJExtPltt(s32);
 void GX_ResetBankForBGExtPltt(void);
 void GX_ResetBankForSubBGExtPltt(void);
 void GX_ResetBankForOBJExtPltt(void);
