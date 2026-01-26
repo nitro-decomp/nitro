@@ -22,7 +22,7 @@ inline void MI_CpuFillFast(void *ptr, u8 value, u32 size) {
 void MI_DmaFill32(u32, void *ptr, u8 value, u32 size);
 void MI_DmaCopy16(u32, void *src, void *dst, u32 size);
 void MI_DmaCopy32(u32, void *src, void *dst, u32 size);
-bool32 MI_IsDmaBusy(u32);
+BOOL MI_IsDmaBusy(u32);
 
 void MI_CpuFill8(void *ptr, u8 value, u32 size);
 void MI_CpuCopy8(void *src, void *dst, u32 size);

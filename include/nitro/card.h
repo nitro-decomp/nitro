@@ -30,7 +30,7 @@ typedef u32 CARDResult;
 
 void CARD_LockBackup(u16 cardId);
 void CARD_UnlockBackup(u16 cardId);
-bool32 CARD_IdentifyBackup(CARDBackupType type);
+BOOL CARD_IdentifyBackup(CARDBackupType type);
 CARDBackupType CARD_GetBackupType();
 #define CARD_IsBackupEeprom() (CARD_GetBackupType() & 0xff) == CARD_BACKUP_TYPE_EEPROM
 #define CARD_IsBackupFlash() (CARD_GetBackupType() & 0xff) == CARD_BACKUP_TYPE_FLASH

@@ -204,7 +204,7 @@ inline void G2S_ChangeBlendAlpha(u32 param1, u32 param2) {
     REG_BLDALPHA_SUB = param1 | (param2 << 8);
 }
 
-inline void G2_BG0Mosaic(bool32 flag) {
+inline void G2_BG0Mosaic(BOOL flag) {
     if (flag) {
         REG_BG0CNT |= 0x40;
     } else {
@@ -212,7 +212,7 @@ inline void G2_BG0Mosaic(bool32 flag) {
     }
 }
 
-inline void G2_BG1Mosaic(bool32 flag) {
+inline void G2_BG1Mosaic(BOOL flag) {
     if (flag) {
         REG_BG1CNT |= 0x40;
     } else {
@@ -220,7 +220,7 @@ inline void G2_BG1Mosaic(bool32 flag) {
     }
 }
 
-inline void G2_BG2Mosaic(bool32 flag) {
+inline void G2_BG2Mosaic(BOOL flag) {
     if (flag) {
         REG_BG2CNT |= 0x40;
     } else {
@@ -228,7 +228,7 @@ inline void G2_BG2Mosaic(bool32 flag) {
     }
 }
 
-inline void G2_BG3Mosaic(bool32 flag) {
+inline void G2_BG3Mosaic(BOOL flag) {
     if (flag) {
         REG_BG3CNT |= 0x40;
     } else {
@@ -236,7 +236,7 @@ inline void G2_BG3Mosaic(bool32 flag) {
     }
 }
 
-inline void G2S_BG0Mosaic(bool32 flag) {
+inline void G2S_BG0Mosaic(BOOL flag) {
     if (flag) {
         REG_BG0CNT_SUB |= 0x40;
     } else {
@@ -244,7 +244,7 @@ inline void G2S_BG0Mosaic(bool32 flag) {
     }
 }
 
-inline void G2S_BG1Mosaic(bool32 flag) {
+inline void G2S_BG1Mosaic(BOOL flag) {
     if (flag) {
         REG_BG1CNT_SUB |= 0x40;
     } else {
@@ -252,7 +252,7 @@ inline void G2S_BG1Mosaic(bool32 flag) {
     }
 }
 
-inline void G2S_BG2Mosaic(bool32 flag) {
+inline void G2S_BG2Mosaic(BOOL flag) {
     if (flag) {
         REG_BG2CNT_SUB |= 0x40;
     } else {
@@ -260,7 +260,7 @@ inline void G2S_BG2Mosaic(bool32 flag) {
     }
 }
 
-inline void G2S_BG3Mosaic(bool32 flag) {
+inline void G2S_BG3Mosaic(BOOL flag) {
     if (flag) {
         REG_BG3CNT_SUB |= 0x40;
     } else {

@@ -191,7 +191,7 @@ void OS_Sleep(u32 time);
 void OS_CreateThread(OSThread *thread, void (*threadFunc)(void *arg), void *arg, void *stackHi,
                      u32 stackSize, u32 prio);
 void OS_WakeupThreadDirect(OSThread *thread);
-bool32 OS_IsThreadTerminated(const OSThread *thread);
+BOOL OS_IsThreadTerminated(const OSThread *thread);
 void OS_KillThread(OSThread *thread, void *);
 OSThread *OS_GetCurrentThread(void);
 #ifdef DEBUG

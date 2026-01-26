@@ -24,13 +24,13 @@ typedef struct {
 } TPData;
 
 void TP_Init(void);
-bool32 TP_GetUserInfo(TPCalibrateParam *calibrate);
+BOOL TP_GetUserInfo(TPCalibrateParam *calibrate);
 void TP_SetCalibrateParam(const TPCalibrateParam *calibrate);
 
 void func_020711c0(void);
-bool32 func_02071254(TPData *data);
+BOOL func_02071254(TPData *data);
 
-inline bool32 TP_RequestRawSampling(TPData *data) {
+inline BOOL TP_RequestRawSampling(TPData *data) {
     func_020711c0();
     return func_02071254(data);
 }

@@ -25,7 +25,7 @@
 
 #define PAD_ALL (PAD_BUTTON_ALL | PAD_KEY_ALL)
 
-inline bool32 PAD_DetectFold(void) {
+inline BOOL PAD_DetectFold(void) {
     return (REG_PAD & 0x8000) >> 0xf;
 }
 

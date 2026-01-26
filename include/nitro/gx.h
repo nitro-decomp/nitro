@@ -171,8 +171,8 @@ inline void GXS_SetOBJVRamModeChar(u32 value) {
     REG_DISPCNT_SUB = (REG_DISPCNT_SUB & 0xFFCFFFEF) | (value);
 }
 
-void GX_VBlankIntr(bool32);
-void GX_HBlankIntr(bool32);
+void GX_VBlankIntr(BOOL);
+void GX_HBlankIntr(BOOL);
 
 inline u16 GX_GetVCount(void) {
     return REG_VCOUNT;
@@ -236,10 +236,10 @@ void GXS_LoadOBJPltt(void *ptr, u32 offset, u32 size);
 void GX_LoadOBJ(void *ptr, u32 offset, u32 size);
 void GXS_LoadOBJ(void *ptr, u32 offset, u32 size);
 
-bool32 GX_TrySetBankForBGExtPltt(u32);
-bool32 GX_TrySetBankForSubBGExtPltt(u32);
-bool32 GX_TrySetBankForOBJExtPltt(u32);
-bool32 GX_TrySetBankForSubOBJExtPltt(u32);
+BOOL GX_TrySetBankForBGExtPltt(u32);
+BOOL GX_TrySetBankForSubBGExtPltt(u32);
+BOOL GX_TrySetBankForOBJExtPltt(u32);
+BOOL GX_TrySetBankForSubOBJExtPltt(u32);
 void GX_ResetBankForBGExtPltt(void);
 void GX_ResetBankForSubBGExtPltt(void);
 void GX_ResetBankForOBJExtPltt(void);

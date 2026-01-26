@@ -45,9 +45,9 @@ typedef struct FSVolume {
     /* 3c */ u32 fatRomOffset;
     /* 40 */ u32 fntRomOffset;
     /* 44 */ u32 *unk_44;
-    /* 48 */ bool32 (*unk_48)(struct FSVolume *, u32, u32, u32);
-    /* 4c */ bool32 (*unk_4c)(struct FSVolume *, u32, u32, u32);
-    /* 50 */ bool32 (*unk_50)(struct FSVolume *, u32, u32, u32);
+    /* 48 */ BOOL (*unk_48)(struct FSVolume *, u32, u32, u32);
+    /* 4c */ BOOL (*unk_4c)(struct FSVolume *, u32, u32, u32);
+    /* 50 */ BOOL (*unk_50)(struct FSVolume *, u32, u32, u32);
     /* 54 */ u32 (*unk_54)(struct FSFile *, u32);
     /* 58 */ u32 unk_58;
     /* 5c */
@@ -106,12 +106,12 @@ typedef struct FSFntDirectory {
 
 void FS_Init(u32 dmaCount);
 void FS_InitFile(FSFile *file);
-bool32 FS_OpenFile(FSFile *file, const char *path);
-bool32 FS_SeekFile(FSFile *file, s32 pos, u32 mode);
+BOOL FS_OpenFile(FSFile *file, const char *path);
+BOOL FS_SeekFile(FSFile *file, s32 pos, u32 mode);
 u32 FS_ReadFile(FSFile *file, void *buf, u32 size);
-inline bool32 FS_IsFile(FSFile *file) {
+inline BOOL FS_IsFile(FSFile *file) {
     return !!(file->flags & FS_FILE_FLAG_FILE);
 }
-bool32 FS_CloseFile(FSFile *file);
+BOOL FS_CloseFile(FSFile *file);
 
 #endif
