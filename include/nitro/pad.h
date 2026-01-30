@@ -17,9 +17,9 @@
 #define PAD_BUTTON_X 0x400
 #define PAD_BUTTON_Y 0x800
 
-#define PAD_BUTTON_ALL                                                                   \
-    (PAD_BUTTON_A | PAD_BUTTON_B | PAD_BUTTON_SELECT | PAD_BUTTON_START | PAD_BUTTON_R | \
-     PAD_BUTTON_L | PAD_BUTTON_X | PAD_BUTTON_Y)
+#define PAD_BUTTON_ALL                                                                                                 \
+    (PAD_BUTTON_A | PAD_BUTTON_B | PAD_BUTTON_SELECT | PAD_BUTTON_START | PAD_BUTTON_R | PAD_BUTTON_L | PAD_BUTTON_X | \
+     PAD_BUTTON_Y)
 
 #define PAD_KEY_ALL (PAD_KEY_RIGHT | PAD_KEY_LEFT | PAD_KEY_UP | PAD_KEY_DOWN)
 

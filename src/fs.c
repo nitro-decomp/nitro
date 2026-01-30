@@ -448,8 +448,8 @@ BOOL FS_AddVolume(FSVolume *volume, const char *path, u32 length) {
     return ret;
 }
 
-BOOL FS_InitVolume(FSVolume *volume, u32 param2, u32 fatRomOffset, u32 fatSize, u32 fntRomOffset,
-                   u32 fntSize, u32 (*param7)(FSFile *file, u8 *buf, u32 offset, u32 size),
+BOOL FS_InitVolume(FSVolume *volume, u32 param2, u32 fatRomOffset, u32 fatSize, u32 fntRomOffset, u32 fntSize,
+                   u32 (*param7)(FSFile *file, u8 *buf, u32 offset, u32 size),
                    u32 (*param8)(FSFile *file, u8 *buf, u32 offset, u32 size)) {
     volume->unk_28       = param2;
     volume->fatSize      = fatSize;
@@ -730,8 +730,8 @@ static void FS_AddRomVolume(u32 dmaCount) {
         func_02070524(&gRomVolume, func_02070acc, 0x602);
         if (REG_FNT_ROM_OFFSET != -1 && REG_FNT_ROM_OFFSET != 0 && REG_FAT_ROM_OFFSET != -1 &&
             REG_FAT_ROM_OFFSET != 0) {
-            FS_InitVolume(&gRomVolume, 0, REG_FAT_ROM_OFFSET, REG_FAT_SIZE, REG_FNT_ROM_OFFSET,
-                          REG_FNT_SIZE, func_02070a7c, func_02070ac4);
+            FS_InitVolume(&gRomVolume, 0, REG_FAT_ROM_OFFSET, REG_FAT_SIZE, REG_FNT_ROM_OFFSET, REG_FNT_SIZE,
+                          func_02070a7c, func_02070ac4);
         }
     }
 }
