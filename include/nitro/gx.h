@@ -1,6 +1,10 @@
 #ifndef _NITRO_GX_H
 #define _NITRO_GX_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "nitro/reg.h"
 #include "nitro/types.h"
 
@@ -125,7 +129,7 @@
 typedef u32 GXVRamBG;
 typedef u32 GXVRamOBJ;
 
-typedef struct {
+typedef struct GXOamAttr {
     u32 lo;
     u16 hi;
 } GXOamAttr;
@@ -147,36 +151,8 @@ void GX_Init(void);
 void GX_DispOff(void);
 void GX_DispOn(void);
 
-inline void GXS_DispOff(void) {
-    REG_DISPCNT_SUB &= ~0x10000;
-}
-
-inline void GXS_DispOn(void) {
-    REG_DISPCNT_SUB |= 0x10000;
-}
-
-inline void GX_SetPower(u32 value) {
-    REG_POWER_CNT = (REG_POWER_CNT & 0xFFFFFDF1) | (value);
-}
-
-inline void GX_SetDispSelect(u32 value) {
-    REG_POWER_CNT = (REG_POWER_CNT & ~0x8000) | value;
-}
-
-inline void GX_SetOBJVRamModeChar(u32 value) {
-    REG_DISPCNT = (REG_DISPCNT & 0xFFCFFFEF) | (value);
-}
-
-inline void GXS_SetOBJVRamModeChar(u32 value) {
-    REG_DISPCNT_SUB = (REG_DISPCNT_SUB & 0xFFCFFFEF) | (value);
-}
-
 u16 GX_VBlankIntr(BOOL);
 u16 GX_HBlankIntr(BOOL);
-
-inline u16 GX_GetVCount(void) {
-    return REG_VCOUNT;
-}
 
 void GX_SetBankForLCDC(s32);
 void GX_DisableBankForLCDC(void);
@@ -186,22 +162,6 @@ void GX_SetBankForSubBG(s32);
 void GX_SetBankForSubOBJ(s32);
 void GX_SetGraphicsMode(u32, u32, u32);
 void GXS_SetGraphicsMode(u32);
-
-inline void GX_SetVisiblePlane(s32 plane) {
-    REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | (plane << 8);
-}
-
-inline void GXS_SetVisiblePlane(s32 plane) {
-    REG_DISPCNT_SUB = (REG_DISPCNT_SUB & ~0x1f00) | (plane << 8);
-}
-
-inline void GX_SetBGCharOffset(u32 offset) {
-    REG_DISPCNT = (REG_DISPCNT & ~0x7000000) | offset;
-}
-
-inline void GX_SetBGScrOffset(u32 offset) {
-    REG_DISPCNT = (REG_DISPCNT & ~0x38000000) | offset;
-}
 
 void GX_LoadOAM(GXOamAttr *oam, u32, u32);
 void GXS_LoadOAM(GXOamAttr *oam, u32, u32);
@@ -260,5 +220,53 @@ void GX_EndLoadOBJExtPltt(void);
 void GXS_BeginLoadOBJExtPltt(void);
 void GXS_LoadOBJExtPltt(void *ptr, u32 offset, u32 size);
 void GXS_EndLoadOBJExtPltt(void);
+
+inline void GXS_DispOff(void) {
+    REG_DISPCNT_SUB &= ~0x10000;
+}
+
+inline void GXS_DispOn(void) {
+    REG_DISPCNT_SUB |= 0x10000;
+}
+
+inline void GX_SetPower(u32 value) {
+    REG_POWER_CNT = (REG_POWER_CNT & 0xFFFFFDF1) | (value);
+}
+
+inline void GX_SetDispSelect(u32 value) {
+    REG_POWER_CNT = (REG_POWER_CNT & ~0x8000) | value;
+}
+
+inline void GX_SetOBJVRamModeChar(u32 value) {
+    REG_DISPCNT = (REG_DISPCNT & 0xFFCFFFEF) | (value);
+}
+
+inline void GXS_SetOBJVRamModeChar(u32 value) {
+    REG_DISPCNT_SUB = (REG_DISPCNT_SUB & 0xFFCFFFEF) | (value);
+}
+
+inline u16 GX_GetVCount(void) {
+    return REG_VCOUNT;
+}
+
+inline void GX_SetVisiblePlane(s32 plane) {
+    REG_DISPCNT = (REG_DISPCNT & ~0x1f00) | (plane << 8);
+}
+
+inline void GXS_SetVisiblePlane(s32 plane) {
+    REG_DISPCNT_SUB = (REG_DISPCNT_SUB & ~0x1f00) | (plane << 8);
+}
+
+inline void GX_SetBGCharOffset(u32 offset) {
+    REG_DISPCNT = (REG_DISPCNT & ~0x7000000) | offset;
+}
+
+inline void GX_SetBGScrOffset(u32 offset) {
+    REG_DISPCNT = (REG_DISPCNT & ~0x38000000) | offset;
+}
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

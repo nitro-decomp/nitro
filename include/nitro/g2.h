@@ -1,10 +1,21 @@
 #ifndef _NITRO_G2_H
 #define _NITRO_G2_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "nitro/fx.h"
 #include "nitro/gx.h"
 #include "nitro/reg.h"
 #include "nitro/types.h"
+
+void G2_SetBGAffine(u32 *reg, MtxFx22 *mtx, u32, u32, u32, u32);
+
+void _G2_SetBlend(u16 *, u32 srcPlane, u32 dstPlane, u32 srcAlpha, u32 dstAlpha);
+
+void *G2_GetBG2ScrPtr(void);
+void *G2_GetBG3ScrPtr(void);
 
 inline void G2_SetBG0Priority(u32 value) {
     REG_BG0CNT = (REG_BG0CNT & ~0x3) | (value);
@@ -166,8 +177,6 @@ inline void G2S_SetBG3ControlText(GXBGScrSizeText scrSize, GXBGColorMode colMode
     G2S_SetBG3Control(scrSize, colMode, scrBase, charBase, 0);
 }
 
-void G2_SetBGAffine(u32 *reg, MtxFx22 *mtx, u32, u32, u32, u32);
-
 inline void G2_SetBG2Affine(MtxFx22 *mtx, u32 param2, u32 param3, u32 param4, u32 param5) {
     G2_SetBGAffine(&REG_BG2PA, mtx, param2, param3, param4, param5);
 }
@@ -272,8 +281,6 @@ inline void G2S_BlendNone() {
     REG_BLDCNT_SUB = 0;
 }
 
-void _G2_SetBlend(u16 *, u32 srcPlane, u32 dstPlane, u32 srcAlpha, u32 dstAlpha);
-
 inline void G2_SetBlendAlpha(u32 srcPlane, u32 dstPlane, u32 srcAlpha, u32 dstAlpha) {
     _G2_SetBlend(&REG_BLDCNT, srcPlane, dstPlane, srcAlpha, dstAlpha);
 }
@@ -318,7 +325,8 @@ inline void G2_SetOBJPriority(GXOamAttr *oam, u32 prio) {
     // no implementation found
 }
 
-void *G2_GetBG2ScrPtr(void);
-void *G2_GetBG3ScrPtr(void);
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

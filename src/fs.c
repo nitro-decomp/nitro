@@ -2,13 +2,13 @@
 #include "nitro/mi.h"
 #include "nitro/os.h"
 
-typedef struct {
+typedef struct FSUnkStruct1 {
     /* 00 */ u32 unk_00;
     /* 04 */ u32 unk_04;
     /* 08 */
 } FSUnkStruct1;
 
-typedef struct {
+typedef struct FSUnkStruct4 {
     /* 00 */ s32 unk_00;
     /* 04 */ s32 unk_04;
     /* 08 */ s32 unk_08;
@@ -18,7 +18,7 @@ typedef struct {
     /* 18 */
 } FSUnkStruct4;
 
-typedef struct {
+typedef struct FSUnkStruct6 {
     /* 00 */
 } FSUnkStruct6;
 

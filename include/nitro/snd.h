@@ -1,6 +1,10 @@
 #ifndef _NITRO_SND_H
 #define _NITRO_SND_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define SND_COMMAND_NOBLOCK 0
 #define SND_COMMAND_BLOCK 1
 
@@ -28,5 +32,9 @@ void SND_StartTimer(u32 channel, u32, u32 num, u32);
 
 u32 SND_GetCurrentCommandTag(void);
 void SND_WaitForCommandProc(u32 tag);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

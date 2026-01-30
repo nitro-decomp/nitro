@@ -1,6 +1,10 @@
 #ifndef _NITRO_HW_H
 #define _NITRO_HW_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define HW_LCDC_VRAM 0x06800000
 #define HW_LCDC_VRAM_SIZE 0xA4000
 
@@ -15,5 +19,9 @@
 
 #define HW_DB_PLTT 0x05000400
 #define HW_DB_PLTT_SIZE 0x400
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

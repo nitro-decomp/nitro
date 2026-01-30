@@ -1,6 +1,10 @@
 #ifndef _NITRO_REG_H
 #define _NITRO_REG_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "nitro/types.h"
 
 #define REG_POWER_CNT (*(vu16 *) 0x04000304)
@@ -118,5 +122,9 @@ extern u32 _DTCM_BASE; // TODO: Provide address via LCF
 #define REG_BLDCNT_SUB _REG_BLDCNT(_SUB_REG_BASE)
 #define REG_BLDALPHA_SUB _REG_BLDALPHA(_SUB_REG_BASE)
 #define REG_MASTER_BRIGHT_SUB _REG_MASTER_BRIGHT(_SUB_REG_BASE)
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

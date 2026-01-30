@@ -1,6 +1,10 @@
 #ifndef _NITRO_OS_H
 #define _NITRO_OS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "nitro/reg.h"
 
 #define OS_IE_V_BLANK 1
@@ -19,13 +23,13 @@
 
 #define OS_LOCK_ID_ERROR -3
 
-typedef struct {
+typedef struct OS_UnkStruct1 {
     /* 00 */ u32 unk_00;
     /* 04 */ u32 unk_04;
     /* 08 */
 } OS_UnkStruct1;
 
-typedef struct {
+typedef struct OSThread {
     /* 00 */ u32 unk_00;
     /* 04 */ u32 unk_04;
     /* 08 */ u32 unk_08;
@@ -67,7 +71,7 @@ typedef struct {
     /* b8 */
 } ATTRIBUTE_ALIGN(32) OSThread;
 
-typedef struct {
+typedef struct OSMessageQueue {
     /* 00 */ OS_UnkStruct1 unk_00;
     /* 08 */ u32 unk_08;
     /* 0c */ u32 unk_0c;
@@ -81,7 +85,7 @@ typedef struct {
 // TODO: Maybe align is wrong? g_msgBuf in PM4 is aligned by 8 with 4 bytes of padding before it
 typedef void *OSMessage ATTRIBUTE_ALIGN(8);
 
-typedef struct {
+typedef struct OSAlarm {
     /* 00 */ u32 unk_00;
     /* 04 */ u32 unk_04;
     /* 08 */ u32 unk_08;
@@ -96,7 +100,7 @@ typedef struct {
     /* 2c */
 } OSAlarm;
 
-typedef struct {
+typedef struct OSMutex {
     /* 00 */ OS_UnkStruct1 unk_00;
     /* 08 */ u32 unk_08;
     /* 0c */ u32 unk_0c;
@@ -113,17 +117,7 @@ void OS_InitTick(void);
 void OS_InitAlarm(void);
 void OS_SetIrqFunction(u32 type, void (*function)());
 
-inline void OS_SetIrqCheckFlag(void) {
-    REG_IRQ |= 1;
-}
-
 void OS_EnableIrqMask(u32 mask);
-
-inline u16 OS_EnableIrq(void) {
-    u16 oldVal = REG_IME;
-    REG_IME    = 1;
-    return oldVal;
-}
 
 void OS_WaitVBlankIntr(void);
 
@@ -148,43 +142,15 @@ void OS_ResetSystem(u32);
 void *OS_InitAlloc(u32 arena, u32 addrLo, u32 addrHi, u32);
 u32 OS_GetArenaLo(u32 arena);
 u32 OS_GetArenaHi(u32 arena);
-inline u32 OS_GetMainArenaLo() {
-    return OS_GetArenaLo(OS_ARENA_MAIN);
-}
-inline u32 OS_GetMainArenaHi(void) {
-    return OS_GetArenaHi(OS_ARENA_MAIN);
-}
-inline u32 OS_GetITCMArenaLo() {
-    return OS_GetArenaLo(OS_ARENA_ITCM);
-}
-inline u32 OS_GetITCMArenaHi() {
-    return OS_GetArenaHi(OS_ARENA_ITCM);
-}
-inline u32 OS_GetDTCMArenaLo() {
-    return OS_GetArenaLo(OS_ARENA_DTCM);
-}
-inline u32 OS_GetDTCMArenaHi() {
-    return OS_GetArenaHi(OS_ARENA_DTCM);
-}
+
 void OS_SetArenaLo(u32 arena, void *addr);
-inline void OS_SetMainArenaLo(void *addr) {
-    OS_SetArenaLo(OS_ARENA_MAIN, addr);
-}
 void *OS_AllocFromArenaLo(u32 arena, u32 size, u32 num);
-inline void *OS_AllocFromMainArenaLo(u32 size, u32 num) {
-    return OS_AllocFromArenaLo(OS_ARENA_MAIN, size, num);
-}
+
 OSHeapHandle OS_CreateHeap(u32 arena, void *addrLo, void *addrHi);
 void OS_SetCurrentHeap(u32 arena, OSHeapHandle heap);
 void OS_DumpHeap(u32 arena, OSHeapHandle heap);
 void *OS_AllocFromHeap(u32 arena, OSHeapHandle heap, u32 size);
-inline void *OS_Alloc(u32 size) {
-    return OS_AllocFromHeap(OS_ARENA_MAIN, OS_CURRENT_HEAP_HANDLE, size);
-}
 void OS_FreeFromHeap(u32 arena, OSHeapHandle heap, void *ptr);
-inline void OS_Free(void *ptr) {
-    OS_FreeFromHeap(OS_ARENA_MAIN, OS_CURRENT_HEAP_HANDLE, ptr);
-}
 
 void OS_Sleep(u32 time);
 
@@ -209,6 +175,61 @@ void OS_SetPeriodicAlarm(OSAlarm *alarm, OSTime, OSTime, void (*callback)(void *
 void OS_CancelAlarm(OSAlarm *alarm);
 
 OSTime OS_GetTick(void);
+
+u32 OS_GetConsoleType(void);
+
+u32 OS_GetLockID(void);
+
+u32 OS_DisableInterrupts_Irq(void);
+void OS_RestoreInterrupts(u32);
+
+BOOL OS_func_0206d5ac(u16, u32);
+
+inline void OS_SetIrqCheckFlag(void) {
+    REG_IRQ |= 1;
+}
+
+inline u16 OS_EnableIrq(void) {
+    u16 oldVal = REG_IME;
+    REG_IME    = 1;
+    return oldVal;
+}
+
+inline u32 OS_GetMainArenaLo() {
+    return OS_GetArenaLo(OS_ARENA_MAIN);
+}
+inline u32 OS_GetMainArenaHi(void) {
+    return OS_GetArenaHi(OS_ARENA_MAIN);
+}
+inline u32 OS_GetITCMArenaLo() {
+    return OS_GetArenaLo(OS_ARENA_ITCM);
+}
+inline u32 OS_GetITCMArenaHi() {
+    return OS_GetArenaHi(OS_ARENA_ITCM);
+}
+inline u32 OS_GetDTCMArenaLo() {
+    return OS_GetArenaLo(OS_ARENA_DTCM);
+}
+inline u32 OS_GetDTCMArenaHi() {
+    return OS_GetArenaHi(OS_ARENA_DTCM);
+}
+
+inline void OS_SetMainArenaLo(void *addr) {
+    OS_SetArenaLo(OS_ARENA_MAIN, addr);
+}
+
+inline void *OS_AllocFromMainArenaLo(u32 size, u32 num) {
+    return OS_AllocFromArenaLo(OS_ARENA_MAIN, size, num);
+}
+
+inline void *OS_Alloc(u32 size) {
+    return OS_AllocFromHeap(OS_ARENA_MAIN, OS_CURRENT_HEAP_HANDLE, size);
+}
+
+inline void OS_Free(void *ptr) {
+    OS_FreeFromHeap(OS_ARENA_MAIN, OS_CURRENT_HEAP_HANDLE, ptr);
+}
+
 inline OSTime OS_MilliSecondsToTicks(OSTime ms) {
     return (ms * 33514) / 64;
 }
@@ -221,13 +242,8 @@ inline OSTime OS_TicksToMilliSeconds(OSTime ticks) {
     return (ticks * 64) / 33514;
 }
 
-u32 OS_GetConsoleType(void);
-
-u32 OS_GetLockID(void);
-
-u32 OS_DisableInterrupts_Irq(void);
-void OS_RestoreInterrupts(u32);
-
-BOOL OS_func_0206d5ac(u16, u32);
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

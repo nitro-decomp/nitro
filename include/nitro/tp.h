@@ -1,6 +1,10 @@
 #ifndef _NITRO_TP_H
 #define _NITRO_TP_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "nitro/types.h"
 
 #define TP_VALIDITY_VALID 0
@@ -8,7 +12,7 @@
 #define TP_VALIDITY_INVALID_Y 2
 #define TP_VALIDITY_INVALID_XY 3
 
-typedef struct {
+typedef struct TPCalibrateParam {
     /* 00 */ s16 unk_00;
     /* 02 */ s16 unk_02;
     /* 04 */ s16 unk_04;
@@ -16,7 +20,7 @@ typedef struct {
     /* 08 */
 } TPCalibrateParam;
 
-typedef struct {
+typedef struct TPData {
     u16 x;
     u16 y;
     u16 touch;
@@ -30,11 +34,15 @@ void TP_SetCalibrateParam(const TPCalibrateParam *calibrate);
 void func_020711c0(void);
 BOOL func_02071254(TPData *data);
 
+void TP_GetCalibratedPoint(TPData *, TPData *);
+
 inline BOOL TP_RequestRawSampling(TPData *data) {
     func_020711c0();
     return func_02071254(data);
 }
 
-void TP_GetCalibratedPoint(TPData *, TPData *);
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

@@ -1,11 +1,15 @@
 #ifndef _NITRO_FX_H
 #define _NITRO_FX_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define FX32_ONE (fx32)(1 << 12)
 
 typedef u32 fx32;
 
-typedef struct {
+typedef struct MtxFx22 {
     /* 00 */ fx32 _00;
     /* 04 */ fx32 _01;
     /* 08 */ fx32 _10;
@@ -14,5 +18,9 @@ typedef struct {
 } MtxFx22;
 
 void FX_Init(void);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

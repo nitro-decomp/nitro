@@ -16,5 +16,6 @@
 #include "nitro/rtc.h"
 #include "nitro/snd.h"
 #include "nitro/std.h"
+#include "nitro/svc.h"
 #include "nitro/tp.h"
 #include "nitro/types.h"

@@ -1,6 +1,10 @@
 #ifndef _NITRO_FS_H
 #define _NITRO_FS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "nitro/os.h"
 #include "nitro/types.h"
 
@@ -109,9 +113,13 @@ void FS_InitFile(FSFile *file);
 BOOL FS_OpenFile(FSFile *file, const char *path);
 BOOL FS_SeekFile(FSFile *file, s32 pos, u32 mode);
 u32 FS_ReadFile(FSFile *file, void *buf, u32 size);
+BOOL FS_CloseFile(FSFile *file);
 inline BOOL FS_IsFile(FSFile *file) {
     return !!(file->flags & FS_FILE_FLAG_FILE);
 }
-BOOL FS_CloseFile(FSFile *file);
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif

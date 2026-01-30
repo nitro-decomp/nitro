@@ -1,6 +1,10 @@
 #ifndef _NITRO_PAD_H
 #define _NITRO_PAD_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "nitro/reg.h"
 #include "nitro/types.h"
 
@@ -32,5 +36,9 @@ inline BOOL PAD_DetectFold(void) {
 inline u16 PAD_Read(void) {
     return ((REG_KEYINPUT | REG_PAD) ^ 0x2fff) & 0x2fff;
 }
+
+#ifdef __cplusplus
+} // extern "C"
+#endif
 
 #endif
