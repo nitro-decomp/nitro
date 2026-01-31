@@ -597,7 +597,16 @@ static void *G2S_func_02069f44(void) {
     return 0;
 }
 
-void G2_SetBGAffine(u32 *reg, MtxFx22 *mtx, u32 param3, u32 param4, u32 param5, u32 param6) {}
+void G2_SetBGAffine(u32 *reg, MtxFx22 *mtx, s32 x0, s32 y0, s32 x1, s32 y1) {
+    s32 x;
+    s32 y;
+    reg[0] = ((u16) (mtx->_00 << 12 >> 16)) | ((u16) (mtx->_01 << 12 >> 16) << 16);
+    reg[1] = ((u16) (mtx->_10 << 12 >> 16)) | ((u16) (mtx->_11 << 12 >> 16) << 16);
+    x      = ((mtx->_00 * (x1 - x0)) + (mtx->_01 * (y1 - y0)) + (x0 << 12)) >> 4;
+    y      = ((mtx->_10 * (x1 - x0)) + (mtx->_11 * (y1 - y0)) + (y0 << 12)) >> 4;
+    reg[2] = x;
+    reg[3] = y;
+}
 
 void _G2_SetBlend(u32 *reg, u32 srcPlane, u32 dstPlane, u32 srcAlpha, u32 dstAlpha) {
     u32 plane = srcPlane | 0x40 | (dstPlane << 8);

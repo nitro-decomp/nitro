@@ -7,7 +7,7 @@ extern "C" {
 
 #define FX32_ONE (fx32)(1 << 12)
 
-typedef u32 fx32;
+typedef s32 fx32;
 
 typedef struct MtxFx22 {
     /* 00 */ fx32 _00;
