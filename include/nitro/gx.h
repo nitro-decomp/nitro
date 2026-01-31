@@ -147,6 +147,23 @@ typedef u32 GXBGCharBase;
 
 typedef u32 GXOBJVRamModeChar;
 
+typedef struct GX_UnkStruct2 {
+    /* 00 */ u16 unk_00;
+    /* 02 */ u16 unk_02;
+    /* 04 */ u16 unk_04;
+    /* 06 */ u16 unk_06;
+    /* 08 */ u16 unk_08;
+    /* 0a */ u16 unk_0a;
+    /* 0c */ u16 unk_0c;
+    /* 0e */ u16 unk_0e;
+    /* 10 */ u16 unk_10;
+    /* 12 */ u16 unk_12;
+    /* 14 */ u16 unk_14;
+    /* 16 */ u16 unk_16;
+    /* 18 */ u16 unk_18;
+    /* 1a */
+} GX_UnkStruct2;
+
 void GX_Init(void);
 void GX_DispOff(void);
 void GX_DispOn(void);
@@ -220,6 +237,13 @@ void GX_EndLoadOBJExtPltt(void);
 void GXS_BeginLoadOBJExtPltt(void);
 void GXS_LoadOBJExtPltt(void *ptr, u32 offset, u32 size);
 void GXS_EndLoadOBJExtPltt(void);
+
+extern u16 data_020a7088;
+extern u32 data_020a708c;
+
+extern u16 data_0216a0dc;
+extern u16 data_0216a0de;
+extern GX_UnkStruct2 data_0216a0e0;
 
 inline void GXS_DispOff(void) {
     REG_DISPCNT_SUB &= ~0x10000;

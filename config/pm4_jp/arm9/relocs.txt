@@ -18462,13 +18462,13 @@ from:0x02069950 kind:load to:0x0216a0e0 module:main
 from:0x02069980 kind:arm_call to:0x02068d84 module:main
 from:0x0206998c kind:load to:0x0216a0e0 module:main
 from:0x020699ac kind:load to:0x0206995c module:main
-from:0x020699b0 kind:load to:0x0216a0ee module:main
+from:0x020699b0 kind:load to:0x0216a0e0 add:0xe module:main
 from:0x020699d0 kind:load to:0x0206995c module:main
-from:0x020699d4 kind:load to:0x0216a0f0 module:main
+from:0x020699d4 kind:load to:0x0216a0e0 add:0x10 module:main
 from:0x020699f8 kind:load to:0x0206995c module:main
-from:0x020699fc kind:load to:0x0216a0f6 module:main
+from:0x020699fc kind:load to:0x0216a0e0 add:0x16 module:main
 from:0x02069a20 kind:load to:0x0206995c module:main
-from:0x02069a24 kind:load to:0x0216a0f8 module:main
+from:0x02069a24 kind:load to:0x0216a0e0 add:0x18 module:main
 from:0x02069ad4 kind:arm_call to:0x0206d66c module:main
 from:0x02069b04 kind:load to:0x0216a0de module:main
 from:0x02069b14 kind:load to:0x02069a28 module:main

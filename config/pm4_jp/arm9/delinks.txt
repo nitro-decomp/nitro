@@ -7,8 +7,11 @@
 src/fx.c:
     .text       start:0x02068a64 end:0x02068a68
 
-src/gx.c:
-    .text       start:0x02068a68 end:0x0206acd8
+src/gx/gx_init.c:
+    .text       start:0x02068a68 end:0x02068d84
+
+src/gx/gx.c:
+    .text       start:0x02068d84 end:0x0206acd8
 
 src/os/os_irq.c:
     .text       start:0x0206acd8 end:0x0206b040
