@@ -184,6 +184,7 @@ u32 OS_DisableInterrupts_Irq(void);
 void OS_RestoreInterrupts(u32);
 
 BOOL OS_func_0206d5ac(u16, u32);
+void OS_func_0206d66c(u16, u32);
 
 inline void OS_SetIrqCheckFlag(void) {
     REG_IRQ |= 1;

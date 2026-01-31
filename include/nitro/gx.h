@@ -163,8 +163,8 @@ void GX_SetBankForSubOBJ(s32);
 void GX_SetGraphicsMode(u32, u32, u32);
 void GXS_SetGraphicsMode(u32);
 
-void GX_LoadOAM(GXOamAttr *oam, u32, u32);
-void GXS_LoadOAM(GXOamAttr *oam, u32, u32);
+void GX_LoadOAM(GXOamAttr *oam, u32 offset, u32 size);
+void GXS_LoadOAM(GXOamAttr *oam, u32 offset, u32 size);
 
 void GX_LoadBG0Char(void *ptr, u32 offset, u32 size);
 void GX_LoadBG0Scr(void *ptr, u32 offset, u32 size);
@@ -200,10 +200,10 @@ BOOL GX_TrySetBankForBGExtPltt(s32);
 BOOL GX_TrySetBankForSubBGExtPltt(s32);
 BOOL GX_TrySetBankForOBJExtPltt(s32);
 BOOL GX_TrySetBankForSubOBJExtPltt(s32);
-void GX_ResetBankForBGExtPltt(void);
-void GX_ResetBankForSubBGExtPltt(void);
-void GX_ResetBankForOBJExtPltt(void);
-void GX_ResetBankForSubOBJExtPltt(void);
+u16 GX_ResetBankForBGExtPltt(void);
+u16 GX_ResetBankForSubBGExtPltt(void);
+u16 GX_ResetBankForOBJExtPltt(void);
+u16 GX_ResetBankForSubOBJExtPltt(void);
 
 void GX_BeginLoadBGExtPltt(void);
 void GX_LoadBGExtPltt(void *ptr, u32 offset, u32 size);

@@ -10,9 +10,9 @@ extern "C" {
 #include "nitro/reg.h"
 #include "nitro/types.h"
 
-void G2_SetBGAffine(u32 *reg, MtxFx22 *mtx, u32, u32, u32, u32);
+void G2_SetBGAffine(u32 *reg, MtxFx22 *mtx, u32 param3, u32 param4, u32 param5, u32 param6);
 
-void _G2_SetBlend(u16 *, u32 srcPlane, u32 dstPlane, u32 srcAlpha, u32 dstAlpha);
+void _G2_SetBlend(u32 *reg, u32 srcPlane, u32 dstPlane, u32 srcAlpha, u32 dstAlpha);
 
 void *G2_GetBG2ScrPtr(void);
 void *G2_GetBG3ScrPtr(void);
@@ -178,11 +178,11 @@ inline void G2S_SetBG3ControlText(GXBGScrSizeText scrSize, GXBGColorMode colMode
 }
 
 inline void G2_SetBG2Affine(MtxFx22 *mtx, u32 param2, u32 param3, u32 param4, u32 param5) {
-    G2_SetBGAffine(&REG_BG2PA, mtx, param2, param3, param4, param5);
+    G2_SetBGAffine((u32 *) &REG_BG2PA, mtx, param2, param3, param4, param5);
 }
 
 inline void G2_SetBG3Affine(MtxFx22 *mtx, u32 param2, u32 param3, u32 param4, u32 param5) {
-    G2_SetBGAffine(&REG_BG3PA, mtx, param2, param3, param4, param5);
+    G2_SetBGAffine((u32 *) &REG_BG3PA, mtx, param2, param3, param4, param5);
 }
 
 inline void G2_ChangeBlendAlpha(u32 param1, u32 param2) {
@@ -282,11 +282,11 @@ inline void G2S_BlendNone() {
 }
 
 inline void G2_SetBlendAlpha(u32 srcPlane, u32 dstPlane, u32 srcAlpha, u32 dstAlpha) {
-    _G2_SetBlend(&REG_BLDCNT, srcPlane, dstPlane, srcAlpha, dstAlpha);
+    _G2_SetBlend((u32 *) &REG_BLDCNT, srcPlane, dstPlane, srcAlpha, dstAlpha);
 }
 
 inline void G2S_SetBlendAlpha(u32 srcPlane, u32 dstPlane, u32 srcAlpha, u32 dstAlpha) {
-    _G2_SetBlend(&REG_BLDCNT_SUB, srcPlane, dstPlane, srcAlpha, dstAlpha);
+    _G2_SetBlend((u32 *) &REG_BLDCNT_SUB, srcPlane, dstPlane, srcAlpha, dstAlpha);
 }
 
 inline void G2_GetOBJPosition(GXOamAttr *oam, u32 *x, u32 *y) {
