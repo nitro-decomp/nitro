@@ -18677,7 +18677,7 @@ from:0x0206b7bc kind:load to:0x027e0000 module:dtcm
 from:0x0206b7cc kind:load to:0x0216a1a0 module:main
 from:0x0206b7d4 kind:load to:0x0216a1b0 module:main
 from:0x0206b7d8 kind:load to:0x0206bda0 module:main
-from:0x0206b7dc kind:load to:0x0216a3f8 module:main
+from:0x0206b7dc kind:load to:0x0216a330 add:0xc8 module:main
 from:0x0206b7f4 kind:arm_call to:0x0206d368 module:main
 from:0x0206b7fc kind:arm_call to:0x0206b3e0 module:main
 from:0x0206b81c kind:arm_call to:0x0206b528 module:main

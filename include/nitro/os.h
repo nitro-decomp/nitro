@@ -23,6 +23,12 @@ extern "C" {
 
 #define OS_LOCK_ID_ERROR -3
 
+typedef struct OSLinkedList {
+    /* 00 */ void *head;
+    /* 04 */ void *tail;
+    /* 08 */
+} OSLinkedList;
+
 typedef struct OS_UnkStruct1 {
     /* 00 */ u32 unk_00;
     /* 04 */ u32 unk_04;
@@ -31,7 +37,7 @@ typedef struct OS_UnkStruct1 {
 
 typedef struct OSThread {
     /* 00 */ u32 unk_00;
-    /* 04 */ u32 unk_04;
+    /* 04 */ void *arg;
     /* 08 */ u32 unk_08;
     /* 0c */ u32 unk_0c;
     /* 10 */ u32 unk_10;
@@ -50,29 +56,28 @@ typedef struct OSThread {
     /* 44 */ u32 unk_44;
     /* 48 */ u8 unk_48[0x64 - 0x48];
     /* 64 */ u32 unk_64;
-    /* 68 */ void *unk_68;
+    /* 68 */ struct OSThread *nextPrio; // next thread with lower priority
     /* 6c */ u32 unk_6c;
-    /* 70 */ u32 unk_70;
+    /* 70 */ u32 prio;
     /* 74 */ u32 unk_74;
     /* 78 */ u32 unk_78;
-    /* 7c */ u32 unk_7c;
-    /* 80 */ u32 unk_80;
+    /* 7c */ struct OSThread *prev;
+    /* 80 */ struct OSThread *next;
     /* 84 */ u32 unk_84;
-    /* 88 */ u32 unk_88;
-    /* 8c */ u32 unk_8c;
-    /* 90 */ u32 *unk_90;
-    /* 94 */ u32 *unk_94;
+    /* 88 */ OS_UnkStruct1 unk_88;
+    /* 90 */ void *stackLo;
+    /* 94 */ void *stackHi;
     /* 98 */ u32 *unk_98;
     /* 9c */ u32 *unk_9c;
     /* a0 */ u32 *unk_a0;
     /* a4 */ u8 unk_a4[0xb0 - 0xa4];
     /* b0 */ u32 *unk_b0;
-    /* b4 */ u32 *unk_b4;
+    /* b4 */ void (*unk_b4)(void *);
     /* b8 */
-} ATTRIBUTE_ALIGN(32) OSThread;
+} ATTRIBUTE_ALIGN(16) OSThread;
 
 typedef struct OSMessageQueue {
-    /* 00 */ OS_UnkStruct1 unk_00;
+    /* 00 */ OSLinkedList unk_00;
     /* 08 */ u32 unk_08;
     /* 0c */ u32 unk_0c;
     /* 10 */ u32 unk_10;
@@ -101,7 +106,7 @@ typedef struct OSAlarm {
 } OSAlarm;
 
 typedef struct OSMutex {
-    /* 00 */ OS_UnkStruct1 unk_00;
+    /* 00 */ OSLinkedList unk_00;
     /* 08 */ u32 unk_08;
     /* 0c */ u32 unk_0c;
     /* 10 */ u32 unk_10;
@@ -154,6 +159,7 @@ void OS_FreeFromHeap(u32 arena, OSHeapHandle heap, void *ptr);
 
 void OS_Sleep(u32 time);
 
+void OS_func_0206b698(void);
 void OS_CreateThread(OSThread *thread, void (*threadFunc)(void *arg), void *arg, void *stackHi, u32 stackSize,
                      u32 prio);
 void OS_WakeupThreadDirect(OSThread *thread);
@@ -165,6 +171,8 @@ void OS_CheckStack(OSThread *thread);
 #else
     #define OS_CheckStack(thread)
 #endif
+void OS_func_0206b8dc(void);
+s32 OS_func_0206b4f8(OS_UnkStruct1 *param1);
 
 void OS_InitMessageQueue(OSMessageQueue *queue, OSMessage *buf, u32 bufLength);
 void OS_ReceiveMessage(OSMessageQueue *queue, OSMessage *message, u32 block);
@@ -185,6 +193,7 @@ void OS_RestoreInterrupts(u32);
 
 BOOL OS_func_0206d5ac(u16, u32);
 void OS_func_0206d66c(u16, u32);
+u32 OS_func_0206d3cc(void);
 
 inline void OS_SetIrqCheckFlag(void) {
     REG_IRQ |= 1;

@@ -81,7 +81,7 @@ typedef struct FSFile {
     /* 0c */ vu32 flags;
     /* 10 */ u32 unk_10;
     /* 14 */ u32 unk_14;
-    /* 18 */ OS_UnkStruct1 unk_18;
+    /* 18 */ OSLinkedList unk_18;
     /* 20 */ u32 unk_20;
     /* 24 */ u32 startRomOffset;
     /* 28 */ u32 endRomOffset;

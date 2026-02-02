@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include "nitro/types.h"
+
 #define MI_DMA_MAX_NUM 3
 
 void MI_DmaFill32(u32, void *ptr, u8 value, u32 size);

@@ -49,7 +49,7 @@ static BOOL (*data_02091014[])(FSFile *file) = {
 static void FS_AddRomVolume(u32);
 static BOOL func_0207090c(FSFile *file);
 
-extern void func_0206bb2c(OS_UnkStruct1 *);
+extern void func_0206bb2c(OSLinkedList *);
 void func_0206f2e4(FSFile *file, u32 param2) {
     u32 irq;
     s32 unk1;

@@ -35,6 +35,8 @@ extern "C" {
 #define REG_FAT_ROM_OFFSET (*(u32 *) 0x027FFE48)
 #define REG_FAT_SIZE (*(u32 *) 0x027FFE4C)
 
+#define REG_027FFFA0 (*(u32 *) 0x027FFFA0)
+
 extern u32 _DTCM_BASE; // TODO: Provide address via LCF
 #define DTCM_BASE ((u8 *) &_DTCM_BASE)
 #define REG_IRQ (*(u32 *) (DTCM_BASE + 0x3FF8))

@@ -4052,10 +4052,21 @@ data_0216a14c kind:bss addr:0x0216a14c
 data_0216a150 kind:bss addr:0x0216a150
 data_0216a178 kind:bss addr:0x0216a178
 data_0216a17c kind:bss addr:0x0216a17c
+data_0216a180 kind:bss addr:0x0216a180
+data_0216a184 kind:bss addr:0x0216a184
+data_0216a188 kind:bss addr:0x0216a188
+data_0216a18c kind:bss addr:0x0216a18c
+data_0216a190 kind:bss addr:0x0216a190
+data_0216a194 kind:bss addr:0x0216a194
+data_0216a198 kind:bss addr:0x0216a198
+sThreadCount kind:bss addr:0x0216a19c local
 data_0216a1a0 kind:bss addr:0x0216a1a0
 data_0216a1a4 kind:bss addr:0x0216a1a4
+data_0216a1a8 kind:bss addr:0x0216a1a8
+data_0216a1ac kind:bss addr:0x0216a1ac
 data_0216a1b0 kind:bss addr:0x0216a1b0
 data_0216a270 kind:bss addr:0x0216a270
+data_0216a330 kind:bss addr:0x0216a330
 data_0216a3f8 kind:bss addr:0x0216a3f8
 data_0216a400 kind:bss addr:0x0216a400
 data_0216a424 kind:bss addr:0x0216a424
