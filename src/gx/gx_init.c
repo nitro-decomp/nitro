@@ -2,7 +2,7 @@
 #include "nitro/mi.h"
 #include "nitro/os.h"
 
-static void GX_func_02068d24(void);
+static void GX_func_0001(void);
 
 static u16 data_020a7088 = 1;
 static u32 data_020a708c = 3;
@@ -16,7 +16,7 @@ void GX_Init(void) {
     REG_POWER_CNT = (REG_POWER_CNT & ~0x20e) | 0x20e;
     REG_POWER_CNT |= 0x1;
 
-    GX_func_02068d24();
+    GX_func_0001();
 
     while (data_0216a0de == 0) {
         s32 lock = OS_GetLockID();
@@ -104,7 +104,7 @@ void GXS_SetGraphicsMode(u32 mode) {
     REG_DISPCNT_SUB = (REG_DISPCNT_SUB & ~0x7) | mode;
 }
 
-static void GX_func_02068d24(void) {
+static void GX_func_0001(void) {
     data_0216a0e0.unk_00 = 0;
     data_0216a0e0.unk_02 = 0;
     data_0216a0e0.unk_04 = 0;

@@ -17,7 +17,7 @@ typedef struct GX_UnkStruct3 {
 
 static GX_UnkStruct3 data_0216a0fc;
 
-static void GX_func_02068d84(u32 cnt) {
+static void GX_func_0002(u32 cnt) {
     if ((cnt & 0x1) != 0) {
         REG_VRAM_CNT_A = 0x80;
     }
@@ -116,7 +116,7 @@ void GX_SetBankForBG(s32 param1) {
             REG_VRAM_CNT_G = 0x81;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
 }
 
 void GX_SetBankForOBJ(s32 param1) {
@@ -153,10 +153,10 @@ void GX_SetBankForOBJ(s32 param1) {
             REG_VRAM_CNT_G = 0x82;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
 }
 
-static void GX_func_0206921c(s32 param1) {
+static void GX_func_0003(s32 param1) {
     data_0216a0e0.unk_00 = ~param1 & (data_0216a0e0.unk_00 | data_0216a0e0.unk_0e);
     data_0216a0e0.unk_0e = param1;
     switch (param1) {
@@ -178,7 +178,7 @@ static void GX_func_0206921c(s32 param1) {
             REG_DISPCNT &= ~0x40000000;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
 }
 
 BOOL GX_TrySetBankForBGExtPltt(s32 param1) {
@@ -206,11 +206,11 @@ BOOL GX_TrySetBankForBGExtPltt(s32 param1) {
             REG_DISPCNT &= ~0x40000000;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
     return true;
 }
 
-static void GX_func_02069448(s32 param1) {
+static void GX_func_0004(s32 param1) {
     data_0216a0e0.unk_00 = ~param1 & (data_0216a0e0.unk_00 | data_0216a0e0.unk_10);
     data_0216a0e0.unk_10 = param1;
     switch (param1) {
@@ -226,7 +226,7 @@ static void GX_func_02069448(s32 param1) {
             REG_DISPCNT &= ~0x80000000;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
 }
 
 BOOL GX_TrySetBankForOBJExtPltt(s32 param1) {
@@ -248,13 +248,13 @@ BOOL GX_TrySetBankForOBJExtPltt(s32 param1) {
             REG_DISPCNT &= ~0x80000000;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
     return true;
 }
 
 void GX_SetBankForLCDC(s32 param1) {
     data_0216a0e0.unk_00 |= param1;
-    GX_func_02068d84(param1);
+    GX_func_0002(param1);
 }
 
 void GX_SetBankForSubBG(s32 param1) {
@@ -272,7 +272,7 @@ void GX_SetBankForSubBG(s32 param1) {
             REG_VRAM_CNT_H = 0x81;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
 }
 
 void GX_SetBankForSubOBJ(s32 param1) {
@@ -288,10 +288,10 @@ void GX_SetBankForSubOBJ(s32 param1) {
             REG_VRAM_CNT_I = 0x82;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
 }
 
-static void GXS_func_02069704(s32 param1) {
+static void GX_func_0005(s32 param1) {
     data_0216a0e0.unk_00 = ~param1 & (data_0216a0e0.unk_00 | data_0216a0e0.unk_16);
     data_0216a0e0.unk_16 = param1;
     switch (param1) {
@@ -303,7 +303,7 @@ static void GXS_func_02069704(s32 param1) {
             REG_DISPCNT_SUB &= ~0x40000000;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
 }
 
 BOOL GX_TrySetBankForSubBGExtPltt(s32 param1) {
@@ -321,11 +321,11 @@ BOOL GX_TrySetBankForSubBGExtPltt(s32 param1) {
             REG_DISPCNT_SUB &= ~0x40000000;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
     return true;
 }
 
-static void GXS_func_02069830(s32 param1) {
+static void GXS_func_0001(s32 param1) {
     data_0216a0e0.unk_00 = ~param1 & (data_0216a0e0.unk_00 | data_0216a0e0.unk_18);
     data_0216a0e0.unk_18 = param1;
     switch (param1) {
@@ -337,7 +337,7 @@ static void GXS_func_02069830(s32 param1) {
             REG_DISPCNT_SUB &= ~0x80000000;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
 }
 
 BOOL GX_TrySetBankForSubOBJExtPltt(s32 param1) {
@@ -355,39 +355,39 @@ BOOL GX_TrySetBankForSubOBJExtPltt(s32 param1) {
             REG_DISPCNT_SUB &= ~0x80000000;
             break;
     }
-    GX_func_02068d84(data_0216a0e0.unk_00);
+    GX_func_0002(data_0216a0e0.unk_00);
     return true;
 }
 
-static u16 GX_func_0206995c(u16 *param1) {
+static u16 GX_func_0006(u16 *param1) {
     u16 uVar1 = *param1;
     *param1   = 0;
     data_0216a0e0.unk_00 |= uVar1;
-    GX_func_02068d84(uVar1);
+    GX_func_0002(uVar1);
     return uVar1;
 }
 
 u16 GX_ResetBankForBGExtPltt(void) {
     REG_DISPCNT &= ~0x40000000;
-    return GX_func_0206995c(&data_0216a0e0.unk_0e);
+    return GX_func_0006(&data_0216a0e0.unk_0e);
 }
 
 u16 GX_ResetBankForOBJExtPltt(void) {
     REG_DISPCNT &= ~0x80000000;
-    return GX_func_0206995c(&data_0216a0e0.unk_10);
+    return GX_func_0006(&data_0216a0e0.unk_10);
 }
 
 u16 GX_ResetBankForSubBGExtPltt(void) {
     REG_DISPCNT_SUB &= ~0x40000000;
-    return GX_func_0206995c(&data_0216a0e0.unk_16);
+    return GX_func_0006(&data_0216a0e0.unk_16);
 }
 
 u16 GX_ResetBankForSubOBJExtPltt(void) {
     REG_DISPCNT_SUB &= ~0x80000000;
-    return GX_func_0206995c(&data_0216a0e0.unk_18);
+    return GX_func_0006(&data_0216a0e0.unk_18);
 }
 
-static u32 GX_func_02069a28(u16 *param1) {
+static u32 GX_func_0007(u16 *param1) {
     u32 uVar1 = *param1;
     *param1   = 0;
     if ((uVar1 & 0x1) != 0) {
@@ -422,24 +422,24 @@ static u32 GX_func_02069a28(u16 *param1) {
 }
 
 void GX_DisableBankForLCDC(void) {
-    GX_func_02069a28(&data_0216a0e0.unk_00);
+    GX_func_0007(&data_0216a0e0.unk_00);
 }
 
-static void *G2_func_02069b1c(void) {
+static void *G2_func_0001(void) {
     u32 cnt = (REG_BG0CNT & 0x1f00) >> 8;
     return ((REG_DISPCNT & 0x38000000) >> 27 << 16) + HW_BG_VRAM + (cnt << 11);
 }
 
-static void *G2S_func_02069b50(void) {
+static void *G2S_func_0001(void) {
     return ((REG_BG0CNT_SUB & 0x1f00) >> 8 << 11) + HW_DB_BG_VRAM;
 }
 
-static void *G2_func_02069b70(void) {
+static void *G2_func_0003(void) {
     u32 cnt = (REG_BG1CNT & 0x1f00) >> 8;
     return ((REG_DISPCNT & 0x38000000) >> 27 << 16) + HW_BG_VRAM + (cnt << 11);
 }
 
-static void *G2S_func_02069ba4(void) {
+static void *G2S_func_0002(void) {
     return ((REG_BG1CNT_SUB & 0x1f00) >> 8 << 11) + HW_DB_BG_VRAM;
 }
 
@@ -468,7 +468,7 @@ void *G2_GetBG2ScrPtr(void) {
     }
 }
 
-static void *G2S_func_02069c48(void) {
+static void *G2S_GetBG2ScrPtr(void) {
     u32 uVar1 = REG_DISPCNT_SUB & 0x7;
     u32 uVar2 = REG_BG2CNT_SUB;
     u32 uVar3 = (uVar2 & 0x1f00) >> 8;
@@ -517,7 +517,7 @@ void *G2_GetBG3ScrPtr(void) {
     }
 }
 
-static void *G2S_func_02069d40(void) {
+static void *G2S_GetBG3ScrPtr(void) {
     u32 uVar1 = REG_DISPCNT_SUB & 0x7;
     u32 uVar2 = REG_BG3CNT_SUB;
     u32 uVar3 = (uVar2 & 0x1f00) >> 8;
@@ -541,27 +541,27 @@ static void *G2S_func_02069d40(void) {
     }
 }
 
-static void *G2_func_02069db4(void) {
+static void *G2_func_0002(void) {
     u32 r1   = (REG_BG0CNT & 0x3c) >> 2;
     void *r0 = ((REG_DISPCNT & 0x7000000) >> 24 << 16) + HW_BG_VRAM;
     return r0 + (r1 << 14);
 }
 
-static void *G2S_func_02069de8(void) {
+static void *G2S_func_0003(void) {
     return ((REG_BG0CNT_SUB & 0x3c) >> 2 << 14) + HW_DB_BG_VRAM;
 }
 
-static void *G2_func_02069e08(void) {
+static void *G2_func_0004(void) {
     u32 r1   = (REG_BG1CNT & 0x3c) >> 2;
     void *r0 = ((REG_DISPCNT & 0x7000000) >> 24 << 16) + HW_BG_VRAM;
     return r0 + (r1 << 14);
 }
 
-static void *G2S_func_02069e3c(void) {
+static void *G2S_func_0004(void) {
     return ((REG_BG1CNT_SUB & 0x3c) >> 2 << 14) + HW_DB_BG_VRAM;
 }
 
-static void *G2_func_02069e5c(void) {
+static void *G2_func_0005(void) {
     s32 r0 = REG_DISPCNT & 0x7;
     u32 r2 = REG_BG2CNT;
     if (r0 < 5 || (r2 & 0x80) == 0) {
@@ -570,7 +570,7 @@ static void *G2_func_02069e5c(void) {
     return 0;
 }
 
-static void *G2S_func_02069eac(void) {
+static void *G2S_func_0005(void) {
     s32 r0 = REG_DISPCNT_SUB & 0x7;
     u32 r1 = REG_BG2CNT_SUB;
     if (r0 < 5 || (r1 & 0x80) == 0) {
@@ -579,7 +579,7 @@ static void *G2S_func_02069eac(void) {
     return 0;
 }
 
-static void *G2_func_02069eec(void) {
+static void *G2_func_0006(void) {
     s32 r0 = REG_DISPCNT & 0x7;
     u32 r2 = REG_BG3CNT;
     if (r0 < 3 || (r0 < 6 && (r2 & 0x80) == 0)) {
@@ -588,7 +588,7 @@ static void *G2_func_02069eec(void) {
     return 0;
 }
 
-static void *G2S_func_02069f44(void) {
+static void *G2S_func_0006(void) {
     s32 r0 = REG_DISPCNT_SUB & 0x7;
     u32 r1 = REG_BG3CNT_SUB;
     if (r0 < 3 || (r0 < 6 && (r1 & 0x80) == 0)) {
@@ -663,19 +663,19 @@ void GXS_LoadOBJ(void *ptr, u32 offset, u32 size) {
 }
 
 void GX_LoadBG0Scr(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram16(ptr, G2_func_02069b1c() + offset, size);
+    GX_LoadVram16(ptr, G2_func_0001() + offset, size);
 }
 
 void GXS_LoadBG0Scr(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram16(ptr, G2S_func_02069b50() + offset, size);
+    GX_LoadVram16(ptr, G2S_func_0001() + offset, size);
 }
 
 void GX_LoadBG1Scr(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram16(ptr, G2_func_02069b70() + offset, size);
+    GX_LoadVram16(ptr, G2_func_0002() + offset, size);
 }
 
 void GXS_LoadBG1Scr(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram16(ptr, G2S_func_02069ba4() + offset, size);
+    GX_LoadVram16(ptr, G2S_func_0002() + offset, size);
 }
 
 void GX_LoadBG2Bmp(void *ptr, u32 offset, u32 size) {
@@ -683,7 +683,7 @@ void GX_LoadBG2Bmp(void *ptr, u32 offset, u32 size) {
 }
 
 void GXS_LoadBG2Bmp(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram16(ptr, G2S_func_02069c48() + offset, size);
+    GX_LoadVram16(ptr, G2S_GetBG2ScrPtr() + offset, size);
 }
 
 void GX_LoadBG3Bmp(void *ptr, u32 offset, u32 size) {
@@ -691,39 +691,39 @@ void GX_LoadBG3Bmp(void *ptr, u32 offset, u32 size) {
 }
 
 void GXS_LoadBG3Bmp(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram16(ptr, G2S_func_02069d40() + offset, size);
+    GX_LoadVram16(ptr, G2S_GetBG3ScrPtr() + offset, size);
 }
 
 void GX_LoadBG0Char(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram32(ptr, G2_func_02069db4() + offset, size);
+    GX_LoadVram32(ptr, G2_func_0002() + offset, size);
 }
 
 void GXS_LoadBG0Char(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram32(ptr, G2S_func_02069de8() + offset, size);
+    GX_LoadVram32(ptr, G2S_func_0003() + offset, size);
 }
 
 void GX_LoadBG1Char(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram32(ptr, G2_func_02069e08() + offset, size);
+    GX_LoadVram32(ptr, G2_func_0004() + offset, size);
 }
 
 void GXS_LoadBG1Char(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram32(ptr, G2S_func_02069e3c() + offset, size);
+    GX_LoadVram32(ptr, G2S_func_0004() + offset, size);
 }
 
 void GX_LoadBG2Char(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram32(ptr, G2_func_02069e5c() + offset, size);
+    GX_LoadVram32(ptr, G2_func_0005() + offset, size);
 }
 
 void GXS_LoadBG2Char(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram32(ptr, G2S_func_02069eac() + offset, size);
+    GX_LoadVram32(ptr, G2S_func_0005() + offset, size);
 }
 
 void GX_LoadBG3Char(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram32(ptr, G2_func_02069eec() + offset, size);
+    GX_LoadVram32(ptr, G2_func_0006() + offset, size);
 }
 
 void GXS_LoadBG3Char(void *ptr, u32 offset, u32 size) {
-    GX_LoadVram32(ptr, G2S_func_02069f44() + offset, size);
+    GX_LoadVram32(ptr, G2S_func_0006() + offset, size);
 }
 
 void GX_BeginLoadBGExtPltt(void) {
@@ -760,7 +760,7 @@ void GX_EndLoadBGExtPltt(void) {
     if (data_020a708c != -1) {
         MI_func_0206d934(data_020a708c);
     }
-    GX_func_0206921c(data_0216a0fc.unk_14);
+    GX_func_0003(data_0216a0fc.unk_14);
     data_0216a0fc.unk_14 = 0;
     data_0216a0fc.unk_10 = 0;
     data_0216a0fc.unk_0c = 0;
@@ -793,7 +793,7 @@ void GX_EndLoadOBJExtPltt(void) {
     if (data_020a708c != -1) {
         MI_func_0206d934(data_020a708c);
     }
-    GX_func_02069448(data_0216a0fc.unk_08);
+    GX_func_0004(data_0216a0fc.unk_08);
     data_0216a0fc.unk_08 = 0;
     data_0216a0fc.unk_04 = 0;
 }
@@ -814,7 +814,7 @@ void GXS_EndLoadBGExtPltt(void) {
     if (data_020a708c != -1) {
         MI_func_0206d934(data_020a708c);
     }
-    GXS_func_02069704(data_0216a0fc.unk_00);
+    GX_func_0005(data_0216a0fc.unk_00);
     data_0216a0fc.unk_00 = 0;
 }
 
@@ -834,6 +834,6 @@ void GXS_EndLoadOBJExtPltt(void) {
     if (data_020a708c != -1) {
         MI_func_0206d934(data_020a708c);
     }
-    GXS_func_02069830(data_0216a0fc.unk_18);
+    GXS_func_0001(data_0216a0fc.unk_18);
     data_0216a0fc.unk_18 = 0;
 }

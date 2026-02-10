@@ -159,7 +159,7 @@ void OS_FreeFromHeap(u32 arena, OSHeapHandle heap, void *ptr);
 
 void OS_Sleep(u32 time);
 
-void OS_func_0206b698(void);
+void OS_func_0043(void);
 void OS_CreateThread(OSThread *thread, void (*threadFunc)(void *arg), void *arg, void *stackHi, u32 stackSize,
                      u32 prio);
 void OS_WakeupThreadDirect(OSThread *thread);
@@ -171,8 +171,8 @@ void OS_CheckStack(OSThread *thread);
 #else
     #define OS_CheckStack(thread)
 #endif
-void OS_func_0206b8dc(void);
-s32 OS_func_0206b4f8(OS_UnkStruct1 *param1);
+void OS_func_0044(void);
+s32 OS_func_0039(OS_UnkStruct1 *param1);
 
 void OS_InitMessageQueue(OSMessageQueue *queue, OSMessage *buf, u32 bufLength);
 void OS_ReceiveMessage(OSMessageQueue *queue, OSMessage *message, u32 block);

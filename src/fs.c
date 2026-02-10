@@ -22,15 +22,15 @@ typedef struct FSUnkStruct6 {
     /* 00 */
 } FSUnkStruct6;
 
-BOOL func_0206f614(FSFile *file);
-BOOL func_0206f640(FSFile *file);
-BOOL func_0206f66c(FSFile *file);
-BOOL func_0206f704(FSFile *file);
-BOOL func_0206f830(FSFile *file);
-BOOL func_0206fa14(FSFile *file);
-BOOL func_0206fdc0(FSFile *file);
-BOOL func_0206fe40(FSFile *file);
-BOOL func_0206fe68(FSFile *file);
+BOOL FS_func_0005(FSFile *file);
+BOOL FS_func_0006(FSFile *file);
+BOOL FS_func_0007(FSFile *file);
+BOOL FS_func_0008(FSFile *file);
+BOOL FS_func_0009(FSFile *file);
+BOOL FS_func_0010(FSFile *file);
+BOOL FS_func_0011(FSFile *file);
+BOOL FS_func_0012(FSFile *file);
+BOOL FS_func_0013(FSFile *file);
 
 static BOOL sFSInitialized;
 static FSVolume *gFSVolumeHead;
@@ -42,15 +42,15 @@ static FSUnkStruct4 data_0216c11c;
 static FSVolume gRomVolume;
 
 static BOOL (*data_02091014[])(FSFile *file) = {
-    func_0206f614, func_0206f640, func_0206f66c, func_0206f704, func_0206f830,
-    func_0206fa14, func_0206fdc0, func_0206fe40, func_0206fe68,
+    FS_func_0005, FS_func_0006, FS_func_0007, FS_func_0008, FS_func_0009,
+    FS_func_0010, FS_func_0011, FS_func_0012, FS_func_0013,
 };
 
 static void FS_AddRomVolume(u32);
-static BOOL func_0207090c(FSFile *file);
+static BOOL FS_func_0027(FSFile *file);
 
 extern void func_0206bb2c(OSLinkedList *);
-void func_0206f2e4(FSFile *file, u32 param2) {
+void FS_func_0001(FSFile *file, u32 param2) {
     u32 irq;
     s32 unk1;
     s32 *unk2;
@@ -73,7 +73,7 @@ void func_0206f2e4(FSFile *file, u32 param2) {
 }
 
 extern void func_0206badc(void *);
-u32 func_0206f340(FSFile *file, u8 param2) {
+u32 FS_func_0002(FSFile *file, u8 param2) {
     s32 result;
     FSVolume *volume = file->volume;
     u32 mask         = 1 << param2;
@@ -112,7 +112,7 @@ u32 func_0206f340(FSFile *file, u8 param2) {
         }
     } else if (!!(file->flags & 4) == 0) {
         volume->flags &= ~0x100;
-        func_0206f2e4(file, result);
+        FS_func_0001(file, result);
     } else {
         volume->flags &= ~0x200;
         file->unk_14 = result;
@@ -138,7 +138,7 @@ s32 FS_PathCompare(const char *lhs, const char *rhs, u32 length) {
     return 0;
 }
 
-s32 func_0206f520(FSUnkStruct2 *param1, FSUnkStruct2 *param2, s32 param3) {
+s32 FS_func_0003(FSUnkStruct2 *param1, FSUnkStruct2 *param2, s32 param3) {
     u32 result;
     FSVolume *volume = param1->unk_00;
     volume->flags |= 0x200;
@@ -162,26 +162,26 @@ s32 func_0206f520(FSUnkStruct2 *param1, FSUnkStruct2 *param2, s32 param3) {
     return result;
 }
 
-u32 func_0206f5e0(FSFile *file, u32 param2) {
+u32 FS_func_0004(FSFile *file, u32 param2) {
     file->flags |= 4;
     file->buf      = file->volume;
     file->unk_38   = 0;
     file->unk_36_s = 0;
     file->unk_34_s = param2;
-    return func_0206f340(file, 2);
+    return FS_func_0002(file, 2);
 }
 
-BOOL func_0206f614(FSFile *file) {
+BOOL FS_func_0005(FSFile *file) {
     file->cursor += file->unk_38;
     return file->volume->unk_48(file->volume, file->buf, 0, 0);
 }
 
-BOOL func_0206f640(FSFile *file) {
+BOOL FS_func_0006(FSFile *file) {
     file->cursor += file->unk_38;
     return file->volume->unk_4c(file->volume, file->buf, 0, 0);
 }
 
-BOOL func_0206f66c(FSFile *file) {
+BOOL FS_func_0007(FSFile *file) {
     s32 iVar1;
     FSVolume *puVar3;
     FSUnkStruct2 local_20;
@@ -190,7 +190,7 @@ BOOL func_0206f66c(FSFile *file) {
     puVar3          = file->volume;
     local_20.unk_04 = puVar3->fnt + file->unk_38 * sizeof(FSFntDirectory);
     local_20.unk_00 = puVar3;
-    iVar1           = func_0206f520(&local_20, &local_18, 8);
+    iVar1           = FS_func_0003(&local_20, &local_18, 8);
     if (iVar1 == 0) {
         file->unk_20 = file->buf;
         if ((u32) * (u16 *) ((s32) &file->unk_34 + 2) == 0 && file->unk_38 == 0) {
@@ -202,7 +202,7 @@ BOOL func_0206f66c(FSFile *file) {
     return iVar1;
 }
 
-BOOL func_0206f704(FSFile *file) {
+BOOL FS_func_0008(FSFile *file) {
     BOOL iVar1;
     FSUnkStruct3 *pFVar2;
     FSUnkStruct2 abStack_18;
@@ -211,7 +211,7 @@ BOOL func_0206f704(FSFile *file) {
     pFVar2          = file->buf;
     local_14.unk_00 = file->volume;
     local_14.unk_04 = file->unk_38;
-    iVar1           = func_0206f520(&local_14, &abStack_18, 1);
+    iVar1           = FS_func_0003(&local_14, &abStack_18, 1);
     if (iVar1 != 0) {
         return iVar1;
     }
@@ -219,7 +219,7 @@ BOOL func_0206f704(FSFile *file) {
     pFVar2->unk_0c = (s32) (u32) abStack_18.unk_00 >> 7;
     if (pFVar2->unk_10 != 0) {
         if (file->unk_34 == 0) {
-            iVar1 = func_0206f520(&local_14, (void *) &pFVar2->unk_14, 0);
+            iVar1 = FS_func_0003(&local_14, (void *) &pFVar2->unk_14, 0);
             if (iVar1) {
                 return iVar1;
             }
@@ -232,7 +232,7 @@ BOOL func_0206f704(FSFile *file) {
             pFVar2->unk_04                     = (u32) * (u16 *) ((s32) &file->unk_34 + 2);
             *(s16 *) ((s32) &file->unk_34 + 2) = *(s16 *) ((s32) &file->unk_34 + 2) + 1;
         } else {
-            iVar1 = func_0206f520(&local_14, &abStack_18, 2);
+            iVar1 = FS_func_0003(&local_14, &abStack_18, 2);
             if (iVar1) {
                 return iVar1;
             }
@@ -247,11 +247,11 @@ BOOL func_0206f704(FSFile *file) {
     return true;
 }
 
-BOOL func_0206f830(FSFile *file) {}
+BOOL FS_func_0009(FSFile *file) {}
 
-BOOL func_0206fa14(FSFile *file) {}
+BOOL FS_func_0010(FSFile *file) {}
 
-BOOL func_0206fdc0(FSFile *file) {
+BOOL FS_func_0011(FSFile *file) {
     s32 iVar1;
     s32 iVar2;
     s32 iVar3;
@@ -267,17 +267,17 @@ BOOL func_0206fdc0(FSFile *file) {
     }
     iStack_20.unk_00 = file->volume;
     iStack_20.unk_04 = *(s32 *) (iStack_20.unk_00 + 0x2c) + iVar3;
-    iVar1            = func_0206f520(&iStack_20, &iStack_18, 8);
+    iVar1            = FS_func_0003(&iStack_20, &iStack_18, 8);
     if (!iVar1) {
         file->buf    = iStack_18.unk_00;
         file->unk_34 = iStack_18.unk_04;
         file->unk_38 = iVar2;
-        return func_0206f340(file, 7);
+        return FS_func_0002(file, 7);
     }
     return iVar1;
 }
 
-BOOL func_0206fe40(FSFile *file) {
+BOOL FS_func_0012(FSFile *file) {
     file->startRomOffset = (u8 *) file->buf;
     file->cursor         = (u8 *) file->buf;
     file->endRomOffset   = file->buf;
@@ -285,7 +285,7 @@ BOOL func_0206fe40(FSFile *file) {
     return false;
 }
 
-BOOL func_0206fe68(FSFile *file) {
+BOOL FS_func_0013(FSFile *file) {
     return false;
 }
 
@@ -311,29 +311,29 @@ u32 FS_GetPathVolumeName(const char *path, s32 length) {
     return volume;
 }
 
-u32 func_0206fec8(FSFile *file, u8 *buf, u32 offset, u32 size) {
+u32 FS_func_0014(FSFile *file, u8 *buf, u32 offset, u32 size) {
     MI_CpuCopy8(file->cursor + offset, buf, size);
     return 0;
 }
 
-u32 func_0206fee4(FSFile *file, u8 *buf, u32 offset, u32 size) {
+u32 FS_func_0015(FSFile *file, u8 *buf, u32 offset, u32 size) {
     MI_CpuCopy8(buf, file->cursor + offset, size);
     return 0;
 }
 
-BOOL func_0206ff04(u32) {}
-void func_02070118(FSFile *) {}
+BOOL FS_func_0016(u32) {}
+void FS_func_0017(FSFile *) {}
 
-BOOL func_020701ac(FSFile *file) {
-    u32 uVar1 = func_0206f340(file, file->unk_10);
-    func_0206f2e4(file, uVar1);
-    if (func_0206ff04(file->volume)) {
-        func_02070118(file);
+BOOL FS_func_0018(FSFile *file) {
+    u32 uVar1 = FS_func_0002(file, file->unk_10);
+    FS_func_0001(file, uVar1);
+    if (FS_func_0016(file->volume)) {
+        FS_func_0017(file);
     }
     return file->unk_14 == 0;
 }
 
-BOOL func_020701f0(FSFile *file, u8 param2) {
+BOOL FS_func_0019(FSFile *file, u8 param2) {
     FSVolume *puVar1;
     FSVolume *it;
     FSVolume *volume;
@@ -349,7 +349,7 @@ BOOL func_020701f0(FSFile *file, u8 param2) {
     file->flags |= 1;
     irq = OS_DisableInterrupts_Irq();
     if ((volume->flags & 0x80) != 0) {
-        func_0206f2e4(file, 3);
+        FS_func_0001(file, 3);
         OS_RestoreInterrupts(irq);
         return false;
     }
@@ -381,7 +381,7 @@ BOOL func_020701f0(FSFile *file, u8 param2) {
         file->flags = file->flags | 0x40;
         if (!!(file->flags & 4) == 0) {
             OS_RestoreInterrupts(irq);
-            func_02070118(file);
+            FS_func_0017(file);
             return true;
         }
         OS_RestoreInterrupts(irq);
@@ -395,10 +395,10 @@ BOOL func_020701f0(FSFile *file, u8 param2) {
         } while ((file->flags & 0x40) == 0);
         OS_RestoreInterrupts(irq);
     }
-    return func_020701ac(file);
+    return FS_func_0018(file);
 }
 
-void func_02070394(FSVolume *unk) {
+void FS_func_0020(FSVolume *unk) {
     MI_CpuFill8(unk, 0, sizeof(*unk));
     unk->unk_10 = 0;
     unk->unk_0c = 0;
@@ -458,15 +458,15 @@ BOOL FS_InitVolume(FSVolume *volume, u32 param2, u32 fatRomOffset, u32 fatSize, 
     volume->fntSize      = fntSize;
     volume->fntRomOffset = fntRomOffset;
     volume->fnt          = fntRomOffset;
-    volume->unk_48       = param7 ? param7 : (void *) func_0206fec8;
-    volume->unk_4c       = param8 ? param8 : (void *) func_0206fee4;
+    volume->unk_48       = param7 ? param7 : (void *) FS_func_0014;
+    volume->unk_4c       = param8 ? param8 : (void *) FS_func_0015;
     volume->unk_50       = volume->unk_48;
     volume->unk_44       = 0;
     volume->flags |= 2;
     return true;
 }
 
-void func_02070524(FSVolume *unk, u32 (*param2)(FSFile *, u32), u32 param3) {
+void FS_func_0021(FSVolume *unk, u32 (*param2)(FSFile *, u32), u32 param3) {
     if (!param3) {
         param2 = NULL;
     } else if (!param2) {
@@ -476,7 +476,7 @@ void func_02070524(FSVolume *unk, u32 (*param2)(FSFile *, u32), u32 param3) {
     unk->unk_58 = param3;
 }
 
-void func_02070544(u32, u32) {}
+void FS_func_0022(u32, u32) {}
 
 void FS_Init(u32 dmaCount) {
     if (sFSInitialized) {
@@ -487,16 +487,16 @@ void FS_Init(u32 dmaCount) {
 }
 
 void FS_InitFile(FSFile *file) {
-    file->unk_00        = 0;
-    file->unk_04        = NULL;
-    file->unk_18.unk_04 = 0;
-    file->unk_18.unk_00 = 0;
-    file->volume        = 0;
-    file->unk_10        = 0xe;
-    file->flags         = 0;
+    file->unk_00      = 0;
+    file->unk_04      = NULL;
+    file->unk_18.tail = NULL;
+    file->unk_18.head = NULL;
+    file->volume      = 0;
+    file->unk_10      = 0xe;
+    file->flags       = 0;
 }
 
-BOOL func_02070618(FSFile *file, const char *path, FSUnkStruct1 *unk, u32 param4) {
+BOOL FS_func_0023(FSFile *file, const char *path, FSUnkStruct1 *unk, u32 param4) {
     bool bVar2;
     s32 i;
     FSUnkStruct5 local_28;
@@ -542,10 +542,10 @@ BOOL func_02070618(FSFile *file, const char *path, FSUnkStruct1 *unk, u32 param4
         file->unk_40 = 0;
         file->unk_44 = unk;
     }
-    return func_020701f0(file, 4);
+    return FS_func_0019(file, 4);
 }
 
-u32 func_0207075c(FSFile *file, void *buf, s32 size, u32 param4) {
+u32 FS_func_0024(FSFile *file, void *buf, s32 size, u32 param4) {
     s32 iVar3   = size;
     u32 prevPos = file->cursor;
     s32 iVar1   = file->endRomOffset - prevPos;
@@ -561,9 +561,9 @@ u32 func_0207075c(FSFile *file, void *buf, s32 size, u32 param4) {
     if (param4 == 0) {
         file->flags |= 4;
     }
-    func_020701f0(file, 0);
+    FS_func_0019(file, 0);
     if (param4 == 0) {
-        if (func_0207090c(file)) {
+        if (FS_func_0027(file)) {
             iVar3 = file->cursor - prevPos;
         } else {
             iVar3 = -1;
@@ -572,23 +572,23 @@ u32 func_0207075c(FSFile *file, void *buf, s32 size, u32 param4) {
     return iVar3;
 }
 
-BOOL func_020707d8(FSUnkStruct1 *unk, const char *path) {
+BOOL FS_func_0025(FSUnkStruct1 *unk, const char *path) {
     FSFile file;
     FS_InitFile(&file);
-    if (func_02070618(&file, path, unk, 0)) {
+    if (FS_func_0023(&file, path, unk, 0)) {
         return true;
     }
     return false;
 }
 
-BOOL func_02070818(FSFile *file, FSUnkStruct1 unk) {
+BOOL FS_func_0026(FSFile *file, FSUnkStruct1 unk) {
     if (unk.unk_00 == 0) {
         return false;
     }
     file->volume = unk.unk_00;
     file->buf    = unk.unk_00;
     file->unk_34 = unk.unk_04;
-    if (func_020701f0(file, 6)) {
+    if (FS_func_0019(file, 6)) {
         file->flags = (file->flags | 0x10) & ~0x20;
         return true;
     }
@@ -597,11 +597,11 @@ BOOL func_02070818(FSFile *file, FSUnkStruct1 unk) {
 
 BOOL FS_OpenFile(FSFile *file, const char *path) {
     FSUnkStruct1 local_10;
-    return func_020707d8(&local_10, path) && func_02070818(file, local_10);
+    return FS_func_0025(&local_10, path) && FS_func_0026(file, local_10);
 }
 
 BOOL FS_CloseFile(FSFile *file) {
-    if (!func_020701f0(file, 8)) {
+    if (!FS_func_0019(file, 8)) {
         return false;
     }
     file->volume = 0;
@@ -610,7 +610,7 @@ BOOL FS_CloseFile(FSFile *file) {
     return true;
 }
 
-static BOOL func_0207090c(FSFile *file) {
+static BOOL FS_func_0027(FSFile *file) {
     BOOL unk1 = false;
     u32 irq;
 
@@ -630,17 +630,17 @@ static BOOL func_0207090c(FSFile *file) {
     }
     OS_RestoreInterrupts(irq);
     if (unk1) {
-        return func_020701ac(file);
+        return FS_func_0018(file);
     }
     return file->unk_14 == 0;
 }
 
-u32 func_020709cc(FSFile *file, void *buf, u32 size) {
-    return func_0207075c(file, buf, size, 1);
+u32 FS_func_0028(FSFile *file, void *buf, u32 size) {
+    return FS_func_0024(file, buf, size, 1);
 }
 
 u32 FS_ReadFile(FSFile *file, void *buf, u32 size) {
-    return func_0207075c(file, buf, size, 0);
+    return FS_func_0024(file, buf, size, 0);
 }
 
 BOOL FS_SeekFile(FSFile *file, s32 pos, u32 mode) {
@@ -669,23 +669,23 @@ BOOL FS_SeekFile(FSFile *file, s32 pos, u32 mode) {
 }
 
 extern s32 func_02073f88(void);
-void func_02070a58(u32 param1) {
-    func_02070544(param1, func_02073f88() ? 5 : 0);
+void FS_func_0029(u32 param1) {
+    FS_func_0022(param1, func_02073f88() ? 5 : 0);
 }
 
 extern void func_02073bbc(FSUnkStruct4 *, u32, u32, u32, void (*)(u32), void *, u32);
-u32 func_02070a7c(FSFile *file, u8 *buf, u32 offset, u32 size) {
-    func_02073bbc(&data_0216c11c, offset, buf, size, func_02070a58, file, 1);
+u32 FS_func_0030(FSFile *file, u8 *buf, u32 offset, u32 size) {
+    func_02073bbc(&data_0216c11c, offset, buf, size, FS_func_0029, file, 1);
     return 6;
 }
 
-u32 func_02070ac4(FSFile *file, u8 *buf, u32 offset, u32 size) {
+u32 FS_func_0031(FSFile *file, u8 *buf, u32 offset, u32 size) {
     return 1;
 }
 
 extern void func_02072e50(u16);
 extern void func_02072e34(u16);
-u32 func_02070acc(FSFile *param1, u32 param2) {
+u32 FS_func_0032(FSFile *param1, u32 param2) {
     switch (param2) {
         case 9:
             func_02072e34(data_0216c11c.unk_00);
@@ -700,11 +700,11 @@ u32 func_02070acc(FSFile *param1, u32 param2) {
     }
 }
 
-u32 func_02070b38(FSFile *file, u8 *buf, u32 offset, u32 size) {
+u32 FS_func_0033(FSFile *file, u8 *buf, u32 offset, u32 size) {
     return 1;
 }
 
-u32 func_02070b40(FSFile *, u32) {
+u32 FS_func_0034(FSFile *, u32) {
     return 4;
 }
 
@@ -717,21 +717,21 @@ static void FS_AddRomVolume(u32 dmaCount) {
     data_0216c11c.unk_10 = 0;
     data_0216c11c.unk_14 = 0;
     func_02073cb4();
-    func_02070394(&gRomVolume);
+    FS_func_0020(&gRomVolume);
     FS_AddVolume(&gRomVolume, "rom", 3);
     if (REG_027FFC40 == 2) {
         data_0216c11c.unk_08 = -1;
         data_0216c11c.unk_0c = 0;
         data_0216c11c.unk_10 = -1;
         data_0216c11c.unk_14 = 0;
-        func_02070524(&gRomVolume, func_02070b40, -1);
-        FS_InitVolume(&gRomVolume, 0, 0, 0, 0, 0, func_02070b38, func_02070ac4);
+        FS_func_0021(&gRomVolume, FS_func_0034, -1);
+        FS_InitVolume(&gRomVolume, 0, 0, 0, 0, 0, FS_func_0033, FS_func_0031);
     } else {
-        func_02070524(&gRomVolume, func_02070acc, 0x602);
+        FS_func_0021(&gRomVolume, FS_func_0032, 0x602);
         if (REG_FNT_ROM_OFFSET != -1 && REG_FNT_ROM_OFFSET != 0 && REG_FAT_ROM_OFFSET != -1 &&
             REG_FAT_ROM_OFFSET != 0) {
             FS_InitVolume(&gRomVolume, 0, REG_FAT_ROM_OFFSET, REG_FAT_SIZE, REG_FNT_ROM_OFFSET, REG_FNT_SIZE,
-                          func_02070a7c, func_02070ac4);
+                          FS_func_0030, FS_func_0031);
         }
     }
 }
