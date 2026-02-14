@@ -198,7 +198,7 @@ extern u32 _OS_unk_linker_3; // 0x027e0080
 #define OS_unk_linker_2 ((u32) (&_OS_unk_linker_2))
 #define OS_unk_linker_3 ((u8 *) (&_OS_unk_linker_3))
 
-void OS_func_0043(void) {
+void OS_InitThread(void) {
     u8 *stackLo;
     if (data_0216a188 != 0) {
         return;

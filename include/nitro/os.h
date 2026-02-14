@@ -5,6 +5,8 @@
 extern "C" {
 #endif
 
+#include <stdarg.h>
+
 #include "nitro/reg.h"
 
 #define OS_IE_V_BLANK 1
@@ -22,6 +24,8 @@ extern "C" {
 #define OS_CONSOLE_NITRO 0x80000000
 
 #define OS_LOCK_ID_ERROR -3
+
+#define OS_THREAD_LAUNCHER_PRIORITY 0x10
 
 typedef struct OSLinkedList {
     /* 00 */ void *head;
@@ -74,7 +78,7 @@ typedef struct OSThread {
     /* b0 */ u32 *unk_b0;
     /* b4 */ void (*unk_b4)(void *);
     /* b8 */
-} ATTRIBUTE_ALIGN(16) OSThread;
+} ATTRIBUTE_ALIGN(32) OSThread;
 
 typedef struct OSMessageQueue {
     /* 00 */ OSLinkedList unk_00;
@@ -117,14 +121,22 @@ typedef struct OSMutex {
 typedef u32 OSHeapHandle;
 typedef u64 OSTime;
 
+typedef u32 OSIntrMode;
+
 void OS_Init(void);
+void OS_InitThread(void);
 void OS_InitTick(void);
 void OS_InitAlarm(void);
+void OS_Terminate(void);
 void OS_SetIrqFunction(u32 type, void (*function)());
 
 void OS_EnableIrqMask(u32 mask);
 
 void OS_WaitVBlankIntr(void);
+void _OS_SpinWait(u32 param1);
+inline void OS_SpinWait(u32 param1) {
+    _OS_SpinWait(param1 / 2);
+}
 
 void OS_InitMutex(OSMutex *mutex);
 void OS_LockMutex(OSMutex *mutex);
@@ -135,10 +147,14 @@ void _OS_Panic();
 #ifdef DEBUG
 void OS_TPrintf(const char *format, ...) {}
 void OS_Printf(const char *format, ...) {}
+void OS_TVPrintf(const char *format, va_list args) {}
+void OS_TPanic(const char *message) {}
 void OS_Panic(const char *message) {}
 #else
     #define OS_TPrintf(...)
     #define OS_Printf(...)
+    #define OS_TVPrintf(...)
+    #define OS_TPanic(...) _OS_Panic()
     #define OS_Panic(...) _OS_Panic()
 #endif
 
@@ -156,10 +172,10 @@ void OS_SetCurrentHeap(u32 arena, OSHeapHandle heap);
 void OS_DumpHeap(u32 arena, OSHeapHandle heap);
 void *OS_AllocFromHeap(u32 arena, OSHeapHandle heap, u32 size);
 void OS_FreeFromHeap(u32 arena, OSHeapHandle heap, void *ptr);
+u32 OS_CheckHeap(u32 arena, OSHeapHandle heap);
 
 void OS_Sleep(u32 time);
 
-void OS_func_0043(void);
 void OS_CreateThread(OSThread *thread, void (*threadFunc)(void *arg), void *arg, void *stackHi, u32 stackSize,
                      u32 prio);
 void OS_WakeupThreadDirect(OSThread *thread);
@@ -188,8 +204,10 @@ u32 OS_GetConsoleType(void);
 
 u32 OS_GetLockID(void);
 
+OSIntrMode OS_DisableInterrupts(void);
 u32 OS_DisableInterrupts_Irq(void);
 void OS_RestoreInterrupts(u32);
+void OS_EnableInterrupts(void);
 
 BOOL OS_func_0206d5ac(u16, u32);
 void OS_func_0206d66c(u16, u32);
@@ -250,6 +268,14 @@ inline OSTime OS_MicroSecondsToTicks(OSTime us) {
 
 inline OSTime OS_TicksToMilliSeconds(OSTime ticks) {
     return (ticks * 64) / 33514;
+}
+
+inline BOOL OS_IsRunOnTwl(void) {
+#ifndef IS_TWL
+    return false;
+#else
+    // Probably checks some reg here
+#endif
 }
 
 #ifdef __cplusplus

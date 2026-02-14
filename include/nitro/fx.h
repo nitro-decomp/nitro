@@ -5,9 +5,21 @@
 extern "C" {
 #endif
 
-#define FX32_ONE (fx32)(1 << 12)
+#define FX32_SHIFT 12
+#define FX16_SHIFT 12
+
+#define FX32_ONE (fx32)(1 << FX32_SHIFT)
+#define FX16_ONE (fx16)(1 << FX16_SHIFT)
 
 typedef s32 fx32;
+typedef s16 fx16;
+
+typedef struct VecFx32 {
+    /* 00 */ fx32 x;
+    /* 04 */ fx32 y;
+    /* 08 */ fx32 z;
+    /* 0c */
+} VecFx32;
 
 typedef struct MtxFx22 {
     /* 00 */ fx32 _00;

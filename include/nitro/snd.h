@@ -23,6 +23,8 @@ void SND_FlushCommand(u32);
 void SND_StopTimer(u32 channel, u32, u32 alarm, u32);
 void SND_UnlockChannel(u32 channel, u32);
 void SND_LockChannel(u32 channel, u32);
+void SND_SetChannelVolume(u32 channel, u32 volume, u32 datashift);
+void SND_SetChannelPan(u32 channel, u32 pan);
 
 void SND_SetupChannelPcm(u32 channel, u32 format, void *buf, u32 loop, u32, u32 numSamples, u32 volume, u32 datashift,
                          u32, u32);

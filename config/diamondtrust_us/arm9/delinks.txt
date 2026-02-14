@@ -1,0 +1,94 @@
+    .crt0       start:0x02000000 end:0x02001000 kind:code align:32
+    .parent     start:0x02001000 end:0x02003000 kind:code align:32
+    .text       start:0x02003000 end:0x02041588 kind:code align:32
+    .exception  start:0x02041588 end:0x020415e0 kind:rodata align:1
+    .exceptix   start:0x020415e0 end:0x02041718 kind:rodata align:4
+    .init       start:0x02041718 end:0x02041f64 kind:code align:4
+    .rodata     start:0x02041f64 end:0x0207c140 kind:rodata align:4
+    .ctor       start:0x0207c140 end:0x0207c1a0 kind:rodata align:4
+    .data       start:0x0207c1a0 end:0x02081560 kind:data align:32
+    .bss        start:0x02081560 end:0x0213bb60 kind:bss align:32
+
+src/card/card_unk1.c:
+    .text       start:0x02022d54 end:0x02023d14
+
+src/os/os_unk6.c:
+    .text       start:0x02023d64 end:0x02023de0
+
+src/fs.c:
+    .text       start:0x02023de0 end:0x020268b8
+
+src/fx.c:
+    .text       start:0x020268b8 end:0x02026e04
+
+src/gx/gx_init.c:
+    .text       start:0x02026e08 end:0x02027650
+
+src/gx/gx.c:
+    .text       start:0x02027650 end:0x02027f90
+
+src/mb/mb.c:
+    .text       start:0x02027f90 end:0x0202cee4
+
+src/mi/mi_unk1.c:
+    .text       start:0x0202cee4 end:0x0202d7d8
+
+src/os/os_irq.c:
+    .text       start:0x0202d7d8 end:0x0202db44
+
+src/os/os_unk1.c:
+    .text       start:0x0202db44 end:0x0202df48
+
+src/os/os_thread.c:
+    .text       start:0x0202df48 end:0x0202e978
+
+src/os/os_unk2.c:
+    .text       start:0x0202e978 end:0x0202e9dc
+
+src/os/os_message.c:
+    .text       start:0x0202e9dc end:0x0202ebd4
+
+src/os/os_mutex.c:
+    .text       start:0x0202ebd4 end:0x0202ee54
+
+src/os/os_cache.c:
+    .text       start:0x0202ee54 end:0x0202ef18
+
+src/os/os_init.c:
+    .text       start:0x0202ef18 end:0x0202f0f0
+
+src/os/os_arena.c:
+    .text       start:0x0202f0f0 end:0x0202f81c
+
+src/os/os_unk3.c:
+    .text       start:0x0202f81c end:0x0202fb98
+
+src/os/os_tick.c:
+    .text       start:0x0202fb98 end:0x020300a8
+
+src/os/os_unk4.c:
+    .text       start:0x020300a8 end:0x02030570
+
+src/os/os_unk5.c:
+    .text       start:0x02030570 end:0x02030b70
+
+src/rtc/rtc_unk1.c:
+    .text       start:0x02030b70 end:0x0203141c
+
+src/snd/snd_unk1.c:
+    .text       start:0x0203141c end:0x0203157c
+
+src/snd/snd_unk2.c:
+    .text       start:0x0203157c end:0x02031cf8
+
+src/tp/tp_unk1.c:
+    .text       start:0x02031cf8 end:0x02032730
+
+src/pm/pm_unk1.c:
+    .text       start:0x02032730 end:0x02032ee8
+
+src/wm/wm.c:
+    .text       start:0x02032ee8 end:0x020350a0
+
+src/card/card_unk2.c:
+    .text       start:0x020350a0 end:0x020358ac

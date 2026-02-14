@@ -12,6 +12,9 @@ extern "C" {
 
 #define REG_DISPSTAT (*(vu16 *) 0x4000004)
 #define REG_VCOUNT (*(vu16 *) 0x04000006)
+#define REG_DISP3DCNT (*(vu16 *) 0x04000060)
+#define REG_DISPCAPCNT (*(vu32 *) 0x04000064)
+#define REG_GFX_STATUS (*(vu32 *) 0x04000600)
 
 #define REG_VRAM_CNT_ABCD (*(vu32 *) 0x04000240)
 #define REG_VRAM_CNT_A (*(vu8 *) 0x04000240)
@@ -26,16 +29,39 @@ extern "C" {
 #define REG_VRAM_CNT_H (*(vu8 *) 0x04000248)
 #define REG_VRAM_CNT_I (*(vu8 *) 0x04000249)
 
-#define REG_PAD (*(u16 *) 0x027FFFA8)
+#if NITRO_VERSION >= 0x05057533
+    #define _BIOS_REG_BASE 0x02FFF000
+#else
+    #define _BIOS_REG_BASE 0x027FF000
+#endif
+
+#define REG_PAD (*(u16 *) (_BIOS_REG_BASE | 0xFA8))
 #define REG_KEYINPUT (*(u16 *) 0x04000130)
 
-#define REG_027FFC40 (*(u16 *) 0x027FFC40)
-#define REG_FNT_ROM_OFFSET (*(u32 *) 0x027FFE40)
-#define REG_FNT_SIZE (*(u32 *) 0x027FFE44)
-#define REG_FAT_ROM_OFFSET (*(u32 *) 0x027FFE48)
-#define REG_FAT_SIZE (*(u32 *) 0x027FFE4C)
+#define REG_027FFC40 (*(u16 *) (_BIOS_REG_BASE | 0xC40))
+#define REG_027FFC42 (*(u16 *) (_BIOS_REG_BASE | 0xC42))
+#define REG_FNT_ROM_OFFSET (*(u32 *) (_BIOS_REG_BASE | 0xE40))
+#define REG_FNT_SIZE (*(u32 *) (_BIOS_REG_BASE | 0xE44))
+#define REG_FAT_ROM_OFFSET (*(u32 *) (_BIOS_REG_BASE | 0xE48))
+#define REG_FAT_SIZE (*(u32 *) (_BIOS_REG_BASE | 0xE4C))
+#define REG_027FFFA0 (*(u32 *) (_BIOS_REG_BASE | 0xFA0))
 
-#define REG_027FFFA0 (*(u32 *) 0x027FFFA0)
+#define REG_GFX_FIFO_MATRIX_MODE (*(vu32 *) 0x04000440)
+#define REG_GFX_FIFO_MATRIX_PUSH (*(vu32 *) 0x04000444)
+#define REG_GFX_FIFO_MATRIX_POP (*(vu32 *) 0x04000448)
+#define REG_GFX_FIFO_MATRIX_STORE (*(vu32 *) 0x0400044c)
+#define REG_GFX_FIFO_MATRIX_IDENTITY (*(vu32 *) 0x04000454)
+#define REG_GFX_FIFO_MATRIX_TRANSLATE (*(vu32 *) 0x04000470)
+#define REG_GFX_FIFO_VERTEX_COLOR (*(vu32 *) 0x04000480)
+#define REG_GFX_FIFO_VERTEX_TEXCOORD (*(vu32 *) 0x04000488)
+#define REG_GFX_FIFO_VERTEX_16 (*(vu32 *) 0x0400048c)
+#define REG_GFX_FIFO_POLYGON_ATTR (*(vu32 *) 0x040004a4)
+#define REG_GFX_FIFO_TEXTURE_PARAM (*(vu32 *) 0x040004a8)
+#define REG_GFX_FIFO_TEXTURE_PALETTE (*(vu32 *) 0x040004ac)
+#define REG_GFX_FIFO_POLYGONS_BEGIN (*(vu32 *) 0x04000500)
+#define REG_GFX_FIFO_POLYGONS_END (*(vu32 *) 0x04000504)
+#define REG_GFX_FIFO_SWAP_BUFFERS (*(vu32 *) 0x04000540)
+#define REG_GFX_FIFO_VIEWPORT (*(vu32 *) 0x04000580)
 
 extern u32 _DTCM_BASE; // TODO: Provide address via LCF
 #define DTCM_BASE ((u8 *) &_DTCM_BASE)

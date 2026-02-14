@@ -13,8 +13,12 @@ extern "C" {
 #define GX_DISP_SELECT_MAIN_SUB 0x8000
 #define GX_DISP_SELECT_SUB_MAIN 0
 #define GX_DISPMODE_GRAPHICS 1
+#define GX_DISPMODE_VRAM_C 0xa
+#define GX_DISPMODE_VRAM_D 0xe
 
 #define GX_VRAM_LCDC_ALL 0x1ff
+#define GX_VRAM_LCDC_C 0x4
+#define GX_VRAM_LCDC_D 0x8
 
 #define GX_VRAM_BG_NONE ((GXVRamBG) 0)
 #define GX_VRAM_BG_128_A ((GXVRamBG) 0x1)
@@ -50,6 +54,10 @@ extern "C" {
 #define GX_VRAM_SUB_OBJEXTPLTT_0_I 0x100
 #define GX_VRAM_OBJEXTPLTT_0_F 0x20
 #define GX_VRAM_OBJEXTPLTT_0_G 0x40
+
+#define GX_VRAM_TEX_01_AB 0x3
+
+#define GX_VRAM_TEXPLTT_0123_E 0x10
 
 #define GX_PLANEMASK_NONE 0
 #define GX_PLANEMASK_BG0 0x1
@@ -123,15 +131,82 @@ extern "C" {
 #define GX_BLEND_PLANEMASK_BG2 0x4
 #define GX_BLEND_PLANEMASK_BG3 0x8
 #define GX_BLEND_PLANEMASK_OBJ 0x10
+#define GX_BLEND_PLANEMASK_BD 0x20
 
 #define GX_OAM_MODE_XLU 1
+#define GX_OAM_MODE_BITMAPOBJ 3
+
+#define GX_OAM_EFFECT_NONE 0
+
+#define GX_OAM_SHAPE_64x64 0x3
+
+#define GX_OAM_COLOR_16 0xf
+
+#define GX_TEXSIZE_S8 0
+#define GX_TEXSIZE_S16 0x1
+#define GX_TEXSIZE_S32 0x2
+#define GX_TEXSIZE_S64 0x3
+#define GX_TEXSIZE_S128 0x4
+#define GX_TEXSIZE_S256 0x5
+#define GX_TEXSIZE_S512 0x6
+#define GX_TEXSIZE_S1024 0x7
+#define GX_TEXSIZE_T8 0
+#define GX_TEXSIZE_T16 0x1
+#define GX_TEXSIZE_T32 0x2
+#define GX_TEXSIZE_T64 0x3
+#define GX_TEXSIZE_T128 0x4
+#define GX_TEXSIZE_T256 0x5
+#define GX_TEXSIZE_T512 0x6
+#define GX_TEXSIZE_T1024 0x7
+
+#define GX_TEXFMT_NONE 0
+#define GX_TEXFMT_PLTT4 0x2
+#define GX_TEXFMT_PLTT16 0x3
+#define GX_TEXFMT_PLTT256 0x4
+#define GX_TEXFMT_DIRECT 0x7
+
+#define GX_TEXPLTTCOLOR0_USE 0
+#define GX_TEXPLTTCOLOR0_TRNS 0x1
+
+#define GX_TEXGEN_NONE 0
+#define GX_TEXGEN_TEXCOORD 0x1
+
+#define GX_TEXREPEAT_NONE 0
+
+#define GX_TEXFLIP_NONE 0
+
+#define GX_LIGHTMASK_NONE 0
+
+#define GX_POLYGONMODE_MODULATE 0x3
+
+#define GX_CULL_NONE 0
+
+#define GX_BEGIN_QUADS 0x1
+
+#define GX_RGB(r, g, b) ((r) | ((g) << 0x5) | ((b) << 0xa))
+
+#define GX_CAPTURE_SIZE_256x192 -1 // unknown value
+#define GX_CAPTURE_MODE_A -1 // unknown value
+#define GX_CAPTURE_SRCA_2D3D -1 // unknown value
+#define GX_CAPTURE_DEST_VRAM_C_0x00000 0x2
+#define GX_CAPTURE_DEST_VRAM_D_0x00000 0x3
+
+#define GX_SORTMODE_MANUAL -1 // unknown value
+
+#define GX_BUFFERMODE_Z -1 // unknown value
+
+#define GX_MTXMODE_POSITION_VECTOR 0x2
+#define GX_MTXMODE_TEXTURE 0x3
 
 typedef u32 GXVRamBG;
 typedef u32 GXVRamOBJ;
 
-typedef struct GXOamAttr {
-    u32 lo;
-    u16 hi;
+typedef struct {
+    u32 attr01;
+    union {
+        u16 attr2;
+        u32 attr23;
+    };
 } GXOamAttr;
 
 typedef u32 GXOamMode;
@@ -146,6 +221,21 @@ typedef u32 GXBGScrBase;
 typedef u32 GXBGCharBase;
 
 typedef u32 GXOBJVRamModeChar;
+
+typedef u32 GXTexFmt;
+typedef s32 GXTexSizeS;
+typedef s32 GXTexSizeT;
+typedef u32 GXSt;
+
+inline GXSt GX_ST(GXTexSizeS sizeS, GXTexSizeT sizeT) {
+    u16 t = sizeT << 8 >> 16;
+    u16 s = sizeS << 8 >> 16;
+    return s | (t << 16);
+}
+
+typedef u32 GXTexPlttColor0;
+
+typedef u32 GXCaptureSrcB;
 
 typedef struct GX_UnkStruct2 {
     /* 00 */ u16 unk_00;
@@ -177,6 +267,8 @@ void GX_SetBankForBG(s32);
 void GX_SetBankForOBJ(s32);
 void GX_SetBankForSubBG(s32);
 void GX_SetBankForSubOBJ(s32);
+void GX_SetBankForTex(u32);
+void GX_SetBankForTexPltt(u32);
 void GX_SetGraphicsMode(u32, u32, u32);
 void GXS_SetGraphicsMode(u32);
 
@@ -238,6 +330,14 @@ void GXS_BeginLoadOBJExtPltt(void);
 void GXS_LoadOBJExtPltt(void *ptr, u32 offset, u32 size);
 void GXS_EndLoadOBJExtPltt(void);
 
+void GX_BeginLoadTexPltt(void);
+void GX_LoadTexPltt(void *ptr, u32 offset, u32 size);
+void GX_EndLoadTexPltt(void);
+
+void GX_BeginLoadTex(void);
+void GX_LoadTex(void *ptr, u32 offset, u32 size);
+void GX_EndLoadTex(void);
+
 extern u16 data_020a7088;
 extern u32 data_020a708c;
 
@@ -287,6 +387,23 @@ inline void GX_SetBGCharOffset(u32 offset) {
 
 inline void GX_SetBGScrOffset(u32 offset) {
     REG_DISPCNT = (REG_DISPCNT & ~0x38000000) | offset;
+}
+
+inline void GX_SetCapture(u32 size, u32 mode, u32 srcA, GXCaptureSrcB srcB, u32 dest, u32 param6, u32 param7) {
+    // Unclear how to combine the arguments
+    //   size = GX_CAPTURE_SIZE_256x192,
+    //   mode = GX_CAPTURE_MODE_A,
+    //   srcA = GX_CAPTURE_SRCA_2D3D,
+    //   srcB = 0,
+    //   dest = GX_CAPTURE_DEST_VRAM_C_0x00000,
+    //   param6 = 16,
+    //   param7 = 0,
+    //     => 0x80320010
+    REG_DISPCAPCNT = 0x80300010 | (dest << 0x10);
+}
+
+inline void GXS_SetOBJVRamModeBmp(u32 mode) {
+    REG_DISPCNT_SUB = REG_DISPCNT_SUB & ~0x60 | ((mode & 0x3) << 5);
 }
 
 #ifdef __cplusplus

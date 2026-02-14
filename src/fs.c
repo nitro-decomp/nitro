@@ -649,7 +649,7 @@ BOOL FS_SeekFile(FSFile *file, s32 pos, u32 mode) {
         case FS_SEEK_SET:
             newPos = file->startRomOffset + pos;
             break;
-        case FS_SEEK_RELATIVE:
+        case FS_SEEK_CUR:
             newPos = file->cursor + pos;
             break;
         case FS_SEEK_END:

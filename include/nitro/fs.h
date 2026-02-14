@@ -9,10 +9,12 @@ extern "C" {
 #include "nitro/types.h"
 
 #define FS_SEEK_SET 0
-#define FS_SEEK_RELATIVE 1
+#define FS_SEEK_CUR 1
 #define FS_SEEK_END 2
 
 #define FS_FILE_FLAG_FILE 0x10
+
+#define FS_FILEMODE_R 0x1
 
 struct FSVolume;
 typedef struct FSUnkStruct2 {
@@ -108,15 +110,37 @@ typedef struct FSFntDirectory {
     /* 08 */
 } FSFntDirectory;
 
+typedef struct FSDirEntry {
+    /* 00 */ u32 unk_00;
+    /* 04 */ union {
+        u32 unk_04_u32;
+        struct {
+            u16 unk_04_u16;
+            u16 unk_06;
+        };
+    };
+    /* 08 */ u32 unk_08;
+    /* 0c */ u32 unk_0c;
+    /* 10 */ u32 unk_10;
+    /* 14 */ char name[0x80];
+    /* 94 */
+} FSDirEntry;
+
 void FS_Init(u32 dmaCount);
 void FS_InitFile(FSFile *file);
 BOOL FS_OpenFile(FSFile *file, const char *path);
+BOOL FS_OpenFileEx(FSFile *file, const char *path, u32 flags);
 BOOL FS_SeekFile(FSFile *file, s32 pos, u32 mode);
+u32 FS_GetLength(FSFile *file);
 u32 FS_ReadFile(FSFile *file, void *buf, u32 size);
 BOOL FS_CloseFile(FSFile *file);
 inline BOOL FS_IsFile(FSFile *file) {
     return !!(file->flags & FS_FILE_FLAG_FILE);
 }
+
+BOOL FS_FindDir(FSFile *file, const char *path);
+BOOL FS_ReadDir(FSFile *file, FSDirEntry *dir);
+void FS_CloseDirectory(FSFile *file);
 
 #ifdef __cplusplus
 } // extern "C"

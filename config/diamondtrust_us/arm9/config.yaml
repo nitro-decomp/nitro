@@ -1,0 +1,26 @@
+rom_config: '../../../extract/diamondtrust_us/config.yaml'
+build_path: '../../../build/diamondtrust_us'
+delinks_path: '../../../build/diamondtrust_us/delinks'
+main_module:
+  name: main
+  object: '../../../build/diamondtrust_us/build/arm9.bin'
+  hash: '3cd6e850f2ae66d6'
+  delinks: delinks.txt
+  symbols: symbols.txt
+  relocations: relocs.txt
+autoloads:
+- kind: Itcm
+  name: itcm
+  object: '../../../build/diamondtrust_us/build/itcm.bin'
+  hash: '3168f754ff866de9'
+  delinks: itcm/delinks.txt
+  symbols: itcm/symbols.txt
+  relocations: itcm/relocs.txt
+- kind: Dtcm
+  name: dtcm
+  object: '../../../build/diamondtrust_us/build/dtcm.bin'
+  hash: '69f8c855a71a5fa6'
+  delinks: dtcm/delinks.txt
+  symbols: dtcm/symbols.txt
+  relocations: dtcm/relocs.txt
+overlays: []

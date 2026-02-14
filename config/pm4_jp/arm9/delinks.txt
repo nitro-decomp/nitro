@@ -78,7 +78,10 @@ src/rtc/rtc_unk1.c:
     .text       start:0x02072158 end:0x02072b24
 
 src/card/card_unk1.c:
-    .text       start:0x02072b24 end:0x020748d4
+    .text       start:0x02072b24 end:0x020740d4
+
+src/card/card_unk2.c:
+    .text       start:0x020740d4 end:0x020748d4
 
 src/std/std_string.c:
     .text       start:0x020748d4 end:0x02074948
