@@ -160,7 +160,7 @@ typedef struct WMMeasureChannelCallback {
 
 typedef struct WMStatus {
     WMStateCode state;
-    u8 unk[0x7c8];
+    u8 unk[0x7cc];
 } WMStatus;
 
 WMErrCode WM_Initialize(void *buf, void (*callback)(void *arg), u32 param3);

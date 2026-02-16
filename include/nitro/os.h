@@ -213,6 +213,8 @@ BOOL OS_func_0206d5ac(u16, u32);
 void OS_func_0206d66c(u16, u32);
 u32 OS_func_0206d3cc(void);
 
+void OS_func_0013(s32, void (*)(u32), u32);
+
 inline void OS_SetIrqCheckFlag(void) {
     REG_IRQ |= 1;
 }
