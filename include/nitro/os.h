@@ -118,6 +118,13 @@ typedef struct OSMutex {
     /* 18 */
 } OSMutex;
 
+typedef struct OSDma {
+    /* 00 */ vu32 src;
+    /* 04 */ vu32 dst;
+    /* 08 */ vu32 cnt;
+    /* 0c */
+} OSDma;
+
 typedef u32 OSHeapHandle;
 typedef u64 OSTime;
 

@@ -16,7 +16,10 @@ extern "C" {
 #define REG_DISPCAPCNT (*(vu32 *) 0x04000064)
 #define REG_GFX_STATUS (*(vu32 *) 0x04000600)
 
+#define REG_DMA ((OSDma *) 0x040000b0)
 #define REG_DMA0SAD (*(vu32 *) 0x040000b0)
+#define REG_DMA0DAD (*(vu32 *) 0x040000b4)
+#define REG_DMA0CNT (*(vu32 *) 0x040000b8)
 
 #define REG_VRAM_CNT_ABCD (*(vu32 *) 0x04000240)
 #define REG_VRAM_CNT_A (*(vu8 *) 0x04000240)
