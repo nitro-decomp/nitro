@@ -8,6 +8,7 @@ static void MI_func_0005(s32 id, u32 param2);
 static void MI_func_0006(BOOL param1, void *param2, s32 param3, s32 param4);
 static s32 MI_func_0010(s32 param1, void *param2, u32 param3, u32 param4, u32 param5);
 
+void MI_func_0007(void *inSrc, void *inDst, u32 size);
 void MI_func_0013(s32 dma, u32 param2, void *param3, BOOL param4, BOOL param5);
 void MI_func_0014(s32 dma, void *param2, u32 param3, BOOL param4, BOOL param5);
 void MI_func_0015(s32 dma, void *param2, u32 param3, BOOL param4, BOOL param5);
@@ -201,18 +202,18 @@ void MI_func_0006(BOOL param1, void *param2, s32 param3, s32 param4) {
 
 void MI_CpuFill16(u16 value, void *inBuf, u32 size) {
     u16 *buf = inBuf;
-#ifdef NO_ASM
+#ifdef NITRO_NO_ASM
     while (buf < inBuf + size) {
         *buf++ = value;
     }
 #else
     u32 i = 0;
     asm {
-    @loop:
+    loop:
         cmp i, size
         strlth value, [buf, i]
         addlt i, i, #0x2
-        blt @loop
+        blt loop
     }
 #endif
 }
@@ -220,7 +221,7 @@ void MI_CpuFill16(u16 value, void *inBuf, u32 size) {
 void MI_CpuCopy16(void *inSrc, void *inDst, u32 size) {
     u16 *src = inSrc;
     u16 *dst = inDst;
-#ifdef NO_ASM
+#ifdef NITRO_NO_ASM
     while (dst < inDst + size) {
         *dst++ = *src++;
     }
@@ -228,19 +229,19 @@ void MI_CpuCopy16(void *inSrc, void *inDst, u32 size) {
     u32 tmp;
     u32 i = 0;
     asm {
-    @loop:
+    loop:
         cmp i, size
         ldrlth tmp, [src, i]
         strlth tmp, [dst, i]
         addlt i, i, #0x2
-        blt @loop
+        blt loop
     }
 #endif
 }
 
 void MI_CpuFill32(u32 value, void *inBuf, u32 size) {
     u32 *buf = inBuf;
-#ifdef NO_ASM
+#ifdef NITRO_NO_ASM
     while (buf < inBuf + size) {
         *buf++ = value;
     }
@@ -248,10 +249,10 @@ void MI_CpuFill32(u32 value, void *inBuf, u32 size) {
     // clang-format off
     asm {
         add ip, inBuf, size
-    @loop:
+    loop:
         cmp buf, ip
         stmltia buf!, {r0}
-        blt @loop
+        blt loop
     }
     // clang-format on
 #endif
@@ -260,7 +261,7 @@ void MI_CpuFill32(u32 value, void *inBuf, u32 size) {
 void MI_CpuCopy32(void *inSrc, void *inDst, u32 size) {
     u32 *src = inSrc;
     u32 *dst = inDst;
-#ifdef NO_ASM
+#ifdef NITRO_NO_ASM
     while (dst < inDst + size) {
         *dst++ = *src++;
     }
@@ -268,17 +269,17 @@ void MI_CpuCopy32(void *inSrc, void *inDst, u32 size) {
     // clang-format off
     asm {
         add ip, inDst, size
-    @loop:
+    loop:
         cmp dst, ip
         ldmltia src!, {r2}
         stmltia dst!, {r2}
-        blt @loop
+        blt loop
     }
     // clang-format on
 #endif
 }
 
-#ifdef NO_ASM
+#ifdef NITRO_NO_ASM
 void _MI_CpuFill(u32 value, void *inBuf, u32 size) {
     u32 *buf        = inBuf;
     u32 alignedSize = size / 32 * 32;
@@ -299,7 +300,7 @@ void _MI_CpuFill(u32 value, void *inBuf, u32 size) {
 #else
 // clang-format off
 asm void _MI_CpuFill(u32 value, void *inBuf, u32 size) {
-    stmdb sp!, {r4, r5, r6, r7, r8, r9}
+    stmdb sp!, {r4-r9}
     add r9, r1, r2
     mov ip, r2, lsr #0x5
     add ip, r1, ip, lsl #0x5
@@ -310,17 +311,102 @@ asm void _MI_CpuFill(u32 value, void *inBuf, u32 size) {
     mov r6, r2
     mov r7, r2
     mov r8, r2
-@alignedLoop:
+alignedLoop:
     cmp r1, ip
-    stmltia r1!, {r0, r2, r3, r4, r5, r6, r7, r8}
-    blt @alignedLoop
-@remainderLoop:
+    stmltia r1!, {r0, r2-r8}
+    blt alignedLoop
+remainderLoop:
     cmp r1, r9
     stmltia r1!, {r0}
-    blt @remainderLoop
-@end:
-    ldmia sp!, {r4, r5, r6, r7, r8, r9}
+    blt remainderLoop
+end:
+    ldmia sp!, {r4-r9}
     bx lr
 }
 // clang-format on
 #endif
+
+#ifdef NITRO_NITRO_NO_ASM
+void MI_func_0007(void *inSrc, void *inDst, u32 size) {
+    u32 *src        = inSrc;
+    u32 *dst        = inDst;
+    u32 alignedSize = size / 32 * 32;
+    typedef struct {
+        u32 data[4];
+    } CopyStruct;
+    while (dst < inDst + alignedSize) {
+        *(CopyStruct *) dst       = *(CopyStruct *) src;
+        *(CopyStruct *) (dst + 4) = *(CopyStruct *) (src + 4);
+        dst += 8;
+        src += 8;
+    }
+    while (dst < inDst + size) {
+        *dst++ = *src++;
+    }
+}
+#else
+// clang-format off
+asm void MI_func_0007(void *inSrc, void *inDst, u32 size) {
+    stmdb sp!, {r4-r10}
+    add r10, r1, r2
+    mov ip, r2, lsr #0x5
+    add ip, r1, ip, lsl #0x5
+alignedLoop:
+    cmp r1, ip
+    ldmltia r0!, {r2-r9}
+    stmltia r1!, {r2-r9}
+    blt alignedLoop
+remainderLoop:
+    cmp r1, r10
+    ldmltia r0!, {r2}
+    stmltia r1!, {r2}
+    blt remainderLoop
+end:
+    ldmia sp!, {r4-r10}
+    bx lr
+}
+#endif
+// clang-format on
+
+void MI_CpuFill8(void *inBuf, u8 inValue, u32 size) {
+    u32 *buf  = inBuf;
+    u32 value = inValue;
+    u32 r3;
+    u32 ip;
+    if (size == 0) {
+        return;
+    }
+    if (((u32) buf & 1) != 0) {
+        *(u16 *) ((u32) buf - 1) = ((u8) * (u16 *) ((u32) buf - 1)) | (value << 8);
+        buf                      = (u32 *) ((u32) buf + 1);
+        size -= 1;
+        if (size == 0) {
+            return;
+        }
+    }
+    if (size >= 2) {
+        value |= (value << 8);
+        if (((u32) buf & 2) != 0) {
+            *((u16 *) buf)++ = value;
+            size -= 2;
+            if (size == 0) {
+                return;
+            }
+        }
+        value |= (value << 16);
+        r3 = size & ~3;
+        if (r3 > 0) {
+            size -= r3;
+            ip = r3 + (u32) buf;
+            do {
+                *buf++ = value;
+            } while (buf < (void *) ip);
+        }
+        if ((size & 2) != 0) {
+            *((u16 *) buf)++ = value;
+        }
+    }
+    if ((size & 1) != 0) {
+        (*(u16 *) buf) = ((*(u16 *) buf) & 0xff00) | (u8) value;
+    }
+}
