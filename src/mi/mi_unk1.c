@@ -410,3 +410,88 @@ void MI_CpuFill8(void *inBuf, u8 inValue, u32 size) {
         (*(u16 *) buf) = ((*(u16 *) buf) & 0xff00) | (u8) value;
     }
 }
+
+void MI_CpuCopy8(void *inSrc, void *inDst, u32 size) {
+    u32 temp_ip;
+    u32 temp_r3;
+    u32 src;
+    u32 dst;
+
+    src = (u32) inSrc;
+    dst = (u32) inDst;
+    if (size == 0) {
+        return;
+    }
+    if (dst & 1) {
+        temp_ip = (u8) * (u16 *) (dst - 1);
+        if ((src & 1) != 0) {
+            temp_r3 = *(u16 *) (src - 1);
+            temp_r3 >>= 8;
+        } else {
+            temp_r3 = *(u16 *) src;
+        }
+        *(u16 *) (dst - 1) = (u16) (temp_ip | (temp_r3 << 8));
+        src += 1;
+        dst += 1;
+        size -= 1;
+        if (size == 0) {
+            return;
+        }
+    }
+    if (((dst ^ src) & 1) != 0) {
+        src &= ~1;
+        temp_r3 = (u32) * (u16 *) src >> 8;
+        src += 2;
+        while ((size -= 2) >= 2) {
+            src += 2;
+            temp_ip      = temp_r3 | (*(u16 *) src << 8);
+            *(u16 *) dst = temp_ip;
+            dst += 2;
+            temp_r3 = temp_ip >> 16;
+        }
+        if ((size & 1) != 0) {
+            *(u16 *) dst = (*(u16 *) dst & 0xff00) | temp_r3;
+        }
+        return;
+    }
+    if (((dst ^ src) & 2) != 0) {
+        temp_r3 = size & ~1;
+        if (temp_r3 > 0) {
+            size -= temp_r3;
+            temp_ip = temp_r3 + dst;
+            do {
+                *(u16 *) dst = *(u16 *) src;
+                src += 2;
+                dst += 2;
+            } while (dst < temp_ip);
+        }
+    } else if (size >= 2) {
+        if (dst & 2) {
+            *(u16 *) dst = *(u16 *) src;
+            src += 2;
+            dst += 2;
+            size -= 2;
+            if (size == 0) {
+                return;
+            }
+        }
+        temp_r3 = size & ~3;
+        if (temp_r3 != 0) {
+            size -= temp_r3;
+            temp_ip = temp_r3 + dst;
+            do {
+                *(s32 *) dst = *(s32 *) src;
+                src += 4;
+                dst += 4;
+            } while (dst < temp_ip);
+        }
+        if ((size & 2) != 0) {
+            *(u16 *) dst = *(u16 *) src;
+            src += 2;
+            dst += 2;
+        }
+    }
+    if ((size & 1) != 0) {
+        *(u16 *) dst = (u16) ((*(u16 *) dst & 0xFF00) | (u8) * (u16 *) src);
+    }
+}
