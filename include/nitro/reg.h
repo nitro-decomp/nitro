@@ -68,9 +68,9 @@ extern "C" {
 #define REG_GFX_FIFO_SWAP_BUFFERS (*(vu32 *) 0x04000540)
 #define REG_GFX_FIFO_VIEWPORT (*(vu32 *) 0x04000580)
 
-extern u32 _DTCM_BASE; // TODO: Provide address via LCF
-#define DTCM_BASE ((u8 *) &_DTCM_BASE)
-#define REG_IRQ (*(u32 *) (DTCM_BASE + 0x3FF8))
+extern u32 __DTCM_LO;
+#define DTCM_LO ((u8 *) &__DTCM_LO)
+#define REG_IRQ (*(u32 *) (DTCM_LO + 0x3FF8))
 
 #define _MAIN_REG_BASE 0x04000000
 #define _SUB_REG_BASE 0x04001000

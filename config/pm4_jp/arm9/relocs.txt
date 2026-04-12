@@ -20570,7 +20570,7 @@ from:0x02080894 kind:load to:0x0216d170 module:main
 from:0x02081cc4 kind:arm_call to:0x02081e80 module:main
 from:0x02081e68 kind:arm_call to:0x02082094 module:main
 from:0x020827dc kind:arm_call to:0x02074960 module:main
-from:0x0208280c kind:load to:0x020913f8 module:main
+from:0x0208280c kind:link_time_const(ARM9_CTOR_START)
 from:0x02082848 kind:load to:0x02074948 module:main
 from:0x02082854 kind:load to:0x02074960 module:main
 from:0x02082860 kind:load to:0x02074974 module:main

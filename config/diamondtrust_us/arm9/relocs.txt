@@ -5635,7 +5635,7 @@ from:0x0202e2f0 kind:arm_call to:0x0202e344 module:main
 from:0x0202e30c kind:load to:0x021384a4 module:main
 from:0x0202e310 kind:load to:0x021384c4 module:main
 from:0x0202e314 kind:load to:0x02138590 module:main
-from:0x0202e320 kind:load to:0x027e0000 module:dtcm
+from:0x0202e320 kind:link_time_const(__DTCM_LO)
 from:0x0202e330 kind:load to:0x021384c0 module:main
 from:0x0202e338 kind:load to:0x021384d0 module:main
 from:0x0202e33c kind:load to:0x0202e800 module:main
@@ -7085,7 +7085,7 @@ from:0x02040f60 kind:arm_call to:0x0203fcc4 module:main
 from:0x02040f70 kind:arm_call to:0x02040210 module:main
 from:0x02040f80 kind:arm_call to:0x02040e54 module:main
 from:0x02040f98 kind:arm_call to:0x0204150c module:main
-from:0x02040ff8 kind:load to:0x0207c140 module:main
+from:0x02040ff8 kind:link_time_const(ARM9_CTOR_START)
 from:0x0204103c kind:load to:0x0213bb44 module:main
 from:0x02041048 kind:load to:0x020358ac module:main
 from:0x02041054 kind:load to:0x02041058 module:main

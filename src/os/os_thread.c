@@ -215,9 +215,9 @@ void OS_InitThread(void) {
     if (OS_unk_linker_1 <= 0) {
         stackLo = OS_unk_linker_3 - OS_unk_linker_1;
     } else {
-        stackLo = DTCM_BASE + 0x3f80 - OS_unk_linker_2 - OS_unk_linker_1;
+        stackLo = DTCM_LO + 0x3f80 - OS_unk_linker_2 - OS_unk_linker_1;
     }
-    data_0216a270.stackHi                = DTCM_BASE + 0x3f80 - OS_unk_linker_2;
+    data_0216a270.stackHi                = DTCM_LO + 0x3f80 - OS_unk_linker_2;
     data_0216a270.stackLo                = stackLo;
     data_0216a270.unk_98                 = 0;
     *(u32 *) (data_0216a270.stackHi - 4) = 0xfddb597d;

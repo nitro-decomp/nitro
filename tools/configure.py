@@ -25,7 +25,7 @@ args = parser.parse_args()
 
 
 # Config
-DSD_VERSION = 'v0.10.1'
+DSD_VERSION = 'v0.11.0'
 WIBO_VERSION = '0.6.16'
 OBJDIFF_VERSION = 'v3.0.0-beta.6'
 MWCC_VERSION = {
@@ -191,6 +191,9 @@ class Project:
 def check_can_run_dsd() -> bool:
     try:
         output = subprocess.run([DSD, "--version"], capture_output=True, text=True, check=True)
+        if args.dsd is not None:
+            # Custom dsd specified, don't check version number
+            return True
         version = output.stdout.strip().split(" ")[-1]
         if not version.startswith("v"):
             version = "v" + version
