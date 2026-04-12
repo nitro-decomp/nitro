@@ -3,27 +3,27 @@
 #include "nitro/reg.h"
 
 static void MI_func_0001(u8 param1);
-static void MI_func_0004(s32 id);
-static void MI_func_0005(s32 id, u32 param2);
-static void MI_func_0006(BOOL param1, void *param2, s32 param3, s32 param4);
-static s32 MI_func_0010(s32 param1, void *param2, u32 param3, u32 param4, u32 param5);
+static void MI_func_0004(s32 dmaChannel);
+static void MI_func_0005(s32 dmaChannel, u32 param2);
+static void MI_func_0006(s32 dmaChannel, void *param2, s32 param3, s32 param4);
+static s32 MI_func_0010(s32 dmaChannel, void *param2, u32 param3, u32 param4, u32 param5);
 
 void MI_func_0007(void *inSrc, void *inDst, u32 size);
-void MI_func_0013(s32 dma, u32 param2, void *param3, BOOL param4, BOOL param5);
-void MI_func_0014(s32 dma, void *param2, u32 param3, BOOL param4, BOOL param5);
-void MI_func_0015(s32 dma, void *param2, u32 param3, BOOL param4, BOOL param5);
+void MI_func_0013(s32 dmaChannel, u32 param2, void *param3, BOOL param4, BOOL param5);
+void MI_func_0014(s32 dmaChannel, void *param2, u32 param3, BOOL param4, BOOL param5);
+void MI_func_0015(s32 dmaChannel, void *param2, u32 param3, BOOL param4, BOOL param5);
 void MI_func_0016(s32 param1, u32 param2, void *param3, BOOL param4, void (*param5)(u32), u32 param6, BOOL param7);
 void MI_func_0017(s32 param1, void *param2, u32 param3, BOOL param4, void (*param5)(u32), u32 param6, BOOL param7);
 void MI_func_0018(s32 param1);
 void MI_func_0020(void);
 void MI_CpuFill16(u16 value, void *buf, u32 size);
 
-inline u32 MI_DmaBusyFlag(u32 dma) {
-    return *(vu32 *) &(&REG_DMA0SAD)[dma * 3 + 2] & 0x80000000;
+inline u32 MI_DmaBusyFlag(u32 dmaChannel) {
+    return *(vu32 *) &(&REG_DMA0SAD)[dmaChannel * 3 + 2] & 0x80000000;
 }
 
-inline void MI_WaitDma(u32 dma) {
-    while (MI_DmaBusyFlag(dma)) {
+inline void MI_WaitDma(u32 dmaChannel) {
+    while (MI_DmaBusyFlag(dmaChannel)) {
     }
 }
 
@@ -31,51 +31,51 @@ static void MI_func_0001(u8 param1) {
     REG_WRAM_CNT = param1;
 }
 
-void MI_func_0013(s32 dma, u32 param2, void *param3, BOOL param4, BOOL param5) {
+void MI_func_0013(s32 dmaChannel, u32 param2, void *param3, BOOL param4, BOOL param5) {
     if (!param4) {
         return;
     }
 
-    MI_WaitDma(dma);
+    MI_WaitDma(dmaChannel);
     if (param5) {
-        MI_func_0010(dma, param3, param2, param4 >> 2 | 0x85000000, 0x12);
+        MI_func_0010(dmaChannel, param3, param2, param4 >> 2 | 0x85000000, 0x12);
     } else {
-        MI_func_0010(dma, param3, param2, param4 >> 2 | 0x5000000, 0x16);
+        MI_func_0010(dmaChannel, param3, param2, param4 >> 2 | 0x5000000, 0x16);
     }
-    MI_WaitDma(dma);
+    MI_WaitDma(dmaChannel);
 }
 
-void MI_func_0014(s32 dma, void *param2, u32 param3, BOOL param4, BOOL param5) {
+void MI_func_0014(s32 dmaChannel, void *param2, u32 param3, BOOL param4, BOOL param5) {
     if (!param4) {
         return;
     }
 
-    MI_func_0006(dma, param2, param4, 0);
-    MI_WaitDma(dma);
+    MI_func_0006(dmaChannel, param2, param4, 0);
+    MI_WaitDma(dmaChannel);
     if (param5) {
-        MI_func_0010(dma, param2, param3, param4 >> 2 | 0x84000000, 0x2);
+        MI_func_0010(dmaChannel, param2, param3, param4 >> 2 | 0x84000000, 0x2);
     } else {
-        MI_func_0010(dma, param2, param3, param4 >> 2 | 0x4000000, 0x6);
+        MI_func_0010(dmaChannel, param2, param3, param4 >> 2 | 0x4000000, 0x6);
     }
-    MI_WaitDma(dma);
+    MI_WaitDma(dmaChannel);
 }
 
-void MI_func_0015(s32 dma, void *param2, u32 param3, BOOL param4, BOOL param5) {
+void MI_func_0015(s32 dmaChannel, void *param2, u32 param3, BOOL param4, BOOL param5) {
     if (!param4) {
         return;
     }
 
-    MI_func_0006(dma, param2, param4, 0);
-    MI_WaitDma(dma);
+    MI_func_0006(dmaChannel, param2, param4, 0);
+    MI_WaitDma(dmaChannel);
     if (param5) {
-        MI_func_0010(dma, param2, param3, param4 >> 1 | 0x80000000, 0x2);
+        MI_func_0010(dmaChannel, param2, param3, param4 >> 1 | 0x80000000, 0x2);
     } else {
-        MI_func_0010(dma, param2, param3, param4 >> 1, 0x6);
+        MI_func_0010(dmaChannel, param2, param3, param4 >> 1, 0x6);
     }
-    MI_WaitDma(dma);
+    MI_WaitDma(dmaChannel);
 }
 
-void MI_func_0016(s32 param1, u32 param2, void *param3, BOOL param4, void (*param5)(u32), u32 param6, BOOL param7) {
+void MI_func_0016(s32 dmaChannel, u32 param2, void *param3, BOOL param4, void (*param5)(u32), u32 param6, BOOL param7) {
     if (!param4) {
         if (param5) {
             (*param5)(param6);
@@ -83,23 +83,23 @@ void MI_func_0016(s32 param1, u32 param2, void *param3, BOOL param4, void (*para
         return;
     }
 
-    MI_func_0018(param1);
+    MI_func_0018(dmaChannel);
     if (param5) {
-        OS_func_0013(param1, param5, param6);
+        OS_func_0013(dmaChannel, param5, param6);
         if (param7) {
-            MI_func_0010(param1, param3, param2, param4 >> 2 | 0xc5000000, 0x10);
+            MI_func_0010(dmaChannel, param3, param2, param4 >> 2 | 0xc5000000, 0x10);
         } else {
-            MI_func_0010(param1, param3, param2, param4 >> 2 | 0x45000000, 0x14);
+            MI_func_0010(dmaChannel, param3, param2, param4 >> 2 | 0x45000000, 0x14);
         }
     } else if (param7) {
-        MI_func_0010(param1, param3, param2, param4 >> 2 | 0x85000000, 0x10);
+        MI_func_0010(dmaChannel, param3, param2, param4 >> 2 | 0x85000000, 0x10);
     } else {
-        MI_func_0010(param1, param3, param2, param4 >> 2 | 0x5000000, 0x14);
+        MI_func_0010(dmaChannel, param3, param2, param4 >> 2 | 0x5000000, 0x14);
     }
 }
 
-void MI_func_0017(s32 param1, void *param2, u32 param3, BOOL param4, void (*param5)(u32), u32 param6, BOOL param7) {
-    MI_func_0006(param1, param2, param4, 0);
+void MI_func_0017(s32 dmaChannel, void *param2, u32 param3, BOOL param4, void (*param5)(u32), u32 param6, BOOL param7) {
+    MI_func_0006(dmaChannel, param2, param4, 0);
     if (!param4) {
         if (param5) {
             (*param5)(param6);
@@ -107,29 +107,29 @@ void MI_func_0017(s32 param1, void *param2, u32 param3, BOOL param4, void (*para
         return;
     }
 
-    MI_func_0018(param1);
+    MI_func_0018(dmaChannel);
     if (param5) {
-        OS_func_0013(param1, param5, param6);
+        OS_func_0013(dmaChannel, param5, param6);
         if (param7 != 0) {
-            MI_func_0010(param1, param2, param3, param4 >> 2 | 0xc4000000, 0);
+            MI_func_0010(dmaChannel, param2, param3, param4 >> 2 | 0xc4000000, 0);
         } else {
-            MI_func_0010(param1, param2, param3, param4 >> 2 | 0x44000000, 4);
+            MI_func_0010(dmaChannel, param2, param3, param4 >> 2 | 0x44000000, 4);
         }
         return;
     }
     if (param7) {
-        MI_func_0010(param1, param2, param3, param4 >> 2 | 0x84000000, 0);
+        MI_func_0010(dmaChannel, param2, param3, param4 >> 2 | 0x84000000, 0);
     } else {
-        MI_func_0010(param1, param2, param3, param4 >> 2 | 0x4000000, 4);
+        MI_func_0010(dmaChannel, param2, param3, param4 >> 2 | 0x4000000, 4);
     }
 }
 
-void MI_func_0018(s32 id) {
+void MI_func_0018(s32 dmaChannel) {
     OSIntrMode intr = OS_DisableInterrupts();
     do {
-    } while (REG_DMA[id].cnt & 0x80000000);
-    if (id == 0) {
-        OSDma *dma = &REG_DMA[id];
+    } while (REG_DMA[dmaChannel].cnt & 0x80000000);
+    if (dmaChannel == 0) {
+        OSDma *dma = &REG_DMA[dmaChannel];
         dma->src   = NULL;
         dma->dst   = NULL;
         dma->cnt   = 0x81400001;
@@ -137,14 +137,14 @@ void MI_func_0018(s32 id) {
     OS_RestoreInterrupts(intr);
 }
 
-static void MI_func_0004(s32 id) {
+static void MI_func_0004(s32 dmaChannel) {
     OSIntrMode intr = OS_DisableInterrupts();
-    REG_DMA[id].cnt &= ~0x3a000000;
-    REG_DMA[id].cnt &= ~0x80000000;
-    REG_DMA[id].cnt;
-    REG_DMA[id].cnt;
-    if (id == 0) {
-        OSDma *dma = &REG_DMA[id];
+    REG_DMA[dmaChannel].cnt &= ~0x3a000000;
+    REG_DMA[dmaChannel].cnt &= ~0x80000000;
+    REG_DMA[dmaChannel].cnt;
+    REG_DMA[dmaChannel].cnt;
+    if (dmaChannel == 0) {
+        OSDma *dma = &REG_DMA[dmaChannel];
         dma->src   = NULL;
         dma->dst   = NULL;
         dma->cnt   = 0x81400001;
@@ -159,10 +159,10 @@ void MI_func_0020(void) {
     MI_func_0004(3);
 }
 
-static void MI_func_0005(s32 id, u32 param2) {
+static void MI_func_0005(s32 dmaChannel, u32 param2) {
     s32 i;
     for (i = 0; i < 3; ++i) {
-        if (i == id) {
+        if (i == dmaChannel) {
             continue;
         }
         u32 cnt = REG_DMA[i].cnt;
@@ -178,11 +178,11 @@ static void MI_func_0005(s32 id, u32 param2) {
     }
 }
 
-void MI_func_0006(BOOL param1, void *param2, s32 param3, s32 param4) {
+void MI_func_0006(s32 dmaChannel, void *param2, s32 param3, s32 param4) {
     u32 before;
     u32 after;
 
-    if (param1) {
+    if (dmaChannel != 0) {
         return;
     }
     before = (u32) param2 & 0xff000000;
@@ -494,4 +494,32 @@ void MI_CpuCopy8(void *inSrc, void *inDst, u32 size) {
     if ((size & 1) != 0) {
         *(u16 *) dst = (u16) ((*(u16 *) dst & 0xFF00) | (u8) * (u16 *) src);
     }
+}
+
+void MI_Swap(u32 *a, u32 *b) {
+#ifdef NITRO_NO_ASM
+    u32 tmp = *b;
+    *b      = *a;
+    *a      = tmp;
+#else
+    asm {
+        swp a, a, [b]
+    }
+#endif
+}
+
+void MI_func_0008(s32 dmaChannel, void *param2, u32 param3, s32 param4) {
+    MI_func_0005(dmaChannel, -1);
+    MI_func_0006(dmaChannel, param2, param4, 0x01000000);
+    if (param4 == 0) {
+        return;
+    }
+    while (REG_DMA[dmaChannel].cnt & 0x80000000) {
+    }
+    MI_func_0010(dmaChannel, param2, param3, 0xAF000001, 0);
+}
+
+void MI_func_0009(void) {
+    MI_func_0001(3);
+    MI_func_0004(0);
 }
