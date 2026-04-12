@@ -75,11 +75,9 @@ src/os/os_unk5.c:
 src/rtc/rtc_unk1.c:
     .text       start:0x02030b70 end:0x0203141c
 
-src/snd/snd_unk1.c:
-    .text       start:0x0203141c end:0x0203157c
-
-src/snd/snd_unk2.c:
-    .text       start:0x0203157c end:0x02031cf8
+src/snd/snd.c:
+    .text       start:0x0203141c end:0x02031cf8
+    .bss        start:0x021388e8 end:0x0213a444
 
 src/tp/tp_unk1.c:
     .text       start:0x02031cf8 end:0x02032730

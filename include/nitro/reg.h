@@ -156,6 +156,8 @@ extern u32 __DTCM_LO;
 #define REG_BLDALPHA_SUB _REG_BLDALPHA(_SUB_REG_BASE)
 #define REG_MASTER_BRIGHT_SUB _REG_MASTER_BRIGHT(_SUB_REG_BASE)
 
+#define REG_04FFF200 (*(vu32 *) 0x04fff200)
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

@@ -6037,8 +6037,8 @@ from:0x0203165c kind:arm_call to:0x0203180c module:main
 from:0x02031664 kind:arm_call to:0x02031844 module:main
 from:0x0203166c kind:load to:0x02138be0 module:main
 from:0x02031670 kind:load to:0x02138904 module:main
-from:0x02031674 kind:load to:0x02139be0 module:main
-from:0x02031678 kind:load to:0x0213a3c8 module:main
+from:0x02031674 kind:load to:0x02138be0 add:0x1000 module:main
+from:0x02031678 kind:load to:0x02138be0 add:0x17e8 module:main
 from:0x0203167c kind:load to:0x02138960 module:main
 from:0x02031680 kind:load to:0x0213a440 module:main
 from:0x02031690 kind:arm_call to:0x020304b8 module:main

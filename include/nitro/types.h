@@ -38,6 +38,8 @@ typedef u32 BOOL;
 
 #define ATTRIBUTE_ALIGN(x) __attribute__((aligned(x)))
 
+#define ARRAY_LEN(arr) ((s32) (sizeof(arr) / sizeof(*(arr))))
+
 #ifdef __cplusplus
 } // extern "C"
 #endif
