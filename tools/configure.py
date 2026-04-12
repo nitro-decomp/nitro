@@ -27,7 +27,7 @@ args = parser.parse_args()
 # Config
 DSD_VERSION = 'v0.11.0'
 WIBO_VERSION = '0.6.16'
-OBJDIFF_VERSION = 'v3.0.0-beta.6'
+OBJDIFF_VERSION = 'v3.7.1'
 MWCC_VERSION = {
     "pm4_jp": "2.0/sp1p5",
     "diamondtrust_us": "dsi/1.3p1",
@@ -156,7 +156,7 @@ class Project:
     def source_object_files(self) -> list[str]:
         files: list[str] = []
         for source_file in get_c_cpp_files([src_path, libs_path]):
-            files.append(str(source_file.with_suffix(".o")))
+            files.append(str(self.game_build / source_file.with_suffix(".o")))
         return files
 
     def nitro_o(self) -> Path:
