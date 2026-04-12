@@ -21,8 +21,8 @@ typedef struct RTCTime {
 } RTCTime;
 
 void RTC_Init(void);
-void RTC_GetDate(RTCDate *date);
-void RTC_GetTime(RTCTime *time);
+s32 RTC_GetDate(RTCDate *date);
+s32 RTC_GetTime(RTCTime *time);
 u64 RTC_ConvertDateTimeToSecond(const RTCDate *date, const RTCTime *time);
 
 #ifdef __cplusplus
