@@ -6,7 +6,7 @@ from pathlib import Path
 import argparse
 import sys
 import subprocess
-from typing import Any
+from typing import Any, Generator
 
 import ninja_syntax # type: ignore
 from get_platform import Platform, get_platform
@@ -153,11 +153,12 @@ class Project:
     def baserom_config(self) -> Path:
         return self.game_extract / 'config.yaml'
 
-    def source_object_files(self) -> list[str]:
-        files: list[str] = []
-        for source_file in get_c_cpp_files([src_path, libs_path]):
-            files.append(str(self.game_build / source_file.with_suffix(".o")))
-        return files
+    def source_files(self) -> Generator[Path]:
+        yield from get_c_cpp_files([src_path, libs_path])
+
+    def source_object_files(self) -> Generator[Path]:
+        for source_file in self.source_files():
+            yield self.game_build / source_file.with_suffix(".o")
 
     def nitro_o(self) -> Path:
         return self.game_build / "nitro.o"
@@ -453,7 +454,7 @@ def add_mwld_builds(n: ninja_syntax.Writer, project: Project):
 
 
 def add_mwcc_builds(n: ninja_syntax.Writer, project: Project, mwcc_implicit: list[str]):
-    for source_file in get_c_cpp_files([src_path, libs_path]):
+    for source_file in project.source_files():
         src_obj_path = project.game_build / source_file
         cc_flags: list[str] = []
         if is_cpp(source_file):
@@ -587,7 +588,7 @@ def add_check_builds(n: ninja_syntax.Writer, project: Project):
 
 def add_objdiff_builds(n: ninja_syntax.Writer, project: Project):
     n.build(
-        inputs=project.dsd_configs(),
+        inputs=project.dsd_configs() + [str(f) for f in project.source_object_files()],
         implicit=DSD,
         rule="objdiff",
         outputs="objdiff.json",
@@ -607,7 +608,7 @@ def add_objdiff_builds(n: ninja_syntax.Writer, project: Project):
     delink_files = project.delink_files()
     n.build(
         inputs=["objdiff.json"],
-        implicit=[OBJDIFF] + delink_files + project.source_object_files(),
+        implicit=[OBJDIFF] + delink_files + [str(f) for f in project.source_object_files()],
         rule="objdiff_report",
         outputs=str(project.objdiff_report()),
     )
