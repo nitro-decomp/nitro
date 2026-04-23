@@ -153,10 +153,10 @@ class Project:
     def baserom_config(self) -> Path:
         return self.game_extract / 'config.yaml'
 
-    def source_files(self) -> Generator[Path]:
+    def source_files(self) -> Generator[Path, Any, Any]:
         yield from get_c_cpp_files([src_path, libs_path])
 
-    def source_object_files(self) -> Generator[Path]:
+    def source_object_files(self) -> Generator[Path, Any, Any]:
         for source_file in self.source_files():
             yield self.game_build / source_file.with_suffix(".o")
 
