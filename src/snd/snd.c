@@ -46,7 +46,7 @@ static void SND_func_0020(SNDCommand *command);
 static s32 SND_func_0024(void);
 static s32 SND_func_0025(void);
 static s32 SND_func_0026(void);
-static void SND_func_0027(u32 arg0, u32 arg1);
+static void SND_func_0027(u32 arg0, u32 arg1, u32 arg2);
 static void SND_func_0028(void);
 static void SND_func_0029(void);
 static SNDCommand *SND_func_0030(void);
@@ -324,7 +324,7 @@ static s32 SND_func_0026(void) {
     return (0x100 - temp_r4) - SND_func_0025();
 }
 
-static void SND_func_0027(u32 arg0, u32 arg1) {
+static void SND_func_0027(u32 arg0, u32 arg1, u32 arg2) {
     OSIntrMode irq;
 
     irq = OS_DisableInterrupts();
