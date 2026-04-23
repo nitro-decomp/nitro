@@ -589,7 +589,7 @@ def add_check_builds(n: ninja_syntax.Writer, project: Project):
 
 def add_objdiff_builds(n: ninja_syntax.Writer, project: Project):
     n.build(
-        inputs=project.dsd_configs() + [str(f) for f in project.source_object_files()],
+        inputs=project.dsd_configs(),
         implicit=DSD,
         rule="objdiff",
         outputs="objdiff.json",
