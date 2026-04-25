@@ -1376,7 +1376,6 @@ func_0203f200 kind:function(arm,size=0x21c) addr:0x0203f200
 func_0203f41c kind:function(arm,size=0x8) addr:0x0203f41c
 func_0203f430 kind:function(arm,size=0x278) addr:0x0203f430
 func_0203f6c0 kind:function(arm,size=0x544) addr:0x0203f6c0
-.L_0203f7f8 kind:data(byte[256]) addr:0x0203f7f8
 func_0203fc04 kind:function(arm,size=0x4) addr:0x0203fc04
 func_0203fc08 kind:function(arm,size=0xc) addr:0x0203fc08
 func_0203fc14 kind:function(arm,size=0x4) addr:0x0203fc14
