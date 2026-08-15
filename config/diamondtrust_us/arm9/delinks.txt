@@ -52,6 +52,7 @@ src/os/os_mutex.c:
     .text       start:0x0202ebd4 end:0x0202ee54
 
 src/os/os_cache.c:
+    complete
     .text       start:0x0202ee54 end:0x0202ef18
 
 src/os/os_init.c:

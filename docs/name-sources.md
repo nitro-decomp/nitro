@@ -55,6 +55,7 @@ This table outlines the source of every symbol/macro name used in this decompila
 | DC_StoreRange       | Function | pm4
 | DC_FlushAll         | Function | pm4
 | DC_FlushRange       | Function | pm4
+| DC_InvalidateAll    | Function
 | DC_InvalidateRange  | Function | diamondtrust
 | DC_DrainWriteBuffer | Function
 |

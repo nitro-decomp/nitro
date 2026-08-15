@@ -13,14 +13,66 @@
     DC_DRAIN_WRITE_BUFFER(zero); \
     DC_CLEAN_INVALIDATE_SI(si);
 
+#define DC_INVALIDATE_ALL(zero) mcr p15, 0, zero, c7, c6, 0
 #define DC_INVALIDATE(line) mcr p15, 0, line, c7, c6, 1
 
-#define DC_CLEAN(line) mcr p15, 0, ptr, c7, c10, 1
+#define DC_CLEAN_VA(addr) mcr p15, 0, addr, c7, c10, 1
+#define DC_CLEAN_SI(si) mcr p15, 0, si, c7, c10, 2
 
 #define IC_INVALIDATE_ALL(zero) mcr p15, 0, zero, c7, c5, 0
 #define IC_INVALIDATE(line) mcr p15, 0, line, c7, c5, 1
 
 #define OS_CACHE_INS(ins) asm(ins);
+
+void DC_InvalidateAll(void *ptr, u32 size) {
+#ifdef NITRO_NO_ASM
+    s32 zero = 0;
+    OS_CACHE_INS(DC_INVALIDATE_ALL(zero));
+#else
+    asm("mov r0, 0");
+    OS_CACHE_INS(DC_INVALIDATE_ALL(r0));
+#endif
+}
+
+void DC_StoreAll(void) {
+#ifdef NITRO_NO_ASM
+    s32 bank;
+    s32 si;
+    s32 line;
+
+    bank = 0;
+    do {
+        line = 0;
+        do {
+            si = bank | line;
+            OS_CACHE_INS(DC_CLEAN_SI(si));
+            line += OS_CACHE_LINE_SIZE;
+        } while (line < 0x400);
+        bank += 0x40000000;
+    } while (bank != 0);
+#else
+    s32 line;
+    s32 bank;
+    s32 si;
+
+    asm {
+        mov bank, 0
+    loop_bank:
+        mov line, 0
+    loop_line:
+        orr si, bank, line
+        DC_CLEAN_SI(si)
+        add line, line, OS_CACHE_LINE_SIZE
+        cmp line, 0x400
+        blt loop_line
+    end_loop_line:
+        add bank, bank, 0x40000000
+        cmp bank, 0
+        bne loop_bank
+    end:
+    }
+#endif
+}
 
 void DC_FlushAll(void) {
 #ifdef NITRO_NO_ASM
@@ -35,7 +87,7 @@ void DC_FlushAll(void) {
         line = 0;
         do {
             si = bank | line;
-            OS_CACHE_INS(DC_FLUSH(zero, si));
+            OS_CACHE_INS(DC_FLUSH_SI(zero, si));
             line += OS_CACHE_LINE_SIZE;
         } while (line < 0x400);
         bank += 0x40000000;
@@ -82,7 +134,7 @@ void DC_StoreRange(void *ptr, u32 size) {
     end = size + (s32) ptr;
     ptr = (void *) ((s32) ptr & ~(OS_CACHE_LINE_SIZE - 1));
     do {
-        OS_CACHE_INS(DC_CLEAN(ptr));
+        OS_CACHE_INS(DC_CLEAN_VA(ptr));
         ptr += OS_CACHE_LINE_SIZE;
     } while ((s32) ptr < end);
 }
@@ -101,8 +153,8 @@ void DC_FlushRange(void *ptr, u32 size) {
         ptr += OS_CACHE_LINE_SIZE;
     } while ((s32) ptr < end);
 #else
-    asm("mov ip, 0");
     s32 end;
+    asm("mov ip, 0");
 
     end = size + (s32) ptr;
     ptr = (void *) ((s32) ptr & ~(OS_CACHE_LINE_SIZE - 1));
