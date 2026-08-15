@@ -1,3 +1,3 @@
 MI_func_0010 kind:function(arm,size=0xd0) addr:0x01ff8000
-OS_func_0112 kind:function(arm,size=0x58) addr:0x01ff80d0
-OS_func_0113 kind:function(arm,size=0x160) addr:0x01ff8128
+OS_func_0177 kind:function(arm,size=0x58) addr:0x01ff80d0
+OS_func_0178 kind:function(arm,size=0x160) addr:0x01ff8128

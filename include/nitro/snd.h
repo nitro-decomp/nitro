@@ -48,7 +48,6 @@ void SND_Init(void);
 SNDCommand *SND_RecvCommandReply(u32);
 BOOL SND_FlushCommand(u32);
 
-void SND_StopTimer(u32 channel, u32, u32 alarm, u32);
 void SND_UnlockChannel(u32 channel, u32);
 void SND_LockChannel(u32 channel, u32);
 void SND_SetChannelVolume(u32 channel, u32 volume, u32 datashift);
@@ -59,6 +58,7 @@ void SND_SetupChannelPcm(u32 channel, u32 format, void *buf, u32 loop, u32, u32 
 
 void SND_SetupAlarm(u32 num, u32, u32, SNDAlarmCallback callback, void *arg);
 void SND_StartTimer(u32 channel, u32, u32 num, u32);
+void SND_StopTimer(u32 channel, u32, u32 alarm, u32);
 
 u32 SND_GetCurrentCommandTag(void);
 void SND_WaitForCommandProc(u32 tag);

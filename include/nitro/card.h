@@ -7,6 +7,7 @@ extern "C" {
 
 #include "nitro/types.h"
 
+#define CARD_BACKUP_TYPE_NOT_USE // TODO: Find value
 #define CARD_BACKUP_TYPE_EEPROM 1
 #define CARD_BACKUP_TYPE_FLASH 2
 #define CARD_BACKUP_TYPE_FRAM 3
@@ -39,9 +40,29 @@ CARDBackupType CARD_GetBackupType();
 #define CARD_IsBackupEeprom() (CARD_GetBackupType() & 0xff) == CARD_BACKUP_TYPE_EEPROM
 #define CARD_IsBackupFlash() (CARD_GetBackupType() & 0xff) == CARD_BACKUP_TYPE_FLASH
 #define CARD_IsBackupFram() (CARD_GetBackupType() & 0xff) == CARD_BACKUP_TYPE_FRAM
+u32 CARD_GetBackupTotalSize(void);
 void CARD_ReadWriteBackupAsync(u32 offset, void *buf, u32 size, void *, void *, u32, u32, u32, u32);
 void CARD_WaitBackupAsync(void);
 CARDResult CARD_GetResultCode(void);
+
+inline void CARD_ReadEeprom(u32 offset, void *buf, u32 size) {
+    // TODO: Implement from GameSpy ReadFromBackup
+}
+inline void CARD_ReadFlash(u32 offset, void *buf, u32 size) {
+    // TODO: Implement from GameSpy ReadFromBackup
+}
+inline void CARD_ReadFram(u32 offset, void *buf, u32 size) {
+    // TODO: Implement from GameSpy ReadFromBackup
+}
+inline void CARD_WriteAndVerifyEeprom(u32 offset, void *buf, u32 size) {
+    // TODO: Implement from GameSpy WriteToBackup
+}
+inline void CARD_WriteAndVerifyFlash(u32 offset, void *buf, u32 size) {
+    // TODO: Implement from GameSpy WriteToBackup
+}
+inline void CARD_WriteAndVerifyFram(u32 offset, void *buf, u32 size) {
+    // TODO: Implement from GameSpy WriteToBackup
+}
 
 inline void CARD_ReadEepromAsync(u32 offset, void *buf, u32 size, void *param4, void *param5) {
     CARD_ReadWriteBackupAsync(offset, buf, size, param4, param5, 1, 6, 1, 0);

@@ -7,6 +7,7 @@ extern "C" {
 
 #include <stdarg.h>
 
+#include "nitro/os/cache.h"
 #include "nitro/reg.h"
 
 #define OS_IE_V_BLANK 1
@@ -135,8 +136,8 @@ void OS_InitThread(void);
 void OS_InitTick(void);
 void OS_InitAlarm(void);
 void OS_Terminate(void);
-void OS_SetIrqFunction(u32 type, void (*function)());
 
+void OS_SetIrqFunction(u32 type, void (*function)());
 void OS_EnableIrqMask(u32 mask);
 
 void OS_WaitVBlankIntr(void);
@@ -238,22 +239,22 @@ inline u16 OS_EnableIrq(void) {
     return oldVal;
 }
 
-inline u32 OS_GetMainArenaLo() {
+inline u32 OS_GetMainArenaLo(void) {
     return OS_GetArenaLo(OS_ARENA_MAIN);
 }
 inline u32 OS_GetMainArenaHi(void) {
     return OS_GetArenaHi(OS_ARENA_MAIN);
 }
-inline u32 OS_GetITCMArenaLo() {
+inline u32 OS_GetITCMArenaLo(void) {
     return OS_GetArenaLo(OS_ARENA_ITCM);
 }
-inline u32 OS_GetITCMArenaHi() {
+inline u32 OS_GetITCMArenaHi(void) {
     return OS_GetArenaHi(OS_ARENA_ITCM);
 }
-inline u32 OS_GetDTCMArenaLo() {
+inline u32 OS_GetDTCMArenaLo(void) {
     return OS_GetArenaLo(OS_ARENA_DTCM);
 }
-inline u32 OS_GetDTCMArenaHi() {
+inline u32 OS_GetDTCMArenaHi(void) {
     return OS_GetArenaHi(OS_ARENA_DTCM);
 }
 

@@ -161,11 +161,12 @@ void MI_func_0020(void) {
 
 static void MI_func_0005(s32 dmaChannel, u32 param2) {
     s32 i;
+    u32 cnt;
     for (i = 0; i < 3; ++i) {
         if (i == dmaChannel) {
             continue;
         }
-        u32 cnt = REG_DMA[i].cnt;
+        cnt = REG_DMA[i].cnt;
         if ((cnt & 0x80000000) == 0) {
             continue;
         }
@@ -326,7 +327,7 @@ end:
 // clang-format on
 #endif
 
-#ifdef NITRO_NITRO_NO_ASM
+#ifdef NITRO_NO_ASM
 void MI_func_0007(void *inSrc, void *inDst, u32 size) {
     u32 *src        = inSrc;
     u32 *dst        = inDst;

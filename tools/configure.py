@@ -8,7 +8,7 @@ import sys
 import subprocess
 from typing import Any, Generator
 
-import ninja_syntax # type: ignore
+import ninja_syntax
 from get_platform import Platform, get_platform
 
 
@@ -25,7 +25,7 @@ args = parser.parse_args()
 
 
 # Config
-DSD_VERSION = 'v0.11.0'
+DSD_VERSION = 'v0.12.0'
 WIBO_VERSION = '0.6.16'
 OBJDIFF_VERSION = 'v3.7.1'
 MWCC_VERSION = {
@@ -153,10 +153,10 @@ class Project:
     def baserom_config(self) -> Path:
         return self.game_extract / 'config.yaml'
 
-    def source_files(self) -> Generator[Path]:
+    def source_files(self) -> Generator[Path, Any, Any]:
         yield from get_c_cpp_files([src_path, libs_path])
 
-    def source_object_files(self) -> Generator[Path]:
+    def source_object_files(self) -> Generator[Path, Any, Any]:
         for source_file in self.source_files():
             yield self.game_build / source_file.with_suffix(".o")
 
@@ -165,6 +165,9 @@ class Project:
 
     def arm9_disassembly_dir(self) -> Path:
         return self.game_build / "asm"
+
+    def objdiff_report_project(self) -> Path:
+        return self.game_build / "objdiff.json"
 
     def objdiff_report(self) -> Path:
         return self.game_build / "report.json"
@@ -268,7 +271,8 @@ def main():
             transform_dep = "tools/transform_dep.py"
             mwcc_cmd += f" && $python {transform_dep} $basefile.d $basefile.d"
             mwcc_implicit.append(transform_dep)
-            mwcc_implicit.append(WINE)
+            if WINE == DEFAULT_WIBO_PATH:
+                mwcc_implicit.append(WINE)
         n.rule(
             name="mwcc",
             command=mwcc_cmd,
@@ -290,13 +294,13 @@ def main():
 
         n.rule(
             name="objdiff",
-            command=f"{DSD} {DSD_BASE_FLAGS} objdiff --config-path $config_path {DSD_OBJDIFF_ARGS}"
+            command=f"{DSD} {DSD_BASE_FLAGS} objdiff --config-path $config_path {DSD_OBJDIFF_ARGS} $extra_flags"
         )
         n.newline()
 
         n.rule(
             name="objdiff_report",
-            command=f"{OBJDIFF} report generate -o $out"
+            command=f"{OBJDIFF} report generate --project $project_path --output $out"
         )
         n.newline()
 
@@ -331,6 +335,8 @@ def main():
             generator=True
         )
         n.newline()
+
+        create_compilation_database(project)
 
         add_download_tool_builds(n, project)
         add_configure_build(n, project)
@@ -588,7 +594,7 @@ def add_check_builds(n: ninja_syntax.Writer, project: Project):
 
 def add_objdiff_builds(n: ninja_syntax.Writer, project: Project):
     n.build(
-        inputs=project.dsd_configs() + [str(f) for f in project.source_object_files()],
+        inputs=project.dsd_configs(),
         implicit=DSD,
         rule="objdiff",
         outputs="objdiff.json",
@@ -607,10 +613,27 @@ def add_objdiff_builds(n: ninja_syntax.Writer, project: Project):
 
     delink_files = project.delink_files()
     n.build(
-        inputs=["objdiff.json"],
+        inputs=project.dsd_configs(),
         implicit=[OBJDIFF] + delink_files + [str(f) for f in project.source_object_files()],
+        rule="objdiff",
+        outputs=str(project.objdiff_report_project()),
+        variables={
+            "config_path": str(project.arm9_config_yaml()),
+            "extra_flags": " ".join([
+                f"--output-path {project.objdiff_report_project().parent}",
+                "--skip-absent-objects"
+            ])
+        },
+    )
+    n.newline()
+
+    n.build(
+        inputs=str(project.objdiff_report_project()),
         rule="objdiff_report",
         outputs=str(project.objdiff_report()),
+        variables={
+            "project_path": str(project.objdiff_report_project().parent)
+        }
     )
     n.newline()
 
@@ -657,6 +680,20 @@ def get_config_files(game_config: Path, name: str) -> list[str]:
         for file in files
         if file == name
     ]
+
+
+def create_compilation_database(project: Project):
+    db_path = root_path / "compile_commands.json"
+    db: list[dict] = []
+    abs_root_path = root_path.absolute()
+    for src_file in project.source_files():
+        db.append({
+            "directory": str(abs_root_path),
+            "arguments": ["#"], # clangd ignores entries with empty arguments
+            "file": str(src_file)
+        })
+    with db_path.open("w") as f:
+        f.write(json.dumps(db))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,11 @@
+CompileFlags:
+  Add:
+  - -m32
+  - -nostdinc
+  - -Iinclude
+  - -Ilibs/c/include
+  - -Wno-c99-designator
+Diagnostics:
+  Suppress:
+  - asm_qualifier_ignored
+  - asm_expected_string
