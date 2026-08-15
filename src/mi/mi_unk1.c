@@ -327,7 +327,7 @@ end:
 // clang-format on
 #endif
 
-#ifdef NITRO_NITRO_NO_ASM
+#ifdef NITRO_NO_ASM
 void MI_func_0007(void *inSrc, void *inDst, u32 size) {
     u32 *src        = inSrc;
     u32 *dst        = inDst;
