@@ -51,11 +51,12 @@ This table outlines the source of every symbol/macro name used in this decompila
 | CARD_WriteAndVerifyFlashAsync  | Function | pm4
 | CARD_WriteAndVerifyFramAsync   | Function | pm4
 |
-| DC_StoreAll        | Function | pm4
-| DC_StoreRange      | Function | pm4
-| DC_FlushAll        | Function | pm4
-| DC_FlushRange      | Function | pm4
-| DC_InvalidateRange | Function | diamondtrust
+| DC_StoreAll         | Function | pm4
+| DC_StoreRange       | Function | pm4
+| DC_FlushAll         | Function | pm4
+| DC_FlushRange       | Function | pm4
+| DC_InvalidateRange  | Function | diamondtrust
+| DC_DrainWriteBuffer | Function
 |
 | FS_SEEK_SET | Macro | pm4, diamondtrust
 | FS_SEEK_CUR | Macro | pm4
@@ -542,6 +543,7 @@ This table outlines the source of every symbol/macro name used in this decompila
 | HW_DB_OAM          | Macro | pm4, diamondtrust
 | HW_DB_OAM_SIZE     | Macro | pm4, diamondtrust
 |
+| IC_InvalidateAll | Function
 | IC_InvalidateRange | Function
 |
 | MB_USER_NAME_LENGTH | Macro | diamondtrust
