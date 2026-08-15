@@ -166,6 +166,9 @@ class Project:
     def arm9_disassembly_dir(self) -> Path:
         return self.game_build / "asm"
 
+    def objdiff_report_project(self) -> Path:
+        return self.game_build / "objdiff.json"
+
     def objdiff_report(self) -> Path:
         return self.game_build / "report.json"
 
@@ -291,13 +294,13 @@ def main():
 
         n.rule(
             name="objdiff",
-            command=f"{DSD} {DSD_BASE_FLAGS} objdiff --config-path $config_path {DSD_OBJDIFF_ARGS}"
+            command=f"{DSD} {DSD_BASE_FLAGS} objdiff --config-path $config_path {DSD_OBJDIFF_ARGS} $extra_flags"
         )
         n.newline()
 
         n.rule(
             name="objdiff_report",
-            command=f"{OBJDIFF} report generate -o $out"
+            command=f"{OBJDIFF} report generate --project $project_path --output $out"
         )
         n.newline()
 
@@ -610,10 +613,27 @@ def add_objdiff_builds(n: ninja_syntax.Writer, project: Project):
 
     delink_files = project.delink_files()
     n.build(
-        inputs=["objdiff.json"],
+        inputs=project.dsd_configs(),
         implicit=[OBJDIFF] + delink_files + [str(f) for f in project.source_object_files()],
+        rule="objdiff",
+        outputs=str(project.objdiff_report_project()),
+        variables={
+            "config_path": str(project.arm9_config_yaml()),
+            "extra_flags": " ".join([
+                f"--output-path {project.objdiff_report_project().parent}",
+                "--skip-absent-objects"
+            ])
+        },
+    )
+    n.newline()
+
+    n.build(
+        inputs=str(project.objdiff_report_project()),
         rule="objdiff_report",
         outputs=str(project.objdiff_report()),
+        variables={
+            "project_path": str(project.objdiff_report_project().parent)
+        }
     )
     n.newline()
 
