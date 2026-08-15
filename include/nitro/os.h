@@ -8,6 +8,8 @@ extern "C" {
 #include <stdarg.h>
 
 #include "nitro/os/cache.h"
+#include "nitro/os/common.h"
+#include "nitro/os/mutex.h"
 #include "nitro/reg.h"
 
 #define OS_IE_V_BLANK 1
@@ -27,18 +29,6 @@ extern "C" {
 #define OS_LOCK_ID_ERROR -3
 
 #define OS_THREAD_LAUNCHER_PRIORITY 0x10
-
-typedef struct OSLinkedList {
-    /* 00 */ void *head;
-    /* 04 */ void *tail;
-    /* 08 */
-} OSLinkedList;
-
-typedef struct OS_UnkStruct1 {
-    /* 00 */ u32 unk_00;
-    /* 04 */ u32 unk_04;
-    /* 08 */
-} OS_UnkStruct1;
 
 typedef struct OSThread {
     /* 00 */ u32 unk_00;
@@ -110,15 +100,6 @@ typedef struct OSAlarm {
     /* 2c */
 } OSAlarm;
 
-typedef struct OSMutex {
-    /* 00 */ OSLinkedList unk_00;
-    /* 08 */ u32 unk_08;
-    /* 0c */ u32 unk_0c;
-    /* 10 */ u32 unk_10;
-    /* 14 */ u32 unk_14;
-    /* 18 */
-} OSMutex;
-
 typedef struct OSDma {
     /* 00 */ vu32 src;
     /* 04 */ vu32 dst;
@@ -145,10 +126,6 @@ void _OS_SpinWait(u32 param1);
 inline void OS_SpinWait(u32 param1) {
     _OS_SpinWait(param1 / 2);
 }
-
-void OS_InitMutex(OSMutex *mutex);
-void OS_LockMutex(OSMutex *mutex);
-void OS_UnlockMutex(OSMutex *mutex);
 
 void _OS_Panic();
 
@@ -190,13 +167,14 @@ void OS_WakeupThreadDirect(OSThread *thread);
 BOOL OS_IsThreadTerminated(const OSThread *thread);
 void OS_KillThread(OSThread *thread, void *);
 OSThread *OS_GetCurrentThread(void);
+void OS_SleepThread(OSMutex *mutex); // sleeps current thread, mutex is optional
 #ifdef DEBUG
 void OS_CheckStack(OSThread *thread);
 #else
     #define OS_CheckStack(thread)
 #endif
 void OS_func_0044(void);
-s32 OS_func_0039(OS_UnkStruct1 *param1);
+OSMutex *OS_func_0039(OS_UnkStruct1 *param1);
 
 void OS_InitMessageQueue(OSMessageQueue *queue, OSMessage *buf, u32 bufLength);
 void OS_ReceiveMessage(OSMessageQueue *queue, OSMessage *message, u32 block);

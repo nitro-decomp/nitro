@@ -649,6 +649,7 @@ This table outlines the source of every symbol/macro name used in this decompila
 | OS_IsThreadTerminated | Function | pm4
 | OS_KillThread         | Function | pm4
 | OS_GetCurrentThread   | Function | pm4
+| OS_SleepThread        | Function | diamondtrust
 | OS_CheckStack         | Function | pm4
 |
 | OS_InitMessageQueue | Function | pm4, diamondtrust

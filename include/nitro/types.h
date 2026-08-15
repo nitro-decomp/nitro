@@ -40,6 +40,8 @@ typedef u32 BOOL;
 
 #define ARRAY_LEN(arr) ((s32) (sizeof(arr) / sizeof(*(arr))))
 
+#define PAD(start, end) u8 unk_##start[end - start]
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

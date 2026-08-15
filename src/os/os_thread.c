@@ -1,5 +1,6 @@
 #include "nitro/mi.h"
 #include "nitro/os.h"
+#include "nitro/os/mutex.h"
 
 typedef struct OS_UnkStruct2 {
     /* 00 */ u16 unk_00;
@@ -115,18 +116,18 @@ static OSThread *OS_func_0038(OSLinkedList *list, OSThread *thread) {
     return iter;
 }
 
-s32 OS_func_0039(OS_UnkStruct1 *param1) {
-    s32 iVar1;
-    s32 iVar2;
+OSMutex *OS_func_0039(OS_UnkStruct1 *param1) {
+    OSMutex *iVar1;
+    OSMutex *iVar2;
 
     iVar2 = param1->unk_00;
-    if (iVar2 != 0) {
-        iVar1          = *(s32 *) (iVar2 + 0x10);
+    if (iVar2 != NULL) {
+        iVar1          = iVar2->unk_10;
         param1->unk_00 = iVar1;
         if (iVar1 != 0) {
-            *(u32 *) (iVar1 + 0x14) = 0;
+            iVar1->unk_14 = 0;
         } else {
-            param1->unk_04 = 0;
+            param1->unk_04 = NULL;
         }
     }
     return iVar2;
