@@ -7105,8 +7105,8 @@ from:0x020413b4 kind:arm_call to:0x02041384 module:main
 from:0x020413bc kind:arm_call to:0x020040b0 module:main
 from:0x02041484 kind:arm_call to:0x0203fd48 module:main
 from:0x02041494 kind:arm_call to:0x0203fd48 module:main
-from:0x020414dc kind:load to:0x020415e0 module:main
-from:0x020414e0 kind:load to:0x02041718 module:main
+from:0x020414dc kind:link_time_const(__exception_table_start__)
+from:0x020414e0 kind:link_time_const(__exception_table_end__)
 from:0x020414f4 kind:arm_call to:0x0203fd48 module:main
 from:0x02041504 kind:arm_call to:0x0203fd48 module:main
 from:0x020415e0 kind:load to:0x0203fc08 module:main

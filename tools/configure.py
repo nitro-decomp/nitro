@@ -25,7 +25,7 @@ args = parser.parse_args()
 
 
 # Config
-DSD_VERSION = 'v0.11.0'
+DSD_VERSION = 'v0.12.0'
 WIBO_VERSION = '0.6.16'
 OBJDIFF_VERSION = 'v3.7.1'
 MWCC_VERSION = {
