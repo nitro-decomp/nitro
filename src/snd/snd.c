@@ -1,5 +1,4 @@
 #include "nitro/snd.h"
-#include "nitro/dc.h"
 #include "nitro/os.h"
 
 typedef struct SND_UnkStruct1 {
