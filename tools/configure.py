@@ -8,7 +8,7 @@ import sys
 import subprocess
 from typing import Any, Generator
 
-import ninja_syntax # type: ignore
+import ninja_syntax
 from get_platform import Platform, get_platform
 
 
@@ -332,6 +332,8 @@ def main():
             generator=True
         )
         n.newline()
+
+        create_compilation_database(project)
 
         add_download_tool_builds(n, project)
         add_configure_build(n, project)
@@ -658,6 +660,20 @@ def get_config_files(game_config: Path, name: str) -> list[str]:
         for file in files
         if file == name
     ]
+
+
+def create_compilation_database(project: Project):
+    db_path = root_path / "compile_commands.json"
+    db: list[dict] = []
+    abs_root_path = root_path.absolute()
+    for src_file in project.source_files():
+        db.append({
+            "directory": str(abs_root_path),
+            "arguments": ["#"], # clangd ignores entries with empty arguments
+            "file": str(src_file)
+        })
+    with db_path.open("w") as f:
+        f.write(json.dumps(db))
 
 
 if __name__ == "__main__":

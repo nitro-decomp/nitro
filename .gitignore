@@ -3,6 +3,7 @@
 
 # Build output
 /build/
+/compile_commands.json
 
 # Tools
 /dsd
