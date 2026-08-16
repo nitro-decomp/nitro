@@ -55,7 +55,7 @@ void FS_func_0001(FSFile *file, u32 param2) {
     s32 unk1;
     s32 *unk2;
 
-    irq  = OS_DisableInterrupts_Irq();
+    irq  = OS_DisableInterrupts();
     unk1 = file->unk_00;
     unk2 = file->unk_04;
     if (unk1 != 0) {
@@ -103,7 +103,7 @@ u32 FS_func_0002(FSFile *file, u8 param2) {
     }
     if (result == 6) {
         if (!!(file->flags & 4) != 0) {
-            u32 irq = OS_DisableInterrupts_Irq();
+            u32 irq = OS_DisableInterrupts();
             while (!!(volume->flags & 0x200) != 0) {
                 func_0206badc(&volume->unk_0c);
             }
@@ -149,7 +149,7 @@ s32 FS_func_0003(FSUnkStruct2 *param1, FSUnkStruct2 *param2, s32 param3) {
             volume->flags &= ~0x200;
             break;
         case 6: {
-            u32 irq = OS_DisableInterrupts_Irq();
+            u32 irq = OS_DisableInterrupts();
             while (!!(volume->flags & 0x200) != 0) {
                 func_0206badc(&volume->unk_0c);
             }
@@ -347,7 +347,7 @@ BOOL FS_func_0019(FSFile *file, u8 param2) {
     file->unk_14 = 2;
     mask         = 1 << param2;
     file->flags |= 1;
-    irq = OS_DisableInterrupts_Irq();
+    irq = OS_DisableInterrupts();
     if ((volume->flags & 0x80) != 0) {
         FS_func_0001(file, 3);
         OS_RestoreInterrupts(irq);
@@ -377,7 +377,7 @@ BOOL FS_func_0019(FSFile *file, u8 param2) {
         if ((volume->unk_58 & 0x200) != 0) {
             volume->unk_54(file, 9);
         }
-        irq         = OS_DisableInterrupts_Irq();
+        irq         = OS_DisableInterrupts();
         file->flags = file->flags | 0x40;
         if (!!(file->flags & 4) == 0) {
             OS_RestoreInterrupts(irq);
@@ -412,7 +412,7 @@ FSVolume *FS_FindVolumeForPath(const char *path, u32 length) {
     u32 irq;
 
     volumeName = FS_GetPathVolumeName(path, length);
-    irq        = OS_DisableInterrupts_Irq();
+    irq        = OS_DisableInterrupts();
     volume     = gFSVolumeHead;
     while (volume && volume->volumeName != volumeName) {
         volume = volume->next;
@@ -423,7 +423,7 @@ FSVolume *FS_FindVolumeForPath(const char *path, u32 length) {
 
 BOOL FS_AddVolume(FSVolume *volume, const char *path, u32 length) {
     BOOL ret  = false;
-    u32 uVar3 = OS_DisableInterrupts_Irq();
+    u32 uVar3 = OS_DisableInterrupts();
     if (!FS_FindVolumeForPath(path, length)) {
         if (gFSVolumeHead == NULL) {
             gFSVolumeHead = volume;
@@ -614,7 +614,7 @@ static BOOL FS_func_0027(FSFile *file) {
     BOOL unk1 = false;
     u32 irq;
 
-    irq = OS_DisableInterrupts_Irq();
+    irq = OS_DisableInterrupts();
     if (!!(file->flags & 1) != 0) {
         unk1 = (file->flags & 0x44) == 0;
         if (unk1) {

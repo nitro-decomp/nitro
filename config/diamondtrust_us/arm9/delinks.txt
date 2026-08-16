@@ -12,7 +12,7 @@
 src/card/card_unk1.c:
     .text       start:0x02022d54 end:0x02023d14
 
-src/os/os_unk6.c:
+src/os/os_cp.c:
     .text       start:0x02023d64 end:0x02023de0
 
 src/fs.c:

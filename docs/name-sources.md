@@ -51,6 +51,9 @@ This table outlines the source of every symbol/macro name used in this decompila
 | CARD_WriteAndVerifyFlashAsync  | Function | pm4
 | CARD_WriteAndVerifyFramAsync   | Function | pm4
 |
+| CP_SaveContext     | Function | gtact
+| CPi_RestoreContext | Function | gtact
+|
 | DC_StoreAll         | Function | pm4
 | DC_StoreRange       | Function | pm4
 | DC_FlushAll         | Function | pm4
@@ -621,12 +624,12 @@ This table outlines the source of every symbol/macro name used in this decompila
 | OS_LockMutex | Function | pm4, diamondtrust
 | OS_UnlockMutex | Function | pm4, diamondtrust
 |
-| _OS_Panic   | Function
 | OS_TPrintf  | Function | pm4, diamondtrust
 | OS_Printf   | Function | pm4, diamondtrust
 | OS_TVPrintf | Function | diamondtrust
 | OS_TPanic   | Function | diamondtrust
 | OS_Panic    | Function | pm4, diamondtrust, gtpd
+| OS_Halt     | Function | gtact
 |
 | OS_ResetSystem | Function | pm4
 |
@@ -644,13 +647,40 @@ This table outlines the source of every symbol/macro name used in this decompila
 |
 | OS_Sleep | Function | pm4, diamondtrust
 |
-| OS_CreateThread       | Function | pm4, diamondtrust
-| OS_WakeupThreadDirect | Function | pm4, diamondtrust
-| OS_IsThreadTerminated | Function | pm4
-| OS_KillThread         | Function | pm4
-| OS_GetCurrentThread   | Function | pm4
-| OS_SleepThread        | Function | diamondtrust
-| OS_CheckStack         | Function | pm4
+| OS_CreateThread            | Function | pm4, diamondtrust
+| OS_WakeupThread            | Function | gtact
+| OS_WakeupThreadDirect      | Function | pm4, diamondtrust
+| OS_IsThreadTerminated      | Function | pm4
+| OS_KillThread              | Function | pm4
+| OS_GetCurrentThread        | Function | pm4
+| OS_SleepThread             | Function | diamondtrust
+| OS_CheckStack              | Function | pm4
+| OS_SetSwitchThreadCallback | Function | gtact
+| OSSwitchThreadCallback     | Typedef  | gtact | Deduced from OS_SetSwitchThreadCallback
+| OS_InitContext             | Function | gtact
+| OS_SaveContext             | Function | gtact
+| OS_LoadContext             | Function | gtact
+| OS_SetThreadDestructor     | Function | gtact
+| OS_ExitThread              | Function | gtact
+| OS_DisableScheduler        | Function | gtact
+| OS_EnableScheduler         | Function | gtact
+| OS_RescheduleThread        | Function | gtact
+| OS_SelectThread            | Function | gtact
+| OS_SetThreadPriority       | Function | gtact
+| OS_GetThreadPriority       | Function | gtact
+|
+| OSi_IdleThreadProc               | Function | gtact
+| OSi_InsertLinkToQueue            | Function | gtact
+| OSi_RemoveLinkFromQueue          | Function | gtact
+| OSi_RemoveSpecifiedLinkFromQueue | Function | gtact
+| OSi_RescheduleThread             | Function | gtact
+| OSi_GetUnusedThreadId            | Function | gtact
+| OSi_InsertThreadToList           | Function | gtact
+| OSi_RemoveThreadFromList         | Function | gtact
+| OSi_ExitThread_ArgSpecified      | Function | gtact
+| OSi_ExitThread                   | Function | gtact
+| OSi_ExitThread_Destroy           | Function | gtact
+| OSi_UnlockAllMutex               | Function | gtact
 |
 | OS_InitMessageQueue | Function | pm4, diamondtrust
 | OS_ReceiveMessage   | Function | pm4, diamondtrust
@@ -660,18 +690,19 @@ This table outlines the source of every symbol/macro name used in this decompila
 | OS_SetPeriodicAlarm | Function | pm4
 | OS_CancelAlarm      | Function | pm4
 |
+| OSi_SleepAlarmCallback | Function | gtact
+|
 | OS_GetTick | Function | pm4, diamondtrust
 |
 | OS_GetConsoleType | Function | pm4
 |
 | OS_GetLockID | Function | pm4, GameSpy
 |
-| OS_DisableInterrupts     | Function | diamondtrust
-| OS_DisableInterrupts_Irq | Function
-| OS_RestoreInterrupts     | Function | diamondtrust
-| OS_EnableInterrupts      | Function | diamondtrust
-| OS_SetIrqCheckFlag       | Function | pm4, diamondtrust
-| OS_EnableIrq             | Function | pm4, diamondtrust
+| OS_DisableInterrupts | Function | diamondtrust
+| OS_RestoreInterrupts | Function | diamondtrust
+| OS_EnableInterrupts  | Function | diamondtrust
+| OS_SetIrqCheckFlag   | Function | pm4, diamondtrust
+| OS_EnableIrq         | Function | pm4, diamondtrust
 |
 | OS_GetMainArenaLo       | Function | pm4, diamondtrust
 | OS_GetMainArenaHi       | Function | pm4, diamondtrust
@@ -688,6 +719,8 @@ This table outlines the source of every symbol/macro name used in this decompila
 | OS_MicroSecondsToTicks | Function | pm4
 | OS_TicksToMilliSeconds | Function | diamondtrust
 | 
+| OS_GetProcMode | Function | gtact
+|
 | OS_IsRunOnTwl | Function | diamondtrust
 | 
 | PAD_BUTTON_A      | Macro | pm4

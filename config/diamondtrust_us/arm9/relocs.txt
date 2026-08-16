@@ -5639,7 +5639,7 @@ from:0x0202e320 kind:link_time_const(__DTCM_LO)
 from:0x0202e330 kind:load to:0x021384c0 module:main
 from:0x0202e338 kind:load to:0x021384d0 module:main
 from:0x0202e33c kind:load to:0x0202e800 module:main
-from:0x0202e340 kind:load to:0x02138718 module:main
+from:0x0202e340 kind:load to:0x02138650 add:0xc8 module:main
 from:0x0202e358 kind:arm_call to:0x020304b8 module:main
 from:0x0202e360 kind:arm_call to:0x0202df48 module:main
 from:0x0202e380 kind:arm_call to:0x0202e090 module:main

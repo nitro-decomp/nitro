@@ -1,9 +1,9 @@
 #include "nitro/os.h"
 #include "nitro/os/mutex.h"
 
-static void OS_func_0051(OSMutex *mutex);
-static void OS_func_0067(OS_Mutex_UnkStruct2 *param1, OSMutex *mutex);
-static void OS_func_0068(OS_Mutex_UnkStruct2 *param1, OSMutex *mutex);
+static void OS_WakeupThread(OSMutex *mutex);
+static void OS_func_0067(OSThread *param1, OSMutex *mutex);
+static void OS_func_0068(OSThread *param1, OSMutex *mutex);
 static BOOL OS_func_0124(OSMutex *mutex);
 static void OS_func_0125(OSMutex *mutex, u32 param2);
 
@@ -21,7 +21,7 @@ extern OS_Mutex_UnkStruct1 data_021384c0;
 
 extern void OS_LockMutex(OSMutex *mutex) {
     OSIntrMode irq;
-    OS_Mutex_UnkStruct2 *temp_r6;
+    OSThread *temp_r6;
 
     irq     = OS_DisableInterrupts();
     temp_r6 = data_021384c0.unk_04;
@@ -40,7 +40,7 @@ void OS_UnlockMutex(OSMutex *mutex) {
     OS_func_0125(mutex, 0x10000000);
 }
 
-void OS_func_0066(OS_Mutex_UnkStruct2 *param1) {
+void OSi_UnlockAllMutex(OSThread *param1) {
     OSMutex *mutex;
     u32 temp_r1;
 
@@ -49,18 +49,18 @@ void OS_func_0066(OS_Mutex_UnkStruct2 *param1) {
         temp_r1       = mutex->unk_0c & 0xFF000000;
         mutex->unk_08 = 0;
         mutex->unk_0c = (s32) (temp_r1 & ~0xFF000000);
-        OS_func_0051(mutex);
+        OS_WakeupThread(mutex);
     }
 }
 
 static BOOL OS_func_0124(OSMutex *mutex) {
-    OS_Mutex_UnkStruct2 *temp_r0;
+    OSThread *temp_r0;
     s32 temp_r1;
     OS_Mutex_UnkStruct1 *temp_r1_2;
     s32 temp_r3;
     OSIntrMode irq;
     BOOL result;
-    OS_Mutex_UnkStruct2 *temp_r2;
+    OSThread *temp_r2;
 
     irq     = OS_DisableInterrupts();
     temp_r2 = mutex->unk_08;
@@ -85,7 +85,7 @@ static BOOL OS_func_0124(OSMutex *mutex) {
 static void OS_func_0125(OSMutex *mutex, u32 param2) {
     u32 temp_r0;
     BOOL var_r1;
-    OS_Mutex_UnkStruct2 *temp_r0_1;
+    OSThread *temp_r0_1;
     s32 temp_r3;
     OSIntrMode irq;
 
@@ -119,13 +119,13 @@ static void OS_func_0125(OSMutex *mutex, u32 param2) {
         OS_func_0068(temp_r0_1, mutex);
         mutex->unk_08 = NULL;
         mutex->unk_0c = (s32) (mutex->unk_0c & ~0xFF000000);
-        OS_func_0051(mutex);
+        OS_WakeupThread(mutex);
     }
     OS_RestoreInterrupts(irq);
     return;
 }
 
-static void OS_func_0067(OS_Mutex_UnkStruct2 *param1, OSMutex *mutex) {
+static void OS_func_0067(OSThread *param1, OSMutex *mutex) {
     OSMutex *temp_r3;
 
     temp_r3 = param1->unk_88.unk_04;
@@ -139,7 +139,7 @@ static void OS_func_0067(OS_Mutex_UnkStruct2 *param1, OSMutex *mutex) {
     param1->unk_88.unk_04 = mutex;
 }
 
-static void OS_func_0068(OS_Mutex_UnkStruct2 *param1, OSMutex *mutex) {
+static void OS_func_0068(OSThread *param1, OSMutex *mutex) {
     OSMutex *temp_r1;
     OSMutex *temp_r2;
 

@@ -9,6 +9,7 @@ extern "C" {
 
 #include "nitro/os/cache.h"
 #include "nitro/os/common.h"
+#include "nitro/os/cp.h"
 #include "nitro/os/mutex.h"
 #include "nitro/reg.h"
 
@@ -30,44 +31,45 @@ extern "C" {
 
 #define OS_THREAD_LAUNCHER_PRIORITY 0x10
 
-typedef struct OSThread {
+typedef struct OSAlarm {
     /* 00 */ u32 unk_00;
-    /* 04 */ void *arg;
+    /* 04 */ u32 unk_04;
     /* 08 */ u32 unk_08;
     /* 0c */ u32 unk_0c;
     /* 10 */ u32 unk_10;
-    /* 14 */ u32 unk_14;
-    /* 18 */ u32 unk_18;
+    /* 14 */ void *unk_14;
+    /* 18 */ void *unk_18;
     /* 1c */ u32 unk_1c;
     /* 20 */ u32 unk_20;
     /* 24 */ u32 unk_24;
     /* 28 */ u32 unk_28;
-    /* 2c */ u32 unk_2c;
-    /* 30 */ u32 unk_30;
-    /* 34 */ u32 unk_34;
-    /* 38 */ u32 unk_38;
-    /* 3c */ void *unk_3c;
-    /* 40 */ u32 unk_40;
-    /* 44 */ u32 unk_44;
-    /* 48 */ u8 unk_48[0x64 - 0x48];
+    /* 2c */
+} OSAlarm;
+
+typedef void (*OSThreadDtor)(void *);
+
+typedef struct OSThread {
+    /* 00 */ u32 cpsr;
+    /* 04 */ u32 regs[16];
+    /* 44 */ u32 sp;
+    /* 48 */ CPContext cpCtx;
     /* 64 */ u32 unk_64;
     /* 68 */ struct OSThread *nextPrio; // next thread with lower priority
     /* 6c */ u32 unk_6c;
     /* 70 */ u32 prio;
     /* 74 */ u32 unk_74;
-    /* 78 */ u32 unk_78;
+    /* 78 */ OSMutex *unk_78;
     /* 7c */ struct OSThread *prev;
     /* 80 */ struct OSThread *next;
-    /* 84 */ u32 unk_84;
+    /* 84 */ OSMutex *unk_84;
     /* 88 */ OS_UnkStruct1 unk_88;
     /* 90 */ void *stackLo;
     /* 94 */ void *stackHi;
     /* 98 */ u32 *unk_98;
-    /* 9c */ u32 *unk_9c;
-    /* a0 */ u32 *unk_a0;
+    /* 9c */ OSLinkedList unk_9c;
     /* a4 */ u8 unk_a4[0xb0 - 0xa4];
-    /* b0 */ u32 *unk_b0;
-    /* b4 */ void (*unk_b4)(void *);
+    /* b0 */ OSAlarm *alarm;
+    /* b4 */ OSThreadDtor destructor;
     /* b8 */
 } ATTRIBUTE_ALIGN(32) OSThread;
 
@@ -85,28 +87,12 @@ typedef struct OSMessageQueue {
 // TODO: Maybe align is wrong? g_msgBuf in PM4 is aligned by 8 with 4 bytes of padding before it
 typedef void *OSMessage ATTRIBUTE_ALIGN(8);
 
-typedef struct OSAlarm {
-    /* 00 */ u32 unk_00;
-    /* 04 */ u32 unk_04;
-    /* 08 */ u32 unk_08;
-    /* 0c */ u32 unk_0c;
-    /* 10 */ u32 unk_10;
-    /* 14 */ void *unk_14;
-    /* 18 */ void *unk_18;
-    /* 1c */ u32 unk_1c;
-    /* 20 */ u32 unk_20;
-    /* 24 */ u32 unk_24;
-    /* 28 */ u32 unk_28;
-    /* 2c */
-} OSAlarm;
-
 typedef struct OSDma {
     /* 00 */ vu32 src;
     /* 04 */ vu32 dst;
     /* 08 */ vu32 cnt;
     /* 0c */
 } OSDma;
-
 typedef u32 OSHeapHandle;
 typedef u64 OSTime;
 
@@ -127,8 +113,6 @@ inline void OS_SpinWait(u32 param1) {
     _OS_SpinWait(param1 / 2);
 }
 
-void _OS_Panic();
-
 #ifdef DEBUG
 void OS_TPrintf(const char *format, ...) {}
 void OS_Printf(const char *format, ...) {}
@@ -139,8 +123,8 @@ void OS_Panic(const char *message) {}
     #define OS_TPrintf(...)
     #define OS_Printf(...)
     #define OS_TVPrintf(...)
-    #define OS_TPanic(...) _OS_Panic()
-    #define OS_Panic(...) _OS_Panic()
+    #define OS_TPanic(...) OS_Terminate()
+    #define OS_Panic(...) OS_Terminate()
 #endif
 
 void OS_ResetSystem(u32);
@@ -173,7 +157,7 @@ void OS_CheckStack(OSThread *thread);
 #else
     #define OS_CheckStack(thread)
 #endif
-void OS_func_0044(void);
+void OS_ExitThread(void);
 OSMutex *OS_func_0039(OS_UnkStruct1 *param1);
 
 void OS_InitMessageQueue(OSMessageQueue *queue, OSMessage *buf, u32 bufLength);
@@ -191,15 +175,19 @@ u32 OS_GetConsoleType(void);
 u32 OS_GetLockID(void);
 
 OSIntrMode OS_DisableInterrupts(void);
-u32 OS_DisableInterrupts_Irq(void);
+u32 OS_DisableInterrupts(void);
 void OS_RestoreInterrupts(u32);
 void OS_EnableInterrupts(void);
 
 BOOL OS_func_0206d5ac(u16, u32);
 void OS_func_0206d66c(u16, u32);
-u32 OS_func_0206d3cc(void);
+u32 OS_GetProcMode(void);
+
+void OS_Halt(void);
 
 void OS_func_0013(s32, void (*)(u32), u32);
+
+void OS_func_0094(OSAlarm *timer, u64 time, void *callback, void *arg);
 
 void OS_func_0167(void);
 void OS_func_0169(u32, void (*)(u32, u32, u32));

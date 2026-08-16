@@ -15,22 +15,16 @@ typedef struct OS_UnkStruct1 {
     /* 08 */
 } OS_UnkStruct1;
 
-typedef struct OS_Mutex_UnkStruct2 {
-    /* 00 */ PAD(0x00, 0x84);
-    /* 84 */ struct OSMutex *unk_84;
-    /* 88 */ OS_UnkStruct1 unk_88;
-    /* 8c */
-} OS_Mutex_UnkStruct2;
-
+struct OSThread;
 typedef struct OS_Mutex_UnkStruct1 {
     /* 00 */ PAD(0x00, 0x04);
-    /* 04 */ OS_Mutex_UnkStruct2 *unk_04;
+    /* 04 */ struct OSThread *unk_04;
     /* 08 */
 } OS_Mutex_UnkStruct1;
 
 typedef struct OSMutex {
     /* 00 */ OSLinkedList unk_00;
-    /* 08 */ OS_Mutex_UnkStruct2 *unk_08;
+    /* 08 */ struct OSThread *unk_08;
     /* 0c */ vu32 unk_0c;
     /* 10 */ struct OSMutex *unk_10;
     /* 14 */ struct OSMutex *unk_14;
@@ -41,7 +35,7 @@ void OS_InitMutex(OSMutex *mutex);
 void OS_LockMutex(OSMutex *mutex);
 void OS_UnlockMutex(OSMutex *mutex);
 
-void OS_func_0066(OS_Mutex_UnkStruct2 *param1);
+void OSi_UnlockAllMutex(struct OSThread *param1);
 
 #ifdef __cplusplus
 } // extern "C"

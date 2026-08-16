@@ -63,7 +63,7 @@ src/snd/snd.c:
 src/fs.c:
     .text       start:0x0206f2e4 end:0x02070c90
 
-src/os/os_unk6.c:
+src/os/os_cp.c:
     .text       start:0x02070c90 end:0x02070d0c
 
 src/tp/tp_unk1.c:
