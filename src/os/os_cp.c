@@ -10,7 +10,7 @@ void CP_SaveContext(CPContext *param1) {
 #else
 // clang-format off
 asm void CP_SaveContext(CPContext *param1) {
-    ldconst r1, 0x4000290
+    ldconst r1, #0x4000290
     stmdb sp!, {r4}
     ldmia r1, {r2, r3, r4, ip}
     stmia r0!, {r2, r3, r4, ip}
@@ -40,7 +40,7 @@ void CPi_RestoreContext(CPContext *param1) {
 // clang-format off
 asm void CPi_RestoreContext(CPContext *param1) {
     stmdb sp!, {r4}
-    ldconst r1, 0x4000290
+    ldconst r1, #0x4000290
     ldmia r0, {r2, r3, r4, ip}
     stmia r1, {r2, r3, r4, ip}
     ldrh r2, [r0, 0x18]
