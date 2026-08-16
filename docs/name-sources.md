@@ -721,11 +721,11 @@ This table outlines the source of every symbol/macro name used in this decompila
 | OS_MilliSecondsToTicks | Function
 | OS_MicroSecondsToTicks | Function | pm4
 | OS_TicksToMilliSeconds | Function | diamondtrust
-| 
+||
 | OS_GetProcMode | Function | gtact
 ||
 | OS_IsRunOnTwl | Function | diamondtrust
-| 
+||
 | PAD_BUTTON_A      | Macro | pm4
 | PAD_BUTTON_B      | Macro | pm4
 | PAD_BUTTON_SELECT | Macro | pm4
@@ -741,32 +741,32 @@ This table outlines the source of every symbol/macro name used in this decompila
 | PAD_BUTTON_ALL    | Macro | pm4
 | PAD_KEY_ALL       | Macro
 | PAD_ALL           | Macro | pm4
-| 
+||
 | PAD_DetectFold | Function | pm4, diamondtrust
 | PAD_Read       | Function | pm4, diamondtrust
-| 
+||
 | PM_GoSleepMode | Function | pm4
 | PM_SetLCDPower | Function | diamondtrust
 ||
 | RTCDate | Struct | pm4, diamondtrust
 | RTCTime | Struct | pm4, diamondtrust
-| 
+||
 | RTC_Init                    | Function | pm4, diamondtrust
 | RTC_GetDate                 | Function | pm4, diamondtrust
 | RTC_GetTime                 | Function | pm4, diamondtrust
 | RTC_ConvertDateTimeToSecond | Function | pm4, diamondtrust
-| 
+||
 | SND_COMMAND_NOBLOCK | Macro | pm4, diamondtrust
 | SND_COMMAND_BLOCK   | Macro | pm4
-| 
+||
 | SND_TIMER_CLOCK | Macro | pm4, diamondtrust
-| 
+||
 | SND_WAVE_FORMAT_PCM16 | Macro | diamondtrust
-| 
+||
 | SND_CHANNEL_LOOP_REPEAT | Macro | diamondtrust
-| 
+||
 | SND_CHANNEL_DATASHIFT_NONE | Macro | diamondtrust
-| 
+||
 | SNDAlarmCallback | Typedef
 ||
 | SNDCommandType | Enum
