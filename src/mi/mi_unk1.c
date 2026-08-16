@@ -9,7 +9,7 @@ static void MI_func_0006(s32 dmaChannel, void *param2, s32 param3, s32 param4);
 static s32 MI_func_0010(s32 dmaChannel, void *param2, u32 param3, u32 param4, u32 param5);
 
 void MI_func_0007(void *inSrc, void *inDst, u32 size);
-void MI_func_0013(s32 dmaChannel, u32 param2, void *param3, BOOL param4, BOOL param5);
+void MI_DmaFill32(s32 dmaChannel, u32 param2, void *param3, BOOL param4, BOOL param5);
 void MI_func_0014(s32 dmaChannel, void *param2, u32 param3, BOOL param4, BOOL param5);
 void MI_func_0015(s32 dmaChannel, void *param2, u32 param3, BOOL param4, BOOL param5);
 void MI_func_0016(s32 param1, u32 param2, void *param3, BOOL param4, void (*param5)(u32), u32 param6, BOOL param7);
@@ -31,7 +31,7 @@ static void MI_func_0001(u8 param1) {
     REG_WRAM_CNT = param1;
 }
 
-void MI_func_0013(s32 dmaChannel, u32 param2, void *param3, BOOL param4, BOOL param5) {
+void MI_DmaFill32(s32 dmaChannel, u32 param2, void *param3, BOOL param4, BOOL param5) {
     if (!param4) {
         return;
     }

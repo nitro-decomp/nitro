@@ -434,12 +434,15 @@ This table outlines the source of every symbol/macro name used in this decompila
 | GXTexPlttColor0 | Typedef | diamondtrust
 | GXCaptureSrcB | Typedef | diamondtrust
 |
-| GX_Init    | Function | pm4, diamondtrust
-| GX_DispOff | Function | pm4, diamondtrust
-| GX_DispOn  | Function | pm4, diamondtrust
+| GX_Init        | Function | pm4, diamondtrust
+| GX_InitGXState | Function | gtact
+| GX_DispOff     | Function | pm4, diamondtrust
+| GX_DispOn      | Function | pm4, diamondtrust
 |
 | GX_VBlankIntr | Function | pm4, diamondtrust
 | GX_HBlankIntr | Function | pm4
+|
+| GX_VRAMCNT_SetLCDC_ | Function | gtact
 |
 | GX_SetBankForLCDC | Function | pm4, diamondtrust
 | GX_DisableBankForLCDC | Function | pm4, diamondtrust
