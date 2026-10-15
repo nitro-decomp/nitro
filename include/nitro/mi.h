@@ -24,6 +24,7 @@ void MI_CpuCopy16(const void *src, void *dst, u32 size);
 void MI_CpuCopy32(const void *src, void *dst, u32 size);
 void MI_CpuFill16(u16 value, void *dst, u32 size);
 void MI_CpuFill32(u32 value, void *ptr, u32 size);
+void MIi_CpuClear32(u32 value, void *ptr, u32 size);
 void MI_Swap(u32 *a, u32 *b);
 
 void MIi_UncompressBackward(void *addr);

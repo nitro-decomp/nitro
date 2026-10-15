@@ -48,7 +48,7 @@ typedef s32 BOOL;
 
 #define PAD(start, end) u8 unk_##start[end - start]
 
-#if !defined(NITRO_NO_ASM) && !defined(__MWERKS__) && !defined(__CLANGD__)
+#if !defined(NITRO_NO_ASM) && !defined(__MWERKS__) && !defined(__CLANGD__) && !defined(__M2CTX__)
     #error NITRO_NO_ASM is required for compilers other than mwccarm
 #endif
 

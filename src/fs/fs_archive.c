@@ -1,10 +1,8 @@
 #include "nitro/fs.h"
 #include "nitro/mi.h"
 #include "nitro/os.h"
+#include "nitro/std.h"
 #include "nitro/wm.h"
-
-// `true` if this is the first byte of a wide character in the Shift JIS character set
-#define FSi_CHAR_IS_WIDE(ch) ((((u8) (ch) ^ 0x20) - 0xa1) < 0x3cu)
 
 typedef struct FS_UnkStruct5 {
     /* 00 */ FSArchive *unk_00;
@@ -157,7 +155,7 @@ FSArchive *FS_func_0046(const char *path, u32 *arg1, char (*arg2)[FS_MAX_PATH]) 
             }
 
             wide = true;
-            if (!FSi_CHAR_IS_WIDE(c)) {
+            if (!STD_CHAR_IS_WIDE(c)) {
                 wide = false;
             }
             i = i + 1 + wide;
@@ -174,7 +172,7 @@ FSArchive *FS_func_0046(const char *path, u32 *arg1, char (*arg2)[FS_MAX_PATH]) 
                 }
                 if (!slash) {
                     wide = false;
-                    if (FSi_CHAR_IS_WIDE(ch) && (pathIter[i + 1] != '\x7f') &&
+                    if (STD_CHAR_IS_WIDE(ch) && (pathIter[i + 1] != '\x7f') &&
                         ((u32) (u8) (pathIter[i + 1] - 0x40) <= 0xBCU)) {
                         wide = true;
                     }
@@ -320,7 +318,7 @@ static s32 FS_func_0051(char *path, s32 arg1) {
     s32 var_r3;
 
     var_r3 = arg1 - 1;
-    while ((var_r3 > 0) && FSi_CHAR_IS_WIDE(path[var_r3 - 1])) {
+    while ((var_r3 > 0) && STD_CHAR_IS_WIDE(path[var_r3 - 1])) {
         var_r3 -= 1;
     }
     arg1 -= 1;
@@ -334,7 +332,7 @@ s32 FS_func_0052(char *path, s32 start) {
 
     index = start;
     while ((temp_lr = path[index]) != '\0' && (u8) temp_lr != '/' && (u8) temp_lr != '\\') {
-        if (FSi_CHAR_IS_WIDE(temp_lr)) {
+        if (STD_CHAR_IS_WIDE(temp_lr)) {
             wide = true;
         } else {
             wide = false;

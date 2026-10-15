@@ -51,13 +51,18 @@ def main():
 
         # Run preprocessor
         try:
-            ctx: str = subprocess.check_output([ # type: ignore
+            ctx: str = subprocess.check_output([
                 'gcc',
-                '-E', '-P', '-fworking-directory', '-undef', '-dD',
+                '--preprocess',         # Preprocess only
+                '--no-line-commands',   # Omit line markers
+                '-fworking-directory',
+                '-undef',               # Omit target-specific macros
+                '--dump=D',             # Output #define directives
+                '-D__M2CTX__',
                 *CXX_FLAGS,
                 tmp_file.name
             ], cwd=root_dir, encoding=args.encoding)
-            ctx = str(ctx) # type: ignore
+            ctx = str(ctx)
         except subprocess.CalledProcessError as e:
             eprint(f"Failed to preprocess '{args.file}'")
             if args.verbose:

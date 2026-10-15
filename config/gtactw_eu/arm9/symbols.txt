@@ -11786,13 +11786,13 @@ func_02146fac kind:function(arm,size=0x5c) addr:0x02146fac
 func_02147008 kind:function(arm,size=0x5c) addr:0x02147008
 func_02147064 kind:function(arm,size=0x1c0) addr:0x02147064
 _ll_sdiv kind:label(arm) addr:0x02147074
-func_02147224 kind:function(arm,size=0x48) addr:0x02147224
+_ll_sdiv kind:function(arm,size=0x48) addr:0x02147224
 .L_02147230 kind:label(arm) addr:0x02147230
-func_0214726c kind:function(arm,size=0x20) addr:0x0214726c
+_ll_mul kind:function(arm,size=0x20) addr:0x0214726c
 func_0214728c kind:function(arm,size=0x30) addr:0x0214728c
 func_021472bc kind:function(arm,size=0x30) addr:0x021472bc
 _s32_div_f kind:function(arm,size=0x20c) addr:0x021472ec
-func_021474f8 kind:function(arm,size=0x1e4) addr:0x021474f8
+_s32_div_f kind:function(arm,size=0x1e4) addr:0x021474f8
 .L_02147500 kind:label(arm) addr:0x02147500
 func_021476f4 kind:function(arm,size=0x544) addr:0x021476f4
 func_02147c38 kind:function(arm,size=0x4) addr:0x02147c38

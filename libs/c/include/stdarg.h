@@ -7,11 +7,19 @@ extern "C" {
 
 typedef char *va_list;
 
-#define __std(ref) ::std::ref
+#ifdef __cplusplus
+    #define __std(ref) ::std::ref
+#else
+    #define __std(ref) ref
+#endif
 #define __fourbytealign(n) ((((unsigned long) (n)) + 3U) & ~3U)
 #define __va_start(parm) ((__std(va_list))((char *) ((unsigned long) (&parm) & ~3U) + __fourbytealign(sizeof(parm))))
 
-#define va_start(ap, parm) ((ap) = __va_start(parm))
+#ifndef __CLANGD__
+    #define va_start(ap, parm) ((ap) = __va_start(parm))
+#else
+    #define va_start(ap, parm)
+#endif
 #define va_arg(ap, type) (*(type *) ((ap += __fourbytealign(sizeof(type))) - __fourbytealign(sizeof(type))))
 #define va_end(ap) ((void) 0)
 

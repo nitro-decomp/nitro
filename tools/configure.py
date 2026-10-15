@@ -542,9 +542,10 @@ def add_mwld_builds(n: ninja_syntax.Writer, projects: list[Project]):
 
 def add_mwcc_builds(n: ninja_syntax.Writer, projects: list[Project]):
     for project in projects:
+        ctx_files = []
         for source_file in project.source_files():
             src_obj_path = project.game_build / source_file
-            cc_flags: list[str] = project.game.cc_flags
+            cc_flags: list[str] = project.game.cc_flags.copy()
             if is_cpp(source_file):
                 cc_flags.append("-lang=c++")
             elif is_c(source_file):
@@ -570,12 +571,27 @@ def add_mwcc_builds(n: ninja_syntax.Writer, projects: list[Project]):
 
             extension = source_file.suffix
             ctx_file = str(src_obj_path.with_suffix(f".ctx{extension}"))
+            ctx_files.append(ctx_file)
             n.build(
                 inputs=str(source_file),
                 rule="m2ctx",
                 outputs=ctx_file,
             )
             n.newline()
+        
+        n.build(
+            inputs=ctx_files,
+            rule="phony",
+            outputs=f"m2ctx_{project.game.name}"
+        )
+        n.newline()
+    
+    n.build(
+        inputs=[f"m2ctx_{project.game.name}" for project in projects],
+        rule="phony",
+        outputs="m2ctx",
+    )
+    n.newline()
 
 
 def get_c_cpp_files(dirs: list[Path]):
@@ -728,7 +744,7 @@ def add_objdiff_builds(n: ninja_syntax.Writer, projects: list[Project]):
                 "extra_flags": " ".join([
                     f"--output-path {project.objdiff_project().parent}",
                     f"--compiler {DECOMP_ME_COMPILERS[project.game.mwcc_version]}", # decomp.me compiler name
-                    f'--c-flags "{CC_FLAGS} {project.game.cc_flags}"',              # decomp.me compiler flags
+                    f'--c-flags "{CC_FLAGS} {" ".join(project.game.cc_flags)}"',              # decomp.me compiler flags
                 ])
             }
         )
