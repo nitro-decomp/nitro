@@ -1,0 +1,13 @@
+    .text       start:0x02000000 end:0x020d70f8 kind:code align:32
+    .exceptix   start:0x020d70f8 end:0x020d70f8 kind:rodata align:4
+    .init       start:0x020d70f8 end:0x020da280 kind:code align:4
+    .rodata     start:0x020da280 end:0x020e4b9c kind:rodata align:4
+    .ctor       start:0x020e4b9c end:0x020e4c68 kind:rodata align:4
+    .data       start:0x020e4c80 end:0x022276e0 kind:data align:32
+    .bss        start:0x022276e0 end:0x0223c280 kind:bss align:32
+
+src/_start.c:
+    .text       start:0x02000850 end:0x02000b94
+
+src/os/os_thread.c:
+    .text       start:0x020b9d64 end:0x020ba64c

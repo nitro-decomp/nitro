@@ -64,6 +64,12 @@ GAMES = [
         sdk_version="0x4027531",
         check_filter_args=["--main", "--itcm", "--dtcm"],
     ),
+    Game(
+        name="LEGO_GAME_NAME",
+        mwcc_version="1.2/base",
+        cc_flags=["-d NITRO_DEBUG=1"],
+        sdk_version="0x2027533", # TODO: double check this is the correct version
+    ),
 ]
 DECOMP_ME_COMPILERS = {
     "1.2/b56": "mwcc_20_56",
@@ -104,7 +110,7 @@ CC_FLAGS = " ".join([
     "-lang=c",              # Set language to C
     "-Cpp_exceptions off",  # Disable C++ exceptions
     "-interworking",        # Enable ARM/Thumb interworking
-    "-ipa file",            # Enable inter-procedural analysis
+#    "-ipa file",            # Enable inter-procedural analysis
     "-requireprotos",       # Require function prototypes
     "-sym on",              # Debug info, including line numbers
     "-gccinc",              # Interpret #include "..." and #include <...> equally

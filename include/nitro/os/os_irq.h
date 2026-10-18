@@ -8,7 +8,7 @@ extern "C" {
 #include "nitro/reg.h"
 #include "nitro/types.h"
 
-typedef u32 OSIntrMode;
+typedef s32 OSIntrMode;
 
 void OS_IrqHandler(void);
 void OS_SetIrqFunction(u32 type, void (*function)());

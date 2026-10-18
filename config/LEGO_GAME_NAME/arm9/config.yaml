@@ -1,0 +1,27 @@
+rom_config: ../../../extract/LEGO_GAME_NAME/config.yaml
+build_path: ../../../build/LEGO_GAME_NAME
+delinks_path: ../../../build/LEGO_GAME_NAME/delinks
+main_module:
+  name: main
+  object: ../../../build/LEGO_GAME_NAME/build/arm9.bin
+  hash: 3b5f2cfa1f105588
+  delinks: delinks.txt
+  symbols: symbols.txt
+  relocations: relocs.txt
+autoloads:
+  - kind: Itcm
+    name: itcm
+    object: ../../../build/LEGO_GAME_NAME/build/itcm.bin
+    hash: afb7a3f46dbbe0e9
+    delinks: itcm/delinks.txt
+    symbols: itcm/symbols.txt
+    relocations: itcm/relocs.txt
+  - kind: Dtcm
+    name: dtcm
+    object: ../../../build/LEGO_GAME_NAME/build/dtcm.bin
+    hash: 56a054754b0a222e
+    delinks: dtcm/delinks.txt
+    symbols: dtcm/symbols.txt
+    relocations: dtcm/relocs.txt
+overlays:
+  []

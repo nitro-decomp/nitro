@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [diamondtrust_us, pm4_jp, gtactw_eu]
+        version: [diamondtrust_us, pm4_jp, gtactw_eu, LEGO_GAME_NAME]
 
     steps:
       - name: Checkout
